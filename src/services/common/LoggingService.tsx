@@ -6,7 +6,6 @@ export class LoggingService {
     private _loggingEnabled: boolean = false;
 
     constructor(props: ILoggingServiceProps) {
-        console.warn(props);
         this._loggingEnabled = props.loggingEnabled ?? false;
     }
 

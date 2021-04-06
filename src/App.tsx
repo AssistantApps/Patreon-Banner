@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-function App() {
+import * as route from './constants/route';
+import { ScrollToTop } from './components/core/scroll/scrollToTop';
+import { setBodyLoadingClass } from './helper/documentHelper';
+import { HomePage } from './pages/home';
+import { ConfigPageContainer } from './pages/config/configPageContainer';
+
+export const App: React.FC = () => {
+  const effectTracker = '';
+  useEffect(() => {
+    setTimeout(() => {
+      setBodyLoadingClass(false);
+    }, 100);
+  }, [effectTracker]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ScrollToTop>
+      <Switch>
+        <Route exact={true} path={route.home} component={HomePage} />
+        <Route path={route.config} component={ConfigPageContainer} />
+      </Switch>
+    </ScrollToTop>
   );
 }
-
-export default App;

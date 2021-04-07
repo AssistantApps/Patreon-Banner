@@ -3,10 +3,12 @@ import React from 'react';
 import { withServices } from '../../integration/dependencyInjection';
 import { NetworkState } from '../../constants/enum/networkState';
 
-import { dependencyInjectionToProps, IExpectedServices } from './configPage.dependencyInjection';
+import { TwitchUser } from '../../contracts/twitchAuth';
 import { ConfigPagePresenter } from './configPagePresenter';
 import { anyObject } from '../../helper/typescriptHacks';
+import { dependencyInjectionToProps, IExpectedServices } from './configPage.dependencyInjection';
 import { isFormValid } from './configPageValidations';
+import { TwitchConfigViewModel } from '../../contracts/generated/ViewModel/twitchConfigViewModel';
 
 declare global {
     interface Window {
@@ -24,14 +26,13 @@ interface IState {
     fetchExistingStatus: NetworkState;
     existingSettingsPayload: any;
 
-    userId: string;
-    accessToken: string;
-    campaignId: string;
+    submissionData: TwitchConfigViewModel;
     submissionStatus: NetworkState;
     showFormValidation: boolean;
 
     // Twitch
     twitch: any;
+    twitchTheme: string;
     twitchStatus: NetworkState;
     isVisible: boolean;
 }
@@ -45,14 +46,13 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
             existingSettingsPayload: anyObject,
 
             // Streamer Submission
-            userId: '',
-            accessToken: '',
-            campaignId: '',
+            submissionData: anyObject,
             submissionStatus: NetworkState.Pending,
             showFormValidation: false,
 
             // Twitch
             twitch: window.Twitch ? window.Twitch.ext : null,
+            twitchTheme: 'dark',
             twitchStatus: NetworkState.Pending,
             isVisible: true
         };
@@ -60,22 +60,29 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
 
     componentDidMount() {
         if (this.state.twitch) {
-            this.state.twitch.onAuthorized((auth: any) => {
+            this.state.twitch.onAuthorized((auth: TwitchUser) => {
                 this.props.twitchAuthService.setToken(auth.token, auth.userId);
-                this.props.loggingService.log?.('set Token', auth.token, auth.userId);
+                this.props.loggingService.log?.('set Token', auth);
                 if (!this.state.twitchStatus) {
-                    this.fetchExistingSettings(auth.userId);
-                    this.setState(() => {
+                    this.getChannelName(auth);
+                    this.fetchExistingSettings(auth);
+                    this.setState((prevState: IState) => {
                         return {
-                            userId: auth.userId,
-                            twitchStatus: NetworkState.Success
+                            twitchStatus: NetworkState.Success,
+                            submissionData: {
+                                ...prevState.submissionData,
+                                userId: auth.userId,
+                                clientId: auth.clientId,
+                                channelId: auth.channelId,
+                                twitchAuthToken: auth.token,
+                            },
                         }
-                    })
+                    });
                 }
             })
 
             this.state.twitch.listen('broadcast', (target: any, contentType: any, body: any) => {
-                this.props.loggingService.log?.(`New PubSub message!\n${target}\n${contentType}\n${body}`);
+                this.props.loggingService.log?.('broadcast', `New PubSub message!\n${target}\n${contentType}\n${body}`);
             })
 
             // this.state.twitch.onVisibilityChanged((isVisible: any, _c: any) => {
@@ -83,7 +90,13 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
             // })
 
             this.state.twitch.onContext((context: any, delta: any) => {
-                this.props.loggingService.log?.(context, delta);
+                this.props.loggingService.log?.('onContext', context, delta);
+                if (context.theme == null) return;
+                this.setState(() => {
+                    return {
+                        twitchTheme: context.theme,
+                    }
+                });
                 //this.contextUpdate(context, delta)
             })
         }
@@ -95,8 +108,8 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
         }
     }
 
-    fetchExistingSettings = (userId: string) => {
-        this.props.loggingService.log?.('fetchExistingSettings', userId);
+    fetchExistingSettings = (auth: TwitchUser) => {
+        this.props.loggingService.log?.('fetchExistingSettings', auth.channelId);
 
         this.setState(() => {
             return {
@@ -105,12 +118,32 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
         })
     }
 
+    getChannelName = async (auth: TwitchUser) => {
+        // const channelQueryResult = await this.props.twitchApiService.getChannelInfo(auth.channelId);
+        // if (!channelQueryResult.isSuccess) {
+        //     this.props.loggingService?.error(channelQueryResult.errorMessage);
+        //     //Swal
+        //     return;
+        // }
+
+        // this.setState((prevState: IState) => {
+        //     return {
+        //         submissionData: {
+        //             ...prevState.submissionData,
+        //             channelName: channelQueryResult.value.display_name,
+        //         }
+        //     }
+        // })
+    }
+
     editFormValues = (propName: string, propValue: string) => {
         this.setState((prevState: IState) => {
-            this.props.loggingService?.log('prevState', prevState);
             return {
-                [propName]: propValue,
-            } as any
+                submissionData: {
+                    ...prevState.submissionData,
+                    [propName]: propValue
+                }
+            }
         });
     }
 
@@ -125,10 +158,32 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
             return;
         }
 
-        // this.setState(() => {
-        //     return {
-        //     }
-        // });
+        this.setState(() => {
+            return {
+                submissionStatus: NetworkState.Loading,
+            }
+        }, this.submitConfigFormFunc);
+    }
+
+    private submitConfigFormFunc = async () => {
+        const apiSaveResult = await this.props.patreonService.submitTwitchConfig(this.state.submissionData);
+        if (!apiSaveResult.isSuccess) {
+            this.props.loggingService?.error(apiSaveResult.errorMessage);
+            //Swal
+
+            this.setState(() => {
+                return {
+                    submissionStatus: NetworkState.Error,
+                }
+            });
+            return;
+        }
+
+        this.setState(() => {
+            return {
+                submissionStatus: NetworkState.Success,
+            }
+        });
     }
 
     render() {

@@ -8,6 +8,7 @@ import { SmallLoading, TinyLoading } from '../../components/loading';
 import { NetworkState } from '../../constants/enum/networkState';
 import { isAccessTokenValid, isCampaignIdValid, isFormValid } from './configPageValidations';
 import { defaultSuccessResult } from '../../contracts/results/ResultWithValue';
+import { TwitchConfigViewModel } from '../../contracts/generated/ViewModel/twitchConfigViewModel';
 
 export interface IConfigPageContainerProps {
     editFormValues: (propName: string, propValue: string) => void;
@@ -18,14 +19,13 @@ export interface IConfigPagePresenterProps {
     fetchExistingStatus: NetworkState;
     existingSettingsPayload: any;
 
-    userId: string;
-    accessToken: string;
-    campaignId: string;
+    submissionData: TwitchConfigViewModel;
     submissionStatus: NetworkState;
     showFormValidation: boolean;
 
     // Twitch
     twitch: any;
+    twitchTheme: string;
     twitchStatus: NetworkState;
 }
 
@@ -54,8 +54,8 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
 
         return (
             <p>
-                <span>These two values are required in order to fetch the list of Patrons from <BasicLink href="https://patreon.com">Patreon.com</BasicLink>.</span><br />
-                <i>No settings found for your Twitch account. Please fill in the form below.</i>
+                No settings found for your Twitch account. <br />
+                Please fill in the form below.These two values are required in order to fetch the list of Patrons from <BasicLink href="https://patreon.com">Patreon.com</BasicLink>.
             </p>
         );
     }
@@ -65,13 +65,10 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
         : defaultSuccessResult;
 
     return (
-        <div id="main">
-            <section id="config" className="main" style={{ padding: '1em 2em' }}>
+        <div id="main" className={classNames('twitch', props.twitchTheme)}>
+            <section id="config" className="main" style={{ paddingTop: '1em' }}>
                 <div className="spotlight">
                     <div className="content">
-                        <header className="major">
-                            <h2>Configuration</h2>
-                        </header>
                         {renderStatusSection(props)}
 
                         <div className="row gtr-uniform">
@@ -81,7 +78,7 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                                     id="config-accessToken"
                                     name="accessToken"
                                     label="Access Token"
-                                    value={props.accessToken}
+                                    value={props.submissionData.accessToken}
                                     onChange={onChangeEvent('accessToken')}
                                     placeholder="AAAaBb0bbCCCc11DddE22EEEeFFF_ABCD"
                                     isValid={() => isAccessTokenValid(props, true)}
@@ -94,8 +91,8 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                                     id="config-campaignId"
                                     name="campaignId"
                                     label="Campaign Id"
-                                    value={props.campaignId}
-                                    pattern="[a-Z]"
+                                    value={props.submissionData.campaignId}
+                                    pattern="[a-zA-Z]"
                                     onChange={onChangeEvent('campaignId')}
                                     placeholder="1234567"
                                     isValid={() => isCampaignIdValid(props, true)}
@@ -114,12 +111,12 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                                     <li>
                                         {
                                             props.submissionStatus === NetworkState.Loading
-                                                ? <div className="button primary disabled"><TinyLoading /></div>
+                                                ? <div className="button primary no-click"><TinyLoading /></div>
                                                 : (
                                                     <>
                                                         <input
                                                             type="submit"
-                                                            value="Fetch my Patreon Supporters List"
+                                                            value="Fetch my Patreon Supporters list"
                                                             className={classNames('primary', { disabled: !isFormValidResult.isSuccess })}
                                                             onClick={props.submitConfigForm}
                                                         />

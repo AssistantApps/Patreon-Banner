@@ -1,8 +1,8 @@
 import axios from 'axios';
-import * as storageType from '../../constants/enum/storageType';
-import { Result, ResultWithValue } from '../../contracts/results/ResultWithValue';
-import { anyObject } from '../../helper/typescriptHacks';
-import { StorageService } from '../StorageService';
+import * as storageType from '../constants/enum/storageType';
+import { Result, ResultWithValue } from '../contracts/results/ResultWithValue';
+import { anyObject } from '../helper/typescriptHacks';
+import { StorageService } from './StorageService';
 
 
 declare global {

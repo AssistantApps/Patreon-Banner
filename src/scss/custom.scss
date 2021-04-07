@@ -10,4 +10,9 @@ html {
     margin-top: 5em;
 }
 
+.no-click {
+    cursor: not-allowed;
+}
+
+@import 'custom/_twitch.scss';
 @import 'custom/_error.scss';

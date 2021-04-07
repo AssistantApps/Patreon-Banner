@@ -1,9 +1,12 @@
 import React, { ReactNode } from "react";
 import { anyObject } from "../helper/typescriptHacks";
+
 import { LoginService } from "../services/api/LoginService";
 import { PatreonService } from "../services/api/PatreonService";
+
 import { LoggingService } from "../services/common/LoggingService";
 import { AnalyticsService } from "../services/common/AnalyticsService";
+
 import { TwitchAuthenticationService } from "../services/twitch/TwitchAuthenticationService";
 
 export interface IDependencyInjection {

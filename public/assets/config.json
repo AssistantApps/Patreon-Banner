@@ -3,5 +3,5 @@
     "consoleLogDebug": true,
     "useServiceWorker": false,
     "reportWebVitals": false,
-    "apiUrl": "http://localhost:55555"
+    "apiUrl": "https://localhost:44308"
 }

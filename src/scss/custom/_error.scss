@@ -6,6 +6,13 @@ $errorTextColour: #a00202;
     color: $errorTextColour !important;
 }
 
-ul.errors {
+ul.errors,
+#main.twitch ul.errors * {
     color: $errorTextColour;
+}
+
+
+
+input.error {
+    border-color: $errorTextColour !important;
 }

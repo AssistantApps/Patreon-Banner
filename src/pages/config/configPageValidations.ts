@@ -9,22 +9,22 @@ import { combineValidationResults } from '../../validation/validationBase';
 export const isAccessTokenValid = (localProps: IConfigPagePresenterProps, withoutPrefix: boolean = false): Result => {
     return lengthValidation({
         inputName: withoutPrefix ? undefined : 'Access Token',
-        input: localProps.accessToken,
-        minLength: 12,
-        maxLength: 40
+        input: localProps.submissionData.accessToken,
+        minLength: 40,
+        maxLength: 44
     });
 }
 
 export const isCampaignIdValid = (localProps: IConfigPagePresenterProps, withoutPrefix: boolean = false): Result => {
     const lengthResult = lengthValidation({
         inputName: withoutPrefix ? undefined : 'Campaign Id',
-        input: localProps.campaignId,
+        input: localProps.submissionData.campaignId,
         minLength: 5,
         maxLength: 7
     });
     const numericResult = numericOnlyValidation({
         inputName: withoutPrefix ? undefined : 'Campaign Id',
-        input: localProps.campaignId,
+        input: localProps.submissionData.campaignId,
     });
     return combineValidationResults(lengthResult, numericResult);
 }

@@ -49,7 +49,7 @@ export const TinyLoading: React.FC = () => {
                         src="/assets/img/loader.svg"
                         draggable="false"
                         alt="loading-animation"
-                        style={{ height: '15px', display: 'inline' }}
+                        style={{ height: '25px', display: 'inline', verticalAlign: 'middle', marginBottom: '5px' }}
                     />
                 </div>
             </div>

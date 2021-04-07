@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import { Result, defaultSuccessResult } from '../../../contracts/results/ResultWithValue';
 import { ErrorLabel } from '../validation/errorLabel';
@@ -57,9 +58,10 @@ export class TextInput extends React.Component<IProps, IState> {
                 <input type="text"
                     id={this.props.id}
                     name={this.props.name}
-                    value={this.props.value}
+                    value={this.props.value ?? ''}
                     pattern={this.props.pattern}
                     onChange={this.onChangeEvent}
+                    className={classNames({ 'error': !validationResult.isSuccess })}
                     placeholder={this.props.placeholder}
                     onBlur={this.onBlur}
                 />

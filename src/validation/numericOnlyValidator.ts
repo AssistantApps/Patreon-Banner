@@ -12,7 +12,8 @@ export const numericOnlyValidation = (props: INumericValidationProps): Result =>
     const defaultErrorMessageLength = errorMessage.length;
 
     let constainsNan = false;
-    for (const inputChar of props.input) {
+    for (let inputIndex = 0; inputIndex < (props.input ?? '').length; inputIndex++) {
+        const inputChar = props.input[inputIndex];
         if (isNaN(inputChar as any)) {
             constainsNan = true;
             break;

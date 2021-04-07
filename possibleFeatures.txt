@@ -1,0 +1,8 @@
+Add ability to test functionality by entering test data
+Choose between lightMode and darkMode for Patron Display
+ - Default to Dark mode
+Change how often Patron list is refreshed 
+ - Once every 5 days for default, able to extend to 7
+ - Premium can change to everyday
+Allow custom CSS
+ - Premium only

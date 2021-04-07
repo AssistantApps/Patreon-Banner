@@ -16,7 +16,7 @@ export const ErrorMessageList: React.FC<IProps> = (props: IProps) => {
                 {
                     (props.errorMessage.split(errorMessageSeperator) || []).map((errorString: string) => {
                         return (
-                            <li>{errorString}</li>
+                            <li key={errorString}>{errorString}</li>
                         );
                     })
                 }

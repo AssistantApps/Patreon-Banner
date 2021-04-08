@@ -4,11 +4,13 @@ import { withServices } from '../../integration/dependencyInjection';
 import { NetworkState } from '../../constants/enum/networkState';
 
 import { TwitchUser } from '../../contracts/twitchAuth';
-import { ConfigPagePresenter } from './configPagePresenter';
-import { anyObject } from '../../helper/typescriptHacks';
-import { dependencyInjectionToProps, IExpectedServices } from './configPage.dependencyInjection';
-import { isFormValid } from './configPageValidations';
 import { TwitchConfigViewModel } from '../../contracts/generated/ViewModel/twitchConfigViewModel';
+import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
+import { anyObject } from '../../helper/typescriptHacks';
+
+import { dependencyInjectionToProps, IExpectedServices } from './configPage.dependencyInjection';
+import { ConfigPagePresenter } from './configPagePresenter';
+import { isFormValid } from './configPageValidations';
 
 declare global {
     interface Window {
@@ -24,7 +26,7 @@ interface IProps extends IExpectedServices, IWithoutExpectedServices { }
 
 interface IState {
     fetchExistingStatus: NetworkState;
-    existingSettingsPayload: any;
+    existingSettingsPayload: PatreonViewModel;
 
     submissionData: TwitchConfigViewModel;
     submissionStatus: NetworkState;
@@ -64,7 +66,6 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
                 this.props.twitchAuthService.setToken(auth.token, auth.userId);
                 this.props.loggingService.log?.('set Token', auth);
                 if (!this.state.twitchStatus) {
-                    this.getChannelName(auth);
                     this.fetchExistingSettings(auth);
                     this.setState((prevState: IState) => {
                         return {
@@ -108,32 +109,27 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
         }
     }
 
-    fetchExistingSettings = (auth: TwitchUser) => {
+    fetchExistingSettings = async (auth: TwitchUser) => {
         this.props.loggingService.log?.('fetchExistingSettings', auth.channelId);
+
+        var existingSettingsresult = await this.props.patreonService.getFromChannelId(auth.channelId);
+        if (!existingSettingsresult.isSuccess) {
+            this.props.loggingService?.error(existingSettingsresult.errorMessage);
+
+            this.setState(() => {
+                return {
+                    fetchExistingStatus: NetworkState.Error,
+                }
+            });
+            return;
+        }
 
         this.setState(() => {
             return {
-                fetchExistingStatus: NetworkState.Error
+                fetchExistingStatus: NetworkState.Success,
+                existingSettingsPayload: existingSettingsresult.value
             }
-        })
-    }
-
-    getChannelName = async (auth: TwitchUser) => {
-        // const channelQueryResult = await this.props.twitchApiService.getChannelInfo(auth.channelId);
-        // if (!channelQueryResult.isSuccess) {
-        //     this.props.loggingService?.error(channelQueryResult.errorMessage);
-        //     //Swal
-        //     return;
-        // }
-
-        // this.setState((prevState: IState) => {
-        //     return {
-        //         submissionData: {
-        //             ...prevState.submissionData,
-        //             channelName: channelQueryResult.value.display_name,
-        //         }
-        //     }
-        // })
+        });
     }
 
     editFormValues = (propName: string, propValue: string) => {

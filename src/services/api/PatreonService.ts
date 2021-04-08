@@ -6,8 +6,12 @@ import { BaseApiService } from '../BaseApiService';
 
 export class PatreonService extends BaseApiService {
 
-    async getAll(): Promise<ResultWithValue<Array<PatreonViewModel>>> {
-        return await this.get(patreonBanner);
+    async getFromGuid(guid: string): Promise<ResultWithValue<PatreonViewModel>> {
+        return await this.get(`${patreonBanner}/${guid}`);
+    }
+
+    async getFromChannelId(channelId: string): Promise<ResultWithValue<PatreonViewModel>> {
+        return await this.get(`${patreonBanner}/channelId/${channelId}`);
     }
 
     async submitTwitchConfig(data: TwitchConfigViewModel): Promise<Result> {

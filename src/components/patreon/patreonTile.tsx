@@ -1,8 +1,8 @@
 import React from 'react';
 import { BasicImage } from '../../components/core/image';
-import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
+import { PatreonItemViewModel } from '../../contracts/generated/ViewModel/patreonItemViewModel';
 
-interface IPatronTileProps extends PatreonViewModel {
+interface IPatronTileProps extends PatreonItemViewModel {
 
 }
 

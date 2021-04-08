@@ -1,8 +1,8 @@
 ﻿/* Auto Generated */
 
+import { PatreonItemViewModel } from "./patreonItemViewModel";
+
 export interface PatreonViewModel {
-    name: string;
-    imageUrl: string;
-    thumbnailUrl: string;
-    url: string;
+    patrons: PatreonItemViewModel[];
+    saveDate: Date;
 }

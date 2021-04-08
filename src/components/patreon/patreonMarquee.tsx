@@ -9,6 +9,7 @@ import { NetworkState } from '../../constants/enum/networkState';
 import { withServices } from '../../integration/dependencyInjection';
 
 import { dependencyInjectionToProps, IExpectedServices } from './patreonMarquee.dependencyInjection';
+import { PatreonItemViewModel } from '../../contracts/generated/ViewModel/patreonItemViewModel';
 
 interface IWithoutExpectedServices {
 }
@@ -16,7 +17,7 @@ interface IWithoutExpectedServices {
 interface IProps extends IExpectedServices, IWithoutExpectedServices { }
 
 interface IState {
-    patrons: Array<PatreonViewModel>;
+    patrons: Array<PatreonItemViewModel>;
     networkState: NetworkState;
 }
 
@@ -35,11 +36,11 @@ export class PatreonMarqueeUnconnected extends React.Component<IProps, IState> {
     }
 
     getPatrons = async () => {
-        const patronsResult: ResultWithValue<Array<PatreonViewModel>> = await this.props.patreonService.getAll();
+        const patronsResult: ResultWithValue<PatreonViewModel> = await this.props.patreonService.getFromGuid('');//TODO
         if (!patronsResult.isSuccess) return;
         this.setState(() => {
             return {
-                patrons: patronsResult.value,
+                patrons: patronsResult.value.patrons,
                 networkState: NetworkState.Success,
             }
         });
@@ -53,7 +54,7 @@ export class PatreonMarqueeUnconnected extends React.Component<IProps, IState> {
             <Marquee gradient={false} className="patreon-container">
                 {
                     patrons != null &&
-                    patrons.map((item: PatreonViewModel) => (
+                    patrons.map((item: PatreonItemViewModel) => (
                         <PatreonTile key={item.name} {...item} />
                     ))
                 }

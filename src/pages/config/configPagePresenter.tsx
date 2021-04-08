@@ -6,9 +6,14 @@ import { TextInput } from '../../components/common/form/textInput';
 import { ErrorMessageList } from '../../components/common/validation/errorMessageList';
 import { SmallLoading, TinyLoading } from '../../components/loading';
 import { NetworkState } from '../../constants/enum/networkState';
-import { isAccessTokenValid, isCampaignIdValid, isFormValid } from './configPageValidations';
 import { defaultSuccessResult } from '../../contracts/results/ResultWithValue';
 import { TwitchConfigViewModel } from '../../contracts/generated/ViewModel/twitchConfigViewModel';
+import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
+import { patronOAuthUrl } from '../../integration/patreonOAuth';
+
+import { isAccessTokenValid, isCampaignIdValid, isFormValid } from './configPageValidations';
+import moment from 'moment';
+import { IExpectedServices } from './configPage.dependencyInjection';
 
 export interface IConfigPageContainerProps {
     editFormValues: (propName: string, propValue: string) => void;
@@ -17,7 +22,7 @@ export interface IConfigPageContainerProps {
 
 export interface IConfigPagePresenterProps {
     fetchExistingStatus: NetworkState;
-    existingSettingsPayload: any;
+    existingSettingsPayload: PatreonViewModel;
 
     submissionData: TwitchConfigViewModel;
     submissionStatus: NetworkState;
@@ -29,7 +34,7 @@ export interface IConfigPagePresenterProps {
     twitchStatus: NetworkState;
 }
 
-interface IProps extends IConfigPagePresenterProps, IConfigPageContainerProps { }
+interface IProps extends IConfigPagePresenterProps, IConfigPageContainerProps, IExpectedServices { }
 
 export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
     if (props.twitchStatus === NetworkState.Loading ||
@@ -43,11 +48,11 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
         if (localProps.fetchExistingStatus === NetworkState.Success) {
             return (
                 <p>
-                    <i>{localProps.existingSettingsPayload.numPatreons} Patreons loaded </i>🚀
+                    <i>{localProps.existingSettingsPayload?.patrons?.length ?? 0} Patreons loaded </i>🚀
                     <br />
-                    <i>Last refresh: {localProps.existingSettingsPayload.lastRefresh}</i>
+                    <i>Last refresh: {moment(localProps.existingSettingsPayload?.saveDate ?? new Date()).fromNow()}</i>
                     <br />
-                    <p style={{ fontWeight: 'bold' }}>No changes needed, you can close this window</p>
+                    <span style={{ fontWeight: 'bold' }}>No changes needed, you can close this window</span>
                 </p>
             );
         }
@@ -70,6 +75,13 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                 <div className="spotlight">
                     <div className="content">
                         {renderStatusSection(props)}
+
+                        <button onClick={() => {
+                            const url = patronOAuthUrl(props.submissionData);
+                            props.loggingService?.log('url', url);
+                            window.open(url,
+                                "mywindow", "resizable=1,width=800,height=800");
+                        }}>Login with Patreon</button>
 
                         <div className="row gtr-uniform">
                             <div className="col-12 col-12-xsmall">

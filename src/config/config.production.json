@@ -3,5 +3,5 @@
     "consoleLogDebug": false,
     "useServiceWorker": true,
     "reportWebVitals": false,
-    "apiUrl": "https://api.assistantapps.com"
+    "apiUrl": "https://api.assistantapps.stream"
 }

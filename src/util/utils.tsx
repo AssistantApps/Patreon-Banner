@@ -2,9 +2,7 @@ import React, { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 
 import { DependencyInjectionProvider } from '../integration/dependencyInjection';
-import { isDev } from '../helper/devDetect';
-import configDevJson from '../Config/config.json';
-import configProdJson from '../Config/config.production.json';
+import configJson from '../Config/config.json';
 
 declare global {
   interface Window {
@@ -15,7 +13,6 @@ declare global {
 }
 
 export const initializeWithConfig = (component: ReactNode) => {
-  const configJson = isDev() ? configDevJson : configProdJson;
   window.config = configJson != null
     ? configJson
     : defaultConfig;

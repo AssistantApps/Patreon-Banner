@@ -1,7 +1,0 @@
-{
-    "googleAnalyticsEnabled": true,
-    "consoleLogDebug": false,
-    "useServiceWorker": false,
-    "reportWebVitals": false,
-    "apiUrl": "https://staging-api.assistantapps.com"
-}

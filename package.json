@@ -15,6 +15,7 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
     "node-sass": "^5.0.0",
+    "npm-run-all": "^4.1.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-fast-marquee": "^1.1.2",
@@ -26,6 +27,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "zipbuild": "bestzip dist/%npm_package_version%.zip build/*",
+    "twitch": "npm-run-all --sequential build zipbuild",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -49,6 +52,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.11",
-    "@types/react-router-dom": "^5.1.7"
+    "@types/react-router-dom": "^5.1.7",
+    "bestzip": "^1.1.6"
   }
 }

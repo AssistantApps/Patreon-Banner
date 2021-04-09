@@ -9,7 +9,7 @@ export const Loading: React.FC = () => {
                     <ul className="cssload-flex-container">
                         <li style={{ listStyleType: 'none' }}>
                             <img
-                                src="/assets/img/loader.svg"
+                                src="assets/img/loader.svg"
                                 draggable="false"
                                 alt="loading-animation"
                             />
@@ -28,7 +28,7 @@ export const SmallLoading: React.FC = () => {
             <div className="row">
                 <div className="col-12" style={{ textAlign: 'center' }}>
                     <img
-                        src="/assets/img/loader.svg"
+                        src="assets/img/loader.svg"
                         draggable="false"
                         alt="loading-animation"
                         style={{ height: '75px', display: 'inline' }}
@@ -46,7 +46,7 @@ export const TinyLoading: React.FC = () => {
             <div className="row">
                 <div className="col-12" style={{ textAlign: 'center' }}>
                     <img
-                        src="/assets/img/loader.svg"
+                        src="assets/img/loader.svg"
                         draggable="false"
                         alt="loading-animation"
                         style={{ height: '25px', display: 'inline', verticalAlign: 'middle', marginBottom: '5px' }}

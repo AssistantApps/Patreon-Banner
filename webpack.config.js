@@ -1,6 +1,8 @@
 const fs = require('fs')
 const path = require("path")
 const webpack = require("webpack")
+const CopyPlugin = require("copy-webpack-plugin");
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
 
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -54,7 +56,22 @@ module.exports = (_env, argv) => {
   // edit webpack plugins here!
   let plugins = [
     new CleanWebpackPlugin(['dist']),
-    new webpack.HotModuleReplacementPlugin()
+    new NodePolyfillPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new CopyPlugin({
+      patterns: [
+        {
+          context: 'public/',
+          from: '**/*',
+          globOptions: {
+            dot: true,
+            gitignore: true,
+            ignore: ['**/*.html'],
+          },
+          to: '',
+        },
+      ],
+    }),
   ]
 
   for (name in entryPoints) {
@@ -109,6 +126,9 @@ module.exports = (_env, argv) => {
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
+      alias: {
+        process: 'process/browser'
+      }
     },
     output: {
       filename: "[name].bundle.js",

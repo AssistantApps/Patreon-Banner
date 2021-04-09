@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import { setBodyLoadingClass } from '../helper/documentHelper';
+
 import { Header } from '../components/common/header';
 import { Navbar } from '../components/common/navbar';
 import { Footer } from '../components/common/footer';
 
 export const HomePage: React.FC = () => {
+	const effectTracker = '';
+	useEffect(() => {
+		setTimeout(() => {
+			setBodyLoadingClass(false);
+		}, 100);
+	}, [effectTracker]);
 	return (
 		<div className="bg">
 			<div className="wrapper">

@@ -1,0 +1,7 @@
+{
+    "googleAnalyticsEnabled": false,
+    "consoleLogDebug": true,
+    "useServiceWorker": false,
+    "reportWebVitals": false,
+    "apiUrl": "https://localhost:44308"
+}

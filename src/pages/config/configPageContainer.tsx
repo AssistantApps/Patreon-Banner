@@ -18,9 +18,7 @@ declare global {
     }
 }
 
-interface IWithoutExpectedServices {
-    wrapperClass: string;
-}
+interface IWithoutExpectedServices { }
 
 interface IProps extends IExpectedServices, IWithoutExpectedServices { }
 

@@ -11,8 +11,9 @@ const bundlePath = path.resolve(__dirname, "dist/")
 module.exports = (_env, argv) => {
   let entryPoints = {
     Index: {
-      path: "./src/Index.tsx",
-      outputHtml: "index.html",
+      path: './src/Index.tsx',
+      outputHtml: 'index.html',
+      template: 'template.html',
       build: true
     },
     // VideoComponent: {
@@ -31,8 +32,9 @@ module.exports = (_env, argv) => {
     //   build: true
     // },
     Config: {
-      path: "./src/Config.tsx",
-      outputHtml: "config.html",
+      path: './src/Config.tsx',
+      outputHtml: 'config.html',
+      template: './template-twitch.html',
       build: true
     },
     // LiveConfig: {
@@ -56,14 +58,15 @@ module.exports = (_env, argv) => {
   ]
 
   for (name in entryPoints) {
-    if (entryPoints[name].build) {
-      entry[name] = entryPoints[name].path
+    const entryPoint = entryPoints[name];
+    if (entryPoint.build) {
+      entry[name] = entryPoint.path
       if (argv.mode === 'production') {
         plugins.push(new HtmlWebpackPlugin({
           inject: true,
           chunks: [name],
-          template: './template.html',
-          filename: entryPoints[name].outputHtml
+          template: entryPoint.template,
+          filename: entryPoint.outputHtml
         }))
       }
     }

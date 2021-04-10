@@ -63,12 +63,13 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
     }
 
     componentDidMount() {
+        this.props.oAuthClient.listenToOAuth(this.refreshExistingSettings);
         if (this.state.twitch) {
             this.state.twitch.onAuthorized((auth: TwitchUser) => {
                 this.props.twitchAuthService.setToken(auth.token, auth.userId);
                 this.props.loggingService.log?.('set Token', auth);
                 if (!this.state.twitchStatus) {
-                    this.fetchExistingSettings(auth);
+                    this.fetchExistingSettings(auth.channelId);
                     this.setState((prevState: IState) => {
                         return {
                             twitchStatus: NetworkState.Success,
@@ -106,15 +107,17 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
     }
 
     componentWillUnmount() {
+        this.props.oAuthClient.leaveGroup(this.state.submissionData.channelId);
+        this.props.oAuthClient.removeListenToOAuth(this.refreshExistingSettings);
         if (this.state.twitch) {
             this.state.twitch.unlisten('broadcast', () => this.props.loggingService.log?.('successfully unlistened'))
         }
     }
 
-    fetchExistingSettings = async (auth: TwitchUser) => {
-        this.props.loggingService.log?.('fetchExistingSettings', auth.channelId);
+    fetchExistingSettings = async (channelId: string) => {
+        this.props.loggingService.log?.('fetchExistingSettings', channelId);
 
-        var existingSettingsresult = await this.props.patreonService.getFromChannelId(auth.channelId);
+        var existingSettingsresult = await this.props.patreonService.getFromChannelId(channelId);
         if (!existingSettingsresult.isSuccess) {
             this.props.loggingService?.error(existingSettingsresult.errorMessage);
 
@@ -133,6 +136,16 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
             }
         });
     }
+
+    refreshExistingSettings = () => {
+        this.props.loggingService?.log('refreshExistingSettings');
+        const { channelId } = this.state.submissionData;
+        this.setState(() => {
+            return {
+                fetchExistingStatus: NetworkState.Loading
+            }
+        }, () => this.fetchExistingSettings(channelId))
+    };
 
     editFormValues = (propName: string, propValue: string) => {
         this.setState((prevState: IState) => {

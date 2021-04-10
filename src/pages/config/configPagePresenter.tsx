@@ -86,10 +86,10 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                         {
                             !props.showAdvanced &&
                             <PatreonButton onClick={() => {
+                                props.oAuthClient.joinGroup(props.submissionData.channelId);
                                 const url = patronOAuthUrl(props.submissionData);
                                 props.loggingService?.log('url', url);
-                                window.open(url,
-                                    "mywindow", "resizable=1,width=800,height=800");
+                                window.open(url, "mywindow", "resizable=1,width=800,height=800");
                             }} />
                         }
 

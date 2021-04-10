@@ -1,6 +1,6 @@
 {
   "name": "assistant-stream-patreon",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "",
   "scripts": {
     "test": "jest",
@@ -41,6 +41,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
+    "@microsoft/signalr": "^5.0.3",
     "axios": "^0.21.1",
     "classnames": "^2.3.1",
     "core-js": "^3.5.0",

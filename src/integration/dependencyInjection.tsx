@@ -6,6 +6,7 @@ import { PatreonService } from "../services/api/PatreonService";
 
 import { LoggingService } from "../services/common/LoggingService";
 import { AnalyticsService } from "../services/common/AnalyticsService";
+import { OAuthClient } from "../services/common/signal/OAuthClient";
 
 import { TwitchAuthenticationService } from "../services/twitch/TwitchAuthenticationService";
 
@@ -13,6 +14,7 @@ export interface IDependencyInjection {
     loginService: LoginService;
     patreonService: PatreonService;
     twitchAuthService: TwitchAuthenticationService;
+    oAuthClient: OAuthClient;
 
     // Common
     loggingService: LoggingService;
@@ -29,6 +31,7 @@ export const defaultDependencyInjectionFunc: GetServices = (props: IServiceOptio
         loginService: new LoginService(),
         patreonService: new PatreonService(),
         twitchAuthService: new TwitchAuthenticationService(anyObject),
+        oAuthClient: new OAuthClient(),
 
         // Common
         loggingService: new LoggingService(props),

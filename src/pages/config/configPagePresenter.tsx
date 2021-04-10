@@ -84,7 +84,7 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                         {renderStatusSection(props)}
 
                         {
-                            !props.showAdvanced &&
+                            (!props.showAdvanced && props.submissionStatus != NetworkState.Success) &&
                             <PatreonButton onClick={() => {
                                 props.oAuthClient.joinGroup(props.submissionData.channelId);
                                 const url = patronOAuthUrl(props.submissionData);

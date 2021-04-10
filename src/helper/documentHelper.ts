@@ -1,8 +1,8 @@
-// export const setDocumentTitle = (title: string) => {
-//     document.title = getNewDocumentTitle(title);
-// }
+export const setDocumentTitle = (title: string) => {
+    document.title = getNewDocumentTitle(title);
+}
 
-// export const getNewDocumentTitle = (title: string) => `${title} - AssistantApps`;
+export const getNewDocumentTitle = (title: string) => `${title} - Patreon Banner by AssistantApps`;
 
 export const setBodyLoadingClass = (isLoading: boolean) => {
     if (isLoading) {

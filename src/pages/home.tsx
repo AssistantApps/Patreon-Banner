@@ -24,11 +24,24 @@ export const HomePage: React.FC = () => {
 						<div className="spotlight">
 							<div className="content">
 								<header className="major">
-									<h2>Ipsum sed adipiscing</h2>
+									<h2>Patrons are awesome!</h2>
 								</header>
-								<p>Sed lorem ipsum dolor sit amet nullam consequat feugiat consequat magna
-								adipiscing magna etiam amet veroeros. Lorem ipsum dolor tempus sit cursus.
-										Tempus nisl et nullam lorem ipsum dolor sit amet aliquam.</p>
+								<p>They help you continue creating, so lets show them how much their support means!</p>
+								<ul className="actions">
+									<li><a href="generic.html" className="noselect button">Learn More</a></li>
+								</ul>
+							</div>
+							<span className="image"><img src="images/pic01.jpg" alt="" /></span>
+						</div>
+					</section>
+
+					<section id="getStarted" className="main">
+						<div className="spotlight">
+							<div className="content">
+								<header className="major">
+									<h2>Patrons are awesome!</h2>
+								</header>
+								<p>They help you continue creating, so lets show them how much their support means!</p>
 								<ul className="actions">
 									<li><a href="generic.html" className="button">Learn More</a></li>
 								</ul>

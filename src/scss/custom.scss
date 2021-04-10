@@ -1,5 +1,34 @@
 html {
     min-height: 100vh;
+    scroll-behavior: smooth;
+
+    ::selection {
+        color: white;
+        background: #5331b9;
+    }
+
+    ::-moz-selection {
+        color: white;
+        background: #5331b9;
+    }
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+  }
+
+span.highlight {
+    // background-color: rgba(255, 255, 255, 0.1);
+}
+
+.ta-center {
+    text-align: center;
 }
 
 .mt1 {
@@ -10,9 +39,22 @@ html {
     margin-top: 5em;
 }
 
+.mr3 {
+    margin-right: 3em;
+}
+
+.pt1 {
+    padding-top: 1em;
+}
+
+.pt5 {
+    padding-top: 5em;
+}
+
 .no-click {
     cursor: not-allowed;
 }
 
 @import 'custom/_twitch.scss';
+@import 'custom/_image.scss';
 @import 'custom/_error.scss';

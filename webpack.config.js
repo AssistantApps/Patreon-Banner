@@ -144,6 +144,7 @@ module.exports = (_env, argv) => {
       headers: {
         'Access-Control-Allow-Origin': '*'
       },
+      historyApiFallback: true,
       port: 8080
     }
     config.devServer.https = true

@@ -1,6 +1,5 @@
 import React from 'react';
-import { site } from '../../constants/site';
-import { BasicLink } from '../core/link';
+import { AppImage } from '../../constants/appImage';
 import { BasicImage } from '../core/image';
 
 interface IProps {
@@ -9,10 +8,9 @@ interface IProps {
 export const Header: React.FC<IProps> = (props: IProps) => {
     return (
         <header id="header" className="alt">
-            <span className="logo"><BasicImage imageUrl="assets/img/logo.svg" alt="" /></span>
+            <span className="logo"><BasicImage imageUrl={AppImage.logo100} alt="" /></span>
             <h1>Patreon Banner</h1>
-            <p>Display your Patreon Supporters on streams with this handy extension.<br />Compatible with OBS, Streamlabs OBS and many more.</p>
-            <i>Built by <BasicLink href={site.stream.twitch}>KhaozTopsy</BasicLink> as part of the <BasicLink href={site.assistantApps.website}>AssistantApps collection</BasicLink></i>
+            <p>Display your Patreon Supporters on streams with this handy extension.<br />Compatible with <span className="highlight">OBS</span>, <span className="highlight">Streamlabs OBS</span> and many more.</p>
         </header>
     );
 }

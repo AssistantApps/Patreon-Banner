@@ -1,7 +1,8 @@
 import React from 'react';
+
+import * as routes from '../../constants/route';
 import { site } from '../../constants/site';
 import { BasicLink } from '../core/link';
-
 import packageJson from '../../../package.json';
 
 interface IProps {
@@ -12,28 +13,20 @@ export const Footer: React.FC<IProps> = () => {
     return (
         <footer id="footer">
             <section>
-                <h2>Aliquam sed mauris</h2>
-                <p>Sed lorem ipsum dolor sit amet et nullam consequat feugiat consequat magna adipiscing tempus etiam dolore veroeros. eget dapibus mauris. Cras aliquet, nisl ut viverra sollicitudin, ligula erat egestas velit, vitae tincidunt odio.</p>
+                <h2>Patreon Banner</h2>
+                <p>This site was built to be used by streamers to help easily display their Patreon Supporters without needing to go through the effort of crafting images and needing to keep them up to date as Patrons come and go.</p>
                 <ul className="actions">
-                    <li><a href="generic.html" className="button">Learn More</a></li>
+                    <li><a href={routes.home} className="button">Go Home</a></li>
                 </ul>
             </section>
             <section>
-                <h2>Etiam feugiat</h2>
-                <dl className="alt">
-                    <dt>Address</dt>
-                    <dd>1234 Somewhere Road &bull; Nashville, TN 00000 &bull; USA</dd>
-                    <dt>Phone</dt>
-                    <dd>(000) 000-0000 x 0000</dd>
-                    <dt>Email</dt>
-                    <dd><BasicLink href="#">information@untitled.tld</BasicLink></dd>
-                </dl>
+                <h2>AssistantApps</h2>
+                <p style={{ marginBottom: '1em' }}>This site/app was designed by <BasicLink href={site.kurt.website}>Kurt Lourens</BasicLink> as part of the collection of tools under the name of <BasicLink href={site.assistantApps.website}>AssistantApps</BasicLink></p>
                 <ul className="icons">
-                    <li><BasicLink href="#" additionalClassNames="icon brands fa-twitter alt"><span className="label">Twitter</span></BasicLink></li>
-                    <li><BasicLink href="#" additionalClassNames="icon brands fa-facebook-f alt"><span className="label">Facebook</span></BasicLink></li>
-                    <li><BasicLink href="#" additionalClassNames="icon brands fa-instagram alt"><span className="label">Instagram</span></BasicLink></li>
-                    <li><BasicLink href="#" additionalClassNames="icon brands fa-github alt"><span className="label">GitHub</span></BasicLink></li>
-                    <li><BasicLink href="#" additionalClassNames="icon brands fa-dribbble alt"><span className="label">Dribbble</span></BasicLink></li>
+                    <li style={{ display: 'block' }}><BasicLink href={site.assistantApps.email} additionalClassNames="mt1">Send me an Email</BasicLink></li>
+                    <li style={{ display: 'block' }}><BasicLink href={site.assistantApps.discord} additionalClassNames="mt1">Join our Discord</BasicLink></li>
+                    <li style={{ display: 'block' }}><BasicLink href={site.assistantApps.patreon} additionalClassNames="mt1">View our Patreon page</BasicLink></li>
+                    <li style={{ display: 'block' }}><BasicLink href={site.assistantApps.github} additionalClassNames="mt1">View our Github Organisation</BasicLink></li>
                 </ul>
             </section>
             <i>

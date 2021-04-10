@@ -18,8 +18,10 @@ export const BasicLink = (props: IProps) => {
     };
 
     const localClick = (e: any) => {
-        e.preventDefault();
-        props.onClick?.();
+        if (props.onClick != null) {
+            e.preventDefault();
+            props.onClick();
+        }
     }
 
     return (

@@ -1,4 +1,3 @@
 export const home = '/';
-export const config = '/config.html';
-export const panelOverlay = '/panel.html';
-export const videoOverlay = '/video_overlay.html';
+export const error = '/error';
+export const errorWithCode = '/error/:code';

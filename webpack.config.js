@@ -98,7 +98,7 @@ module.exports = (_env, argv) => {
     module: {
       rules: [
         {
-          test: /\.s[ac]ss$/i,
+          test: /\.(s[ac]||c)ss$/i,
           use: [
             "style-loader",
             "css-loader",
@@ -121,6 +121,18 @@ module.exports = (_env, argv) => {
           options: {
             name: "img/[name].[ext]"
           }
+        },
+        {
+          test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[name].[ext]',
+                outputPath: 'fonts/'
+              }
+            }
+          ]
         }
       ]
     },

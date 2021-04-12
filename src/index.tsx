@@ -12,6 +12,7 @@ import { initializeWithConfig } from "./util/utils";
 
 import './scss/main.scss';
 import './scss/custom.scss';
+import 'react-tippy/dist/tippy.css'
 
 const App: React.FC = () => {
     const effectTracker = '';

@@ -10,6 +10,7 @@ export const site = {
     },
     stream: {
         twitch: 'https://www.twitch.tv/khaoztopsy',
+        twitchExtension: 'https://www.twitch.tv/khaoztopsy',
     },
     assistantApps: {
         name: 'AssistantApps',

@@ -1,18 +1,25 @@
-img {
-
-    &.fl-left {
+    .fl-left,
+    img.fl-left {
         float: left;
     }
 
-    &.fl-right {
+    .fl-left-gt-sm {
+        @media screen and (min-width: 600px) {
+            float: left;
+        }
+    }
+
+    .fl-right,
+    img.fl-right {
         float: right;
     }
 
-    &.lg-max-33 {
+    .lg-max-33,
+    img.lg-max-33 {
         max-width: 33%;
     }
 
-    &.lg-maxh-300 {
+    .lg-maxh-300,
+    img.lg-maxh-300 {
         max-width: 300px;
     }
-}

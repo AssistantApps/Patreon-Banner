@@ -35,3 +35,15 @@ export const Footer: React.FC<IProps> = () => {
         </footer>
     );
 }
+
+export const EmptyFooter: React.FC<IProps> = () => {
+    return (
+        <footer id="footer">
+            <section>
+                <br />
+                <br />
+                <br />
+            </section>
+        </footer>
+    );
+}

@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src: url('icomoon.eot?z79y3e');
-  src: url('icomoon.eot?z79y3e#iefix') format('embedded-opentype'),
-    url('icomoon.ttf?z79y3e') format('truetype'),
-    url('icomoon.woff?z79y3e') format('woff'),
-    url('icomoon.svg?z79y3e#icomoon') format('svg');
+  src: url('icomoon.eot?w5ictj');
+  src: url('icomoon.eot?w5ictj#iefix') format('embedded-opentype'),
+    url('icomoon.ttf?w5ictj') format('truetype'),
+    url('icomoon.woff?w5ictj') format('woff'),
+    url('icomoon.svg?w5ictj#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -29,6 +29,10 @@
 .icon-patreon:before {
   content: "\1f4b8";
   color: #f96854;
+}
+
+.icon-copy:before {
+  content: "\a9";
 }
 
 .icon-info:before {

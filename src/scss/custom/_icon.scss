@@ -17,6 +17,19 @@
         }
     }
 
+    &.medium {
+
+        &:before {
+            padding: 0.25em;
+            border-radius: 5px;
+            font-size: 1.8rem;
+        }
+
+        &:hover:before {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    }
+
     &.info {
         font-size: 80%;
     }

@@ -33,7 +33,7 @@ export const SmallLoading: React.FC = () => {
                         alt="loading-animation"
                         style={{ height: '75px', display: 'inline' }}
                     />
-                    <h2 className="largeHeading" style={{ display: 'inline', verticalAlign: 'middle' }}>Loading...</h2>
+                    <h2 className="largeHeading" style={{ verticalAlign: 'middle' }}>Loading...</h2>
                 </div>
             </div>
         </div>

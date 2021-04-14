@@ -2,26 +2,22 @@ import React, { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 
 import { DependencyInjectionProvider } from '../integration/dependencyInjection';
-import configJson from '../Config/config.json';
-
-declare global {
-  interface Window {
-    config: any;
-    Twitch: any
-    registration: any
-  }
-}
+import prodConfigJson from '../Config/config.production.json';
+import devConfigJson from '../Config/config.development.json';
+import { getEntireConfig, getAnalytics, getConsoleLogDebug } from '../helper/configHelper';
+import { isDev } from '../helper/devDetect';
 
 export const initializeWithConfig = (component: ReactNode) => {
+  const configJson = isDev() ? devConfigJson : prodConfigJson;
   window.config = configJson != null
     ? configJson
     : defaultConfig;
 
-  if (window.config.consoleLogDebug) console.log('Config', window.config);
+  if (getConsoleLogDebug()) console.log('Config', getEntireConfig());
 
   const config = {
-    analyticsEnabled: window.config.googleAnalyticsEnabled,
-    loggingEnabled: window.config.consoleLogDebug,
+    analyticsEnabled: getAnalytics(),
+    loggingEnabled: getConsoleLogDebug(),
   }
 
   const app = (

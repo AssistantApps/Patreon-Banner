@@ -6,6 +6,7 @@ import { NetworkState } from '../../constants/enum/networkState';
 import { TwitchUser } from '../../contracts/twitchAuth';
 import { TwitchConfigViewModel } from '../../contracts/generated/ViewModel/twitchConfigViewModel';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
+import { getConfig, getSubConfig } from '../../helper/configHelper';
 import { anyObject } from '../../helper/typescriptHacks';
 
 import { dependencyInjectionToProps, IExpectedServices } from './configPage.dependencyInjection';
@@ -63,13 +64,13 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
     }
 
     componentDidMount() {
-        this.props.oAuthClient.listenToOAuth(this.refreshExistingSettings);
+        this.props.oAuthClient.listenToOAuth(this.setLoadingForFetchExistingSettings);
         if (this.state.twitch) {
             this.state.twitch.onAuthorized((auth: TwitchUser) => {
                 this.props.twitchAuthService.setToken(auth.token, auth.userId);
                 this.props.loggingService.log?.('set Token', auth);
-                if (!this.state.twitchStatus) {
-                    this.fetchExistingSettings(auth.channelId);
+                if (this.state.twitchStatus !== NetworkState.Success) {
+                    this.setLoadingForFetchExistingSettings(auth.channelId);
                     this.setState((prevState: IState) => {
                         return {
                             twitchStatus: NetworkState.Success,
@@ -108,14 +109,27 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
 
     componentWillUnmount() {
         this.props.oAuthClient.leaveGroup(this.state.submissionData.channelId);
-        this.props.oAuthClient.removeListenToOAuth(this.refreshExistingSettings);
+        this.props.oAuthClient.removeListenToOAuth(this.setLoadingForFetchExistingSettings);
         if (this.state.twitch) {
             this.state.twitch.unlisten('broadcast', () => this.props.loggingService.log?.('successfully unlistened'))
         }
     }
 
-    fetchExistingSettings = async (channelId: string) => {
+    setLoadingForFetchExistingSettings = (channelId?: string) => {
+        if (channelId == null) {
+            channelId = this.state.submissionData.channelId;
+        }
+
+        this.setState(() => {
+            return {
+                fetchExistingStatus: NetworkState.Loading
+            }
+        }, () => this.fetchExistingSettings(channelId))
+    };
+
+    fetchExistingSettings = async (channelId?: string) => {
         this.props.loggingService.log?.('fetchExistingSettings', channelId);
+        if (channelId == null) return;
 
         var existingSettingsresult = await this.props.patreonService.getFromChannelId(channelId);
         if (!existingSettingsresult.isSuccess) {
@@ -136,16 +150,6 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
             }
         });
     }
-
-    refreshExistingSettings = () => {
-        this.props.loggingService?.log('refreshExistingSettings');
-        const { channelId } = this.state.submissionData;
-        this.setState(() => {
-            return {
-                fetchExistingStatus: NetworkState.Loading
-            }
-        }, () => this.fetchExistingSettings(channelId))
-    };
 
     editFormValues = (propName: string, propValue: string) => {
         this.setState((prevState: IState) => {

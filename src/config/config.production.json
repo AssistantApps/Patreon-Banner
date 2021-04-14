@@ -3,5 +3,6 @@
     "consoleLogDebug": false,
     "useServiceWorker": true,
     "reportWebVitals": false,
-    "apiUrl": "https://api.assistantapps.stream"
+    "apiUrl": "https://api.assistantapps.stream",
+    "appUrl": "https://localhost:8080"
 }

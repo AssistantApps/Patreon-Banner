@@ -1,5 +1,8 @@
-1. Patreon Banner Panel
-2. Change speed of Marquee
+1. Patreon Banner Panel - https://jsfiddle.net/jonathansampson/h7SYp/
+2. Settings
+ - Speed of Marquee
+ - BackgroundColour
+ - TextColour
 3. Add ability to test functionality by entering test data
 4. Choose between lightMode and darkMode for Patron Display
  - Default to Dark mode

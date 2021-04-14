@@ -44,7 +44,7 @@ export const ErrorPage: React.FC<IProps> = (props: IProps) => {
                                     <h2>Error</h2>
                                 </header>
 
-                                <BasicImage imageUrl={AppImage.errorImage} imageName="Error" classNames="lg-max-33 fl-left" />
+                                <BasicImage imageUrl={`/${AppImage.errorImage}`} imageName="Error" classNames="lg-max-33 fl-left" />
 
                                 {
                                     messageToDisplay

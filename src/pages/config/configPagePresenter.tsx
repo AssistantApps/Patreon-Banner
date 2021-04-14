@@ -4,17 +4,16 @@ import classNames from 'classnames';
 
 import { BasicLink } from '../../components/core/link';
 import { TextInput } from '../../components/common/form/textInput';
-import { ErrorMessageList } from '../../components/common/validation/errorMessageList';
-import { SmallLoading, TinyLoading } from '../../components/loading';
+import { SmallLoading } from '../../components/loading';
 import { PatreonButton } from '../../components/patreon/patreonButton';
 import { NetworkState } from '../../constants/enum/networkState';
-import { defaultSuccessResult } from '../../contracts/results/ResultWithValue';
 import { TwitchConfigViewModel } from '../../contracts/generated/ViewModel/twitchConfigViewModel';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
+import { getDisplayUrl } from '../../helper/configHelper';
 import { patronOAuthUrl } from '../../integration/patreonOAuth';
 
-import { isAccessTokenValid, isCampaignIdValid, isFormValid } from './configPageValidations';
 import { IExpectedServices } from './configPage.dependencyInjection';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 export interface IConfigPageContainerProps {
     editFormValues: (propName: string, propValue: string) => void;
@@ -41,9 +40,17 @@ export interface IConfigPagePresenterProps {
 interface IProps extends IConfigPagePresenterProps, IConfigPageContainerProps, IExpectedServices { }
 
 export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
-    if (props.twitchStatus === NetworkState.Loading ||
-        props.fetchExistingStatus === NetworkState.Loading) {
-        return (<SmallLoading />);
+    if (
+        props.twitchStatus === NetworkState.Loading ||
+        props.twitchStatus === NetworkState.Pending ||
+        props.fetchExistingStatus === NetworkState.Loading ||
+        props.fetchExistingStatus === NetworkState.Pending
+    ) {
+        return (
+            <div className="mt5">
+                <SmallLoading />
+            </div>
+        );
     }
 
     const onChangeEvent = (name: string) => (value: string) => props.editFormValues?.(name, value);
@@ -55,8 +62,8 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                     <i>{localProps.existingSettingsPayload?.patrons?.length ?? 0} Patreons loaded </i>🚀
                     <br />
                     <i>Last refresh: {moment(localProps.existingSettingsPayload?.saveDate ?? new Date()).fromNow()}</i>
-                    <br />
-                    <span style={{ fontWeight: 'bold' }}>No changes needed, you can close this window</span>
+                    <br /><br />
+                    <span>You are all set up and ready to go! Use the url below as a Browser Source in your Streaming tool of choice.</span>
                 </p>
             );
         }
@@ -72,9 +79,13 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
         );
     }
 
-    const isFormValidResult = props.showFormValidation
-        ? isFormValid(props)
-        : defaultSuccessResult;
+    // const isFormValidResult = props.showFormValidation
+    //     ? isFormValid(props)
+    //     : defaultSuccessResult;
+
+    const existingFetchSuccessful = props.fetchExistingStatus === NetworkState.Success;
+    const showPatreonLoginButton = props.showAdvanced == false && existingFetchSuccessful == false;
+    const userDisplayUrl = getDisplayUrl(props.existingSettingsPayload?.twitchUserGuid);
 
     return (
         <div id="main" className={classNames('twitch', props.twitchTheme)}>
@@ -84,7 +95,7 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                         {renderStatusSection(props)}
 
                         {
-                            (!props.showAdvanced && props.submissionStatus != NetworkState.Success) &&
+                            showPatreonLoginButton &&
                             <PatreonButton onClick={() => {
                                 props.oAuthClient.joinGroup(props.submissionData.channelId);
                                 const url = patronOAuthUrl(props.submissionData);
@@ -93,15 +104,34 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                             }} />
                         }
 
-                        <div className={classNames({ 'mt1': !props.showAdvanced })}>
+                        {
+                            existingFetchSuccessful &&
+                            <div className="pos-rel">
+                                <TextInput
+                                    key="displayUrl"
+                                    id="displayUrl"
+                                    name="displayUrl"
+                                    label="Browser Source Url"
+                                    value={userDisplayUrl}
+                                    onChange={() => { }}
+                                    placeholder="An Error has occurred"
+                                />
+                                <a href={userDisplayUrl} target="_blank" rel="noopener noreferrer"
+                                    className="icon medium icon-browser" draggable={false}
+                                    style={{ position: 'absolute', top: '1.45rem', right: '0.1rem' }}
+                                ></a>
+                            </div>
+                        }
+
+                        {/* <div className={classNames({ 'mt1': !props.showAdvanced })}>
                             <BasicLink href="#"
                                 additionalClassNames="twitch"
                                 onClick={() => props.toggleAdvancedMode?.()}>
                                 <span>{props.showAdvanced ? 'Hide' : 'Show'}&nbsp;advanced</span>
                             </BasicLink>
-                        </div>
+                        </div> */}
 
-                        {
+                        {/* {
                             props.showAdvanced &&
                             <div className="mt1">
                                 <div className="row gtr-uniform">
@@ -162,7 +192,7 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                                     </div>
                                 </div>
                             </div>
-                        }
+                        } */}
                     </div>
                 </div>
             </section>

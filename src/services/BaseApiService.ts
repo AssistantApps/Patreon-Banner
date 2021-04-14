@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as storageType from '../constants/enum/storageType';
 import { Result, ResultWithValue } from '../contracts/results/ResultWithValue';
+import { getApi } from '../helper/configHelper';
 import { anyObject } from '../helper/typescriptHacks';
 import { StorageService } from './StorageService';
 
@@ -10,7 +11,7 @@ declare global {
 }
 
 export class BaseApiService {
-  private _baseUrl: String = window.config.apiUrl;
+  private _baseUrl: String = getApi();
 
   constructor(newBaseUrl?: String) {
     if (newBaseUrl != null) this._baseUrl = newBaseUrl;

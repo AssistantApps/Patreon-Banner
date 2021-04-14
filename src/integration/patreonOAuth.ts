@@ -1,7 +1,8 @@
 import { patreonApiOAuthUrl, apiPatronOAuthClientId } from "../constants/patreon";
 import { TwitchConfigViewModel } from "../contracts/generated/ViewModel/twitchConfigViewModel";
+import { getApi } from "../helper/configHelper";
 
-export const apiPatronOAuthResponseUrl = () => `${window.config.apiUrl}/OAuth/Patreon`;
+export const apiPatronOAuthResponseUrl = () => `${getApi()}/OAuth/Patreon`;
 export const patronOAuthUrl = (state: TwitchConfigViewModel) => `${patreonApiOAuthUrl}?response_type=code` +
     `&client_id=${apiPatronOAuthClientId}` +
     `&redirect_uri=${apiPatronOAuthResponseUrl()}` +

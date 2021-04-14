@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "test": "jest",
-    "build": "webpack --mode production",
-    "start": "webpack serve --mode development",
+    "build": "webpack --mode production --config webpack.prod.js",
+    "start": "webpack serve --mode development --config webpack.dev.js",
     "zipbuild": "bestzip release/%npm_package_version%.zip dist/*",
     "twitch": "npm-run-all --sequential build zipbuild",
     "cert": "./bin/generate_cert.sh server",
@@ -21,6 +21,7 @@
     "@babel/preset-react": "^7.7.4",
     "@types/node": "^12.20.7",
     "@types/react": "^17.0.3",
+    "@types/react-copy-to-clipboard": "^5.0.0",
     "@types/react-dom": "^17.0.3",
     "@types/react-lottie": "^1.2.5",
     "@types/react-router-dom": "^5.1.7",
@@ -39,7 +40,8 @@
     "ts-loader": "^8.1.0",
     "webpack": "^5.31.2",
     "webpack-cli": "^4.6.0",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^3.11.2",
+    "webpack-merge": "^5.7.3"
   },
   "dependencies": {
     "@microsoft/signalr": "^5.0.3",
@@ -50,6 +52,7 @@
     "moment": "^2.29.1",
     "node-polyfill-webpack-plugin": "^1.1.0",
     "react": "^17.0.2",
+    "react-copy-to-clipboard": "^5.0.3",
     "react-dom": "^17.0.2",
     "react-fast-marquee": "^1.1.2",
     "react-lottie": "^1.2.3",

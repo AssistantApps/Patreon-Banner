@@ -1,0 +1,26 @@
+#patreonMarquee .patreon-container.marquee-container {
+    height: unset;
+    max-height: 50px;
+    background-color: rgba(0, 0, 0, 0.3);
+
+    .patron-container {
+        margin-left: 3em;
+        display: flex;
+        min-width: 200px;
+
+        img {
+            max-height: 50px;
+        }
+
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: white;
+            margin: auto 0.25em;
+            // padding-bottom: 2.5px;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+    }
+}

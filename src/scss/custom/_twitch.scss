@@ -22,7 +22,8 @@ $twitchLightModePlaceholderTextColour: rgba(255, 255, 255, 0.5);
     }
 
     a.twitch,
-    a.twitch * {
+    a.twitch *,
+    .icon:before {
         color: $twitchHighlightColour;
     }
 

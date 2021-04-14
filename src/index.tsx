@@ -6,6 +6,7 @@ import { ScrollToTop } from './components/core/scroll/scrollToTop';
 import { setBodyLoadingClass } from "./helper/documentHelper";
 
 import { HomePage } from './pages/home';
+import { DisplayPage } from './pages/display/displayContainer';
 import { SuccessfulPatreonLoginPage } from './pages/successfulPatreonLogin';
 import { ErrorPage } from './pages/error';
 import { NotFoundPage } from './pages/notFound';
@@ -27,7 +28,12 @@ const App: React.FC = () => {
             <ScrollToTop>
                 <Switch>
                     <Route exact={true} path={route.home} component={HomePage} />
+
+                    <Route path={route.displayWithGuid} component={DisplayPage} />
+                    <Route path={route.display} component={DisplayPage} />
+
                     <Route path={route.patreonSuccess} component={SuccessfulPatreonLoginPage} />
+
                     <Route path={route.errorWithCode} component={ErrorPage} />
                     <Route path={route.error} component={ErrorPage} />
                     <Route component={NotFoundPage} />

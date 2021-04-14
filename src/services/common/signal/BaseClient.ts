@@ -1,12 +1,13 @@
 import { HubConnection, HubConnectionBuilder, HubConnectionState } from '@microsoft/signalr';
 import { SignalRSendEvent, SignalRReceiveEvent } from '../../../constants/enum/signalREvent';
+import { getApi, getConsoleLogDebug } from '../../../helper/configHelper';
 
 declare global {
     interface Window { config: any }
 }
 
 export class BaseClient {
-    private _baseUrl: String = window.config.apiUrl;
+    private _baseUrl: String = getApi();
     private _hubUrl: String = '/hubs/OAuth';
     private _connection: HubConnection;
 
@@ -50,7 +51,7 @@ export class BaseClient {
     }
 
     private logMessage = (message: string, ...optionalParams: any[]) => {
-        if (!window.config.consoleLogDebug) return;
+        if (!getConsoleLogDebug()) return;
         console.log(message, optionalParams);
     }
 }

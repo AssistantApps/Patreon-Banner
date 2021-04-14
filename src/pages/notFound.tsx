@@ -22,7 +22,7 @@ export const NotFoundPage: React.FC = () => {
                 <div id="main">
                     <section id="intro" className="main">
                         <div className="spotlight">
-                            <BasicImage imageUrl={AppImage.notFoundImage} imageName="Not Found" classNames="lg-maxh-300 mr3 fl-left" />
+                            <BasicImage imageUrl={`${AppImage.notFoundImage}`} imageName="Not Found" classNames="lg-maxh-300 mr3 fl-left" />
                             <div className="content">
                                 <header className="major">
                                     <h2>Not Found</h2>

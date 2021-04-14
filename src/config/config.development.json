@@ -1,0 +1,8 @@
+{
+    "googleAnalyticsEnabled": false,
+    "consoleLogDebug": true,
+    "useServiceWorker": false,
+    "reportWebVitals": false,
+    "apiUrl": "https://610bacbd0e7c.ngrok.io",
+    "appUrl": "https://localhost:8080"
+}

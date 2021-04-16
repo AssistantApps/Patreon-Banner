@@ -3,10 +3,10 @@ import { Result } from '../../contracts/results/ResultWithValue';
 import { lengthValidation } from '../../validation/lengthValidator';
 import { numericOnlyValidation } from '../../validation/numericOnlyValidator';
 import { errorMessageSeperator } from '../../constants/validation';
-import { IConfigPagePresenterProps } from './configPagePresenter';
+import { ITwitchConfigPagePresenterProps } from './twitchConfigPagePresenter';
 import { combineValidationResults } from '../../validation/validationBase';
 
-export const isAccessTokenValid = (localProps: IConfigPagePresenterProps, withoutPrefix: boolean = false): Result => {
+export const isAccessTokenValid = (localProps: ITwitchConfigPagePresenterProps, withoutPrefix: boolean = false): Result => {
     return lengthValidation({
         inputName: withoutPrefix ? undefined : 'Access Token',
         input: localProps.submissionData.accessToken,
@@ -15,7 +15,7 @@ export const isAccessTokenValid = (localProps: IConfigPagePresenterProps, withou
     });
 }
 
-export const isCampaignIdValid = (localProps: IConfigPagePresenterProps, withoutPrefix: boolean = false): Result => {
+export const isCampaignIdValid = (localProps: ITwitchConfigPagePresenterProps, withoutPrefix: boolean = false): Result => {
     const lengthResult = lengthValidation({
         inputName: withoutPrefix ? undefined : 'Campaign Id',
         input: localProps.submissionData.campaignId,
@@ -29,7 +29,7 @@ export const isCampaignIdValid = (localProps: IConfigPagePresenterProps, without
     return combineValidationResults(lengthResult, numericResult);
 }
 
-export const isFormValid = (localProps: IConfigPagePresenterProps): Result => {
+export const isFormValid = (localProps: ITwitchConfigPagePresenterProps): Result => {
     const isAccessTokenValidResult = isAccessTokenValid(localProps);
     const isCampaignIdValidResult = isCampaignIdValid(localProps);
 

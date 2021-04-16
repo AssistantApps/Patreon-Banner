@@ -1,5 +1,7 @@
 export const home = '/';
 
+export const config = '/config';
+
 export const display = '/display';
 export const displayWithGuid = '/display/:guid';
 

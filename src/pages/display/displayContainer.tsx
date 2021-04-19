@@ -43,12 +43,11 @@ export class DisplayPageUnconnected extends React.Component<IProps, IState> {
     getPatronSettings = async () => {
         const { match: { params } } = this.props;
 
-        debugger;
         let patronsResult: ResultWithValue<PatreonViewModel> = anyObject;
         if (params.guid != null) {
             patronsResult = await this.props.patreonService.getFromGuid(params.guid);
         } else {
-            patronsResult = patreonTestData;
+            patronsResult = patreonTestData();
         }
 
         if (!patronsResult.isSuccess) {

@@ -2,6 +2,8 @@ export const home = '/';
 
 export const config = '/config';
 
+export const example = '/examples';
+
 export const display = '/display';
 export const displayWithGuid = '/display/:guid';
 

@@ -53,12 +53,14 @@ const shuffle = (array: Array<PatreonItemViewModel>) => {
     return array;
 }
 
-export const patreonTestData: ResultWithValue<PatreonViewModel> = {
-    isSuccess: true,
-    value: {
-        twitchUserGuid: '',
-        patrons: shuffle(testPatrons),
-        saveDate: new Date(),
-    },
-    errorMessage: ''
+export const patreonTestData = (): ResultWithValue<PatreonViewModel> => {
+    return {
+        isSuccess: true,
+        value: {
+            twitchUserGuid: '',
+            patrons: shuffle(testPatrons),
+            saveDate: new Date(),
+        },
+        errorMessage: ''
+    }
 }

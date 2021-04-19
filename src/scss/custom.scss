@@ -11,6 +11,10 @@ html {
         color: white;
         background: #5331b9;
     }
+
+    body .bg {
+        min-height: 100vh;
+    }
 }
 
 .noselect {
@@ -37,8 +41,20 @@ span.highlight {
     text-align: center;
 }
 
+.m0 {
+    margin: 0;
+}
+
 .mt1 {
     margin-top: 1em;
+}
+
+.mt0 {
+    margin-top: 0em;
+}
+
+.mt2 {
+    margin-top: 2em;
 }
 
 .mt5 {
@@ -47,6 +63,10 @@ span.highlight {
 
 .mr3 {
     margin-right: 3em;
+}
+
+.mb1 {
+    margin-right: 1em;
 }
 
 .m-h-auto {
@@ -84,4 +104,5 @@ span.highlight {
 @import 'custom/_image.scss';
 @import 'custom/_patreon.scss';
 @import 'custom/_icon.scss';
+@import 'custom/_displayType.scss';
 @import 'custom/_error.scss';

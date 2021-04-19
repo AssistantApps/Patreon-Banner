@@ -7,6 +7,7 @@ import { setBodyLoadingClass } from "./helper/documentHelper";
 
 import { HomePage } from './pages/home';
 import { ConfigPageContainer } from './pages/config/configPageContainer';
+import { ExamplePageContainer } from './pages/example/exampleContainer';
 import { DisplayPage } from './pages/display/displayContainer';
 import { SuccessfulPatreonLoginPage } from './pages/successfulPatreonLogin';
 import { ErrorPage } from './pages/error';
@@ -30,6 +31,7 @@ const App: React.FC = () => {
                 <Switch>
                     <Route exact={true} path={route.home} component={HomePage} />
                     <Route path={route.config} component={ConfigPageContainer} />
+                    <Route path={route.example} component={ExamplePageContainer} />
 
                     <Route path={route.displayWithGuid} component={DisplayPage} />
                     <Route path={route.display} component={DisplayPage} />

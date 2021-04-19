@@ -43,6 +43,7 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "@microsoft/signalr": "^5.0.3",
     "axios": "^0.21.1",
     "classnames": "^2.3.1",

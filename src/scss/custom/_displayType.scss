@@ -1,0 +1,28 @@
+.MuiFormGroup-row {
+    justify-content: center;
+
+    img.display-type {
+        min-width: 150px;
+    }
+}
+
+
+
+.display-test {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    min-height: 400px;
+    border: 3px dashed _palette(bg2);
+    border-radius: 10px;
+
+    .display-test-marquee {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+}

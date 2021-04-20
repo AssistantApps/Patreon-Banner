@@ -1,14 +1,11 @@
 import React from 'react';
 import moment from 'moment';
 
-import { Header } from '../../components/common/header';
-import { Navbar } from '../../components/common/navbar';
 import { Footer } from '../../components/common/footer'
 import { TextInput } from '../../components/common/form/textInput';
-import { SmallLoading } from '../../components/loading';
+import { Loading } from '../../components/loading';
 import { PatreonButton } from '../../components/patreon/patreonButton';
 import { NetworkState } from '../../constants/enum/networkState';
-import { TwitchConfigViewModel } from '../../contracts/generated/ViewModel/twitchConfigViewModel';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
 
 import { getDisplayUrl } from '../../helper/configHelper';
@@ -19,27 +16,19 @@ import { IExpectedServices } from './configPage.dependencyInjection';
 export interface IConfigPagePresenterProps {
     fetchExistingStatus: NetworkState;
     existingSettingsPayload: PatreonViewModel;
-
-    submissionData: TwitchConfigViewModel;
-    submissionStatus: NetworkState;
 }
 
 interface IProps extends IConfigPagePresenterProps, IExpectedServices { }
 
 export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
-    if (
-        props.fetchExistingStatus === NetworkState.Loading ||
-        props.fetchExistingStatus === NetworkState.Pending
-    ) {
+    if (props.fetchExistingStatus === NetworkState.Loading) {
         return (
-            <div className="mt5">
-                <SmallLoading />
-            </div>
+            <Loading />
         );
     }
 
     const renderStatusSection = (localProps: IProps) => {
-        if (localProps.fetchExistingStatus === NetworkState.Success) {
+        if (localProps.fetchExistingStatus === NetworkState.Success && localProps.existingSettingsPayload.patrons != null) {
             return (
                 <p>
                     <i>{localProps.existingSettingsPayload?.patrons?.length ?? 0} Patreons loaded </i>🚀
@@ -53,61 +42,59 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
 
         return (
             <p style={{ marginBottom: '1em' }}>
-                No settings found for your Twitch account. <br />
+                Please login with Patreon to change your settings. <br />
             </p>
         );
     }
 
     const existingFetchSuccessful = props.fetchExistingStatus === NetworkState.Success;
-    const showPatreonLoginButton = existingFetchSuccessful == false;
-    const userDisplayUrl = getDisplayUrl(props.existingSettingsPayload?.twitchUserGuid);
+    const showPatreonLoginButton = existingFetchSuccessful === false;
+    const userDisplayUrl = getDisplayUrl(props.existingSettingsPayload?.userGuid);
 
     return (
-        <div className="bg">
-            <div className="wrapper pt5">
-                <div id="main">
-                    <section id="config" className="main">
-                        <div className="spotlight">
-                            <div className="content">
-                                <header className="major">
-                                    <h2>Config</h2>
-                                </header>
-                                {renderStatusSection(props)}
+        <div className="wrapper pt5">
+            <div id="main">
+                <section id="config" className="main">
+                    <div className="spotlight">
+                        <div className="content">
+                            <header className="major">
+                                <h2>Config</h2>
+                            </header>
+                            {renderStatusSection(props)}
 
-                                {
-                                    showPatreonLoginButton &&
-                                    <PatreonButton onClick={() => {
-                                        const url = patronOAuthUrl(props.submissionData);
-                                        props.loggingService?.log('url', url);
-                                        window.open(url, "mywindow", "resizable=1,width=800,height=800");
-                                    }} />
-                                }
+                            {
+                                showPatreonLoginButton &&
+                                <PatreonButton onClick={() => {
+                                    const url = patronOAuthUrl();
+                                    props.loggingService?.log('url', url);
+                                    window.location.href = url;
+                                }} />
+                            }
 
-                                {
-                                    existingFetchSuccessful &&
-                                    <div className="pos-rel">
-                                        <TextInput
-                                            key="displayUrl"
-                                            id="displayUrl"
-                                            name="displayUrl"
-                                            label="Browser Source Url"
-                                            value={userDisplayUrl}
-                                            onChange={() => { }}
-                                            placeholder="An Error has occurred"
-                                        />
-                                        <a href={userDisplayUrl} target="_blank" rel="noopener noreferrer"
-                                            className="icon medium icon-browser" draggable={false}
-                                            style={{ position: 'absolute', top: '1.45rem', right: '0.1rem' }}
-                                        ></a>
-                                    </div>
-                                }
-                            </div>
+                            {
+                                existingFetchSuccessful &&
+                                <div className="pos-rel">
+                                    <TextInput
+                                        key="displayUrl"
+                                        id="displayUrl"
+                                        name="displayUrl"
+                                        label="Browser Source Url"
+                                        value={userDisplayUrl}
+                                        onChange={() => { }}
+                                        placeholder="An Error has occurred"
+                                    />
+                                    <a href={userDisplayUrl} target="_blank" rel="noopener noreferrer"
+                                        className="icon medium icon-browser" draggable={false}
+                                        style={{ position: 'absolute', top: '1.45rem', right: '0.1rem' }}
+                                    ></a>
+                                </div>
+                            }
                         </div>
-                    </section>
-                </div>
-
-                <Footer />
+                    </div>
+                </section>
             </div>
+
+            <Footer />
         </div>
     );
 }

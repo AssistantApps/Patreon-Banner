@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
+
+import { home } from '../../constants/route'
 import { site } from "../../constants/site";
 
 interface IProps {
@@ -48,5 +50,12 @@ export const BasicInternalLink = (props: IProps) => {
             draggable={false}>
             {props.children}
         </Link>
+    );
+}
+
+
+export const BackToHomepage = () => {
+    return (
+        <BasicInternalLink href={home} additionalClassNames="mt1 ml1 inline-block">&lt;&lt; Home page</BasicInternalLink>
     );
 }

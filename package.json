@@ -1,13 +1,14 @@
 {
   "name": "assistant-stream-patreon",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "",
   "scripts": {
     "test": "jest",
-    "build": "webpack --mode production --config webpack.prod.js",
     "start": "webpack serve --mode development --config webpack.dev.js",
-    "zipbuild": "bestzip release/%npm_package_version%.zip dist/*",
-    "twitch": "npm-run-all --sequential build zipbuild",
+    "build": "webpack --mode production --config webpack.prod.js",
+    "buildTwitch": "webpack --mode production --config webpack.twitch.js",
+    "zipbuild": "cd dist && bestzip ../release/%npm_package_version%.zip ./",
+    "twitch": "npm-run-all --sequential buildTwitch zipbuild",
     "cert": "./bin/generate_cert.sh server",
     "host": "webpack serve --mode development --devrig"
   },
@@ -15,7 +16,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/cli": "^7.7.5",
+    "@babel/cli": "^7.13.16",
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.6",
     "@babel/preset-react": "^7.7.4",

@@ -17,31 +17,29 @@ export const NotFoundPage: React.FC = () => {
     }, [effectTracker]);
 
     return (
-        <div className="bg">
-            <div className="wrapper pt5">
-                <div id="main">
-                    <section id="intro" className="main">
-                        <div className="spotlight">
-                            <BasicImage imageUrl={`${AppImage.notFoundImage}`} imageName="Not Found" classNames="lg-maxh-300 mr3 fl-left" />
-                            <div className="content">
-                                <header className="major">
-                                    <h2>Not Found</h2>
-                                </header>
+        <div className="wrapper pt5">
+            <div id="main">
+                <section id="intro" className="main">
+                    <div className="spotlight">
+                        <BasicImage imageUrl={`${AppImage.notFoundImage}`} imageName="Not Found" classNames="lg-maxh-300 mr3 fl-left" />
+                        <div className="content">
+                            <header className="major">
+                                <h2>Not Found</h2>
+                            </header>
 
 
-                                <p>How did you get here? Whatever you were looking could not be found 🤷‍♂️</p>
+                            <p>How did you get here? Whatever you were looking could not be found 🤷‍♂️</p>
 
-                                <ul className="actions">
-                                    <li style={{ paddingLeft: 0 }}><a href={routes.home} className="primary button">Go Home</a></li>
-                                </ul>
+                            <ul className="actions">
+                                <li style={{ paddingLeft: 0 }}><a href={routes.home} className="primary button">Go Home</a></li>
+                            </ul>
 
-                            </div>
                         </div>
-                    </section>
-                </div>
-
-                <Footer />
+                    </div>
+                </section>
             </div>
+
+            <Footer />
         </div>
     );
 }

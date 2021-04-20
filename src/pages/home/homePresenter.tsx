@@ -45,7 +45,7 @@ export const HomePresenter: React.FC = () => {
     ];
 
     return (
-        <div className="bg">
+        <>
             <ScrollUp
                 startPosition={0}
                 showAtPosition={400}
@@ -127,6 +127,6 @@ export const HomePresenter: React.FC = () => {
 
                 <Footer />
             </div>
-        </div>
+        </>
     );
 }

@@ -1,8 +1,8 @@
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
-const { nonTwitchEntryPoints } = require('./webpack.entryPoints.js');
+const { twitchEntryPoints } = require('./webpack.entryPoints.js');
 
-module.exports = (_env, argv) => merge(common(_env, { ...argv, entryPoints: nonTwitchEntryPoints }), {
+module.exports = (_env, argv) => merge(common(_env, { ...argv, entryPoints: twitchEntryPoints }), {
   mode: 'production',
   devtool: 'inline-source-map',
   // devServer: {
@@ -21,8 +21,5 @@ module.exports = (_env, argv) => merge(common(_env, { ...argv, entryPoints: nonT
       },
       name: false
     }
-  },
-  output: {
-    publicPath: '/',
   }
 });

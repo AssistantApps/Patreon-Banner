@@ -57,7 +57,7 @@ export const patreonTestData = (): ResultWithValue<PatreonViewModel> => {
     return {
         isSuccess: true,
         value: {
-            twitchUserGuid: '',
+            userGuid: '',
             patrons: shuffle(testPatrons),
             saveDate: new Date(),
         },

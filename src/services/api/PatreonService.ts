@@ -14,7 +14,15 @@ export class PatreonService extends BaseApiService {
         return await this.get(`${patreonBanner}/channelId/${channelId}`);
     }
 
-    async submitTwitchConfig(data: TwitchConfigViewModel): Promise<Result> {
+    async submitTwitchConfigForm(data: TwitchConfigViewModel): Promise<Result> {
         return await this.post(patreonBanner, data);
     }
+
+    // async submitSettingsForCampaignId(data: TwitchConfigViewModel): Promise<Result> {
+    //     return await this.post(patreonBanner, data);
+    // }
+
+    // async submitSettingsFromTwitch(data: TwitchConfigViewModel): Promise<Result> {
+    //     return await this.post(patreonBanner, data);
+    // }
 }

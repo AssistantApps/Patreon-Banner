@@ -188,7 +188,7 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
     }
 
     private submitConfigFormFunc = async () => {
-        const apiSaveResult = await this.props.patreonService.submitTwitchConfig(this.state.submissionData);
+        const apiSaveResult = await this.props.patreonService.submitTwitchConfigForm(this.state.submissionData);
         if (!apiSaveResult.isSuccess) {
             this.props.loggingService?.error(apiSaveResult.errorMessage);
             //Swal

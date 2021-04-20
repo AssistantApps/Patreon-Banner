@@ -1,12 +1,11 @@
 import React from 'react';
 
-import { withServices } from '../../integration/dependencyInjection';
+import * as storageKey from '../../constants/storageKey';
 import { NetworkState } from '../../constants/enum/networkState';
-
-import { TwitchUser } from '../../contracts/twitchAuth';
-import { TwitchConfigViewModel } from '../../contracts/generated/ViewModel/twitchConfigViewModel';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
 import { anyObject } from '../../helper/typescriptHacks';
+
+import { withServices } from '../../integration/dependencyInjection';
 
 import { dependencyInjectionToProps, IExpectedServices } from './configPage.dependencyInjection';
 import { ConfigPagePresenter } from './configPagePresenter';
@@ -24,10 +23,6 @@ interface IProps extends IExpectedServices, IWithoutExpectedServices { }
 interface IState {
     fetchExistingStatus: NetworkState;
     existingSettingsPayload: PatreonViewModel;
-
-    submissionData: TwitchConfigViewModel;
-    submissionStatus: NetworkState;
-    showFormValidation: boolean;
 }
 
 export class ConfigPageContainerUnconnected extends React.Component<IProps, IState> {
@@ -37,35 +32,26 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
         this.state = {
             fetchExistingStatus: NetworkState.Pending,
             existingSettingsPayload: anyObject,
-
-            // Streamer Submission
-            submissionData: anyObject,
-            submissionStatus: NetworkState.Pending,
-            showFormValidation: false,
         };
     }
 
     componentDidMount() {
-        this.setLoadingForFetchExistingSettings('test');
+        const currentGuid = this.props.storageService?.get<string>(storageKey.userGuid);
+        if (currentGuid != null && currentGuid.isSuccess) {
+            this.setLoadingForFetchExistingSettings(currentGuid.value);
+        }
     }
 
-    setLoadingForFetchExistingSettings = (channelId?: string) => {
-        if (channelId == null) {
-            channelId = this.state.submissionData.channelId;
-        }
-
+    setLoadingForFetchExistingSettings = (userGuid: string) => {
         this.setState(() => {
             return {
                 fetchExistingStatus: NetworkState.Loading
             }
-        }, () => this.fetchExistingSettings(channelId))
+        }, () => this.fetchExistingSettings(userGuid))
     };
 
-    fetchExistingSettings = async (channelId?: string) => {
-        this.props.loggingService.log?.('fetchExistingSettings', channelId);
-        if (channelId == null) return;
-
-        var existingSettingsresult = await this.props.patreonService.getFromChannelId(channelId);
+    fetchExistingSettings = async (userGuid: string) => {
+        var existingSettingsresult = await this.props.patreonService.getFromGuid(userGuid);
         if (!existingSettingsresult.isSuccess) {
             this.props.loggingService?.error(existingSettingsresult.errorMessage);
 

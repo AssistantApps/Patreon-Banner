@@ -9,7 +9,8 @@ import { HomePresenter } from './pages/home/homePresenter';
 import { ConfigPageContainer } from './pages/config/configPageContainer';
 import { ExamplePageContainer } from './pages/example/exampleContainer';
 import { DisplayPage } from './pages/display/displayContainer';
-import { SuccessfulPatreonLoginPage } from './pages/successfulPatreonLogin';
+import { SuccessfulPatreonLoginFromTwitchPage } from './pages/successfulPatreonLoginFromTwitch';
+import { AuthTokenFromServerPage } from './pages/authTokenFromServer/authTokenFromServer';
 import { ErrorPage } from './pages/error';
 import { NotFoundPage } from './pages/notFound';
 import { initializeWithConfig } from "./util/utils";
@@ -36,10 +37,12 @@ const App: React.FC = () => {
                     <Route path={route.displayWithGuid} component={DisplayPage} />
                     <Route path={route.display} component={DisplayPage} />
 
-                    <Route path={route.patreonSuccess} component={SuccessfulPatreonLoginPage} />
+                    <Route path={route.patreonSuccess} component={SuccessfulPatreonLoginFromTwitchPage} />
+
+                    <Route path={route.authTokenFromServerWithParams} component={AuthTokenFromServerPage} />
 
                     <Route path={route.errorWithCode} component={ErrorPage} />
-                    <Route path={route.error} component={ErrorPage} />
+                    <Route exact={true} path={route.error} component={ErrorPage} />
                     <Route component={NotFoundPage} />
                 </Switch>
             </ScrollToTop>

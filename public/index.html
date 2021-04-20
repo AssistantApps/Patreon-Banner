@@ -13,11 +13,48 @@
 
   <link rel="stylesheet" href="/assets/font/style.css">
   <link rel="preload" href="/assets/img/loader.svg" as="image">
+
+  <style>
+    .full-page-loader {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1002;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      color: white
+    }
+
+    .full-page-loader img {
+      width: 200px;
+    }
+
+    .opacity80 {
+      background-color: #333333;
+      opacity: 0.8;
+    }
+  </style>
 </head>
 
 <body>
   <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
-  <div id="assistantApp-Patreon"></div>
+  <div id="assistantApp-Patreon" class="bg">
+    <div className="full-page-loader opacity80"></div>
+    <div className="full-page-loader">
+      <div className="cssload-container">
+        <ul className="cssload-flex-container">
+          <li style="list-style-type: none">
+            <img src="/assets/img/loader.svg" draggable="false" alt="loading-animation" />
+            <h2 className="largeHeading">Loading...</h2>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
   <noscript>
     You need to enable JavaScript to run this app.
   </noscript>

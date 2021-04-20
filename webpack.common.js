@@ -11,47 +11,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const bundlePath = path.resolve(__dirname, "dist/")
 
 module.exports = (_env, argv) => {
-    let entryPoints = {
-        Index: {
-            path: './src/Index.tsx',
-            outputHtml: 'index.html',
-            template: 'template-non-twitch.html',
-            build: true,
-        },
-        // VideoComponent: {
-        //   path: "./src/VideoComponent.js",
-        //   outputHtml: "video_component.html",
-        //   build: true
-        // },
-        // VideoOverlay: {
-        //   path: "./src/VideoOverlay.js",
-        //   outputHtml: "video_overlay.html",
-        //   build: true
-        // },
-        // Panel: {
-        //   path: "./src/Panel.js",
-        //   outputHtml: "panel.html",
-        //   build: true
-        // },
-        Config: {
-            path: './src/Config.tsx',
-            outputHtml: 'config.html',
-            template: './template.html',
-            build: true
-        },
-        // LiveConfig: {
-        //   path: "./src/LiveConfig.js",
-        //   outputHtml: "live_config.html",
-        //   build: true
-        // },
-        // Mobile: {
-        //   path: "./src/Mobile.js",
-        //   outputHtml: "mobile.html",
-        //   build: true
-        // }
-    }
-
-    let entry = {}
+    let localMappedEntryPoints = {}
 
     // edit webpack plugins here!
     let plugins = [
@@ -74,10 +34,10 @@ module.exports = (_env, argv) => {
         }),
     ]
 
-    for (name in entryPoints) {
-        const entryPoint = entryPoints[name];
+    for (name in argv.entryPoints) {
+        const entryPoint = argv.entryPoints[name];
         if (entryPoint.build) {
-            entry[name] = entryPoint.path
+            localMappedEntryPoints[name] = entryPoint.path
             if (argv.mode === 'production') {
                 plugins.push(new HtmlWebpackPlugin({
                     inject: true,
@@ -90,8 +50,7 @@ module.exports = (_env, argv) => {
     }
 
     let config = {
-        //entry points for webpack- remove if not used/needed
-        entry,
+        entry: localMappedEntryPoints,
         optimization: {
             minimize: false, // this setting is default to false to pass review more easily. you can opt to set this to true to compress the bundles, but also expect an email from the review team to get the full source otherwise. 
         },
@@ -143,7 +102,7 @@ module.exports = (_env, argv) => {
             }
         },
         output: {
-            filename: "[name].bundle.js",
+            filename: "[name].[contenthash].bundle.js",
             path: bundlePath
         },
         plugins

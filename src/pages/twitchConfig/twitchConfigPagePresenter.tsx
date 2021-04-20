@@ -10,7 +10,7 @@ import { NetworkState } from '../../constants/enum/networkState';
 import { TwitchConfigViewModel } from '../../contracts/generated/ViewModel/twitchConfigViewModel';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
 import { getDisplayUrl } from '../../helper/configHelper';
-import { patronOAuthUrl } from '../../integration/patreonOAuth';
+import { patronOAuthUrlForTwitch } from '../../integration/patreonOAuth';
 
 import { IExpectedServices } from './twitchConfigPage.dependencyInjection';
 
@@ -82,7 +82,7 @@ export const TwitchConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
 
     const existingFetchSuccessful = props.fetchExistingStatus === NetworkState.Success;
     const showPatreonLoginButton = props.showAdvanced == false && existingFetchSuccessful == false;
-    const userDisplayUrl = getDisplayUrl(props.existingSettingsPayload?.twitchUserGuid);
+    const userDisplayUrl = getDisplayUrl(props.existingSettingsPayload?.userGuid);
 
     return (
         <div id="main" className={classNames('twitch', props.twitchTheme)}>
@@ -95,7 +95,7 @@ export const TwitchConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                             showPatreonLoginButton &&
                             <PatreonButton onClick={() => {
                                 props.oAuthClient.joinGroup(props.submissionData.channelId);
-                                const url = patronOAuthUrl(props.submissionData);
+                                const url = patronOAuthUrlForTwitch(props.submissionData);
                                 props.loggingService?.log('url', url);
                                 window.open(url, "mywindow", "resizable=1,width=800,height=800");
                             }} />

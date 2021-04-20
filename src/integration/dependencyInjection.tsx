@@ -9,6 +9,7 @@ import { AnalyticsService } from "../services/common/AnalyticsService";
 import { OAuthClient } from "../services/common/signal/OAuthClient";
 
 import { TwitchAuthenticationService } from "../services/twitch/TwitchAuthenticationService";
+import { StorageService } from "../services/StorageService";
 
 export interface IDependencyInjection {
     loginService: LoginService;
@@ -17,6 +18,7 @@ export interface IDependencyInjection {
     oAuthClient: OAuthClient;
 
     // Common
+    storageService: StorageService;
     loggingService: LoggingService;
     analyticsService: AnalyticsService;
 }
@@ -34,6 +36,7 @@ export const defaultDependencyInjectionFunc: GetServices = (props: IServiceOptio
         oAuthClient: new OAuthClient(),
 
         // Common
+        storageService: new StorageService(),
         loggingService: new LoggingService(props),
         analyticsService: new AnalyticsService(props),
     }

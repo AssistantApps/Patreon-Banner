@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { site } from "../../constants/site";
 
 interface IProps {
@@ -8,6 +9,7 @@ interface IProps {
     additionalClassNames?: string;
     children?: ReactNode;
 }
+
 export const BasicLink = (props: IProps) => {
     const appendRef = (baseUrl: string) => {
         if (baseUrl.includes('@')) return baseUrl;
@@ -34,5 +36,17 @@ export const BasicLink = (props: IProps) => {
             draggable={false}>
             {props.children}
         </a>
+    );
+}
+
+
+export const BasicInternalLink = (props: IProps) => {
+    return (
+        <Link
+            to={props.href}
+            className={classNames(props.additionalClassNames ?? '')}
+            draggable={false}>
+            {props.children}
+        </Link>
     );
 }

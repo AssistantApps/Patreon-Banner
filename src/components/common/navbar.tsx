@@ -1,16 +1,30 @@
+import classNames from 'classnames';
 import React from 'react';
 
+interface ILinkProps {
+    link: string;
+    name: string;
+}
+
 interface IProps {
+    initialActiveLink: string;
+    links: Array<ILinkProps>;
 }
 
 export const Navbar: React.FC<IProps> = (props: IProps) => {
     return (
         <nav id="nav">
             <ul>
-                <li><a href="#getStarted" className="noselect active" draggable={false}>Get Started</a></li>
-                <li><a href="#first" className="noselect" draggable={false}>How it works</a></li>
-                {/* <li><a href="#second" className="noselect" draggable={false}>Examples</a></li> */}
-                <li><a href="#contact" className="noselect" draggable={false}>Contact Us</a></li>
+                {
+                    props.links.map((item) => {
+                        const isActive: boolean = item.link === props.initialActiveLink;
+                        return (
+                            <li key={`${item.link}-${item.name}`}>
+                                <a href={item.link} className={classNames('noselect', { 'active': isActive })} draggable={false}>{item.name}</a>
+                            </li>
+                        );
+                    })
+                }
             </ul>
         </nav>
     );

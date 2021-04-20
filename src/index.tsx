@@ -5,7 +5,7 @@ import * as route from './constants/route';
 import { ScrollToTop } from './components/core/scroll/scrollToTop';
 import { setBodyLoadingClass } from "./helper/documentHelper";
 
-import { HomePage } from './pages/home';
+import { HomePresenter } from './pages/home/homePresenter';
 import { ConfigPageContainer } from './pages/config/configPageContainer';
 import { ExamplePageContainer } from './pages/example/exampleContainer';
 import { DisplayPage } from './pages/display/displayContainer';
@@ -29,7 +29,7 @@ const App: React.FC = () => {
         <BrowserRouter>
             <ScrollToTop>
                 <Switch>
-                    <Route exact={true} path={route.home} component={HomePage} />
+                    <Route exact={true} path={route.home} component={HomePresenter} />
                     <Route path={route.config} component={ConfigPageContainer} />
                     <Route path={route.example} component={ExamplePageContainer} />
 

@@ -1,0 +1,27 @@
+.segmented-control,
+#main .segmented-control {
+    color: #0d6372;
+    border-radius: 3px;
+    transition: all 250ms !important;
+
+    input[type="checkbox"]+label,
+    input[type="radio"]+label {
+        text-decoration: none;
+        cursor: pointer;
+        position: static;
+        font-size: 0.9em;
+        color: #0d6372;
+    }
+
+    label {
+        color: #0d6372;
+        margin-bottom: 0;
+        border-color: currentcolor;
+        border-style: solid;
+        border-width: 1px;
+
+        &::after {
+            margin-top: 2px;
+        }
+    }
+}

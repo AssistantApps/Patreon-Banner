@@ -8,7 +8,11 @@ const entryPoints = {
     ...twitchEntryPoints,
 }
 
-module.exports = (_env, argv) => merge(common(_env, { ...argv, entryPoints }), {
+const localArgs = {
+    entryPoints,
+}
+
+module.exports = (_env, argv) => merge(common(_env, { ...argv, ...localArgs }), {
     mode: 'development',
     devtool: 'inline-source-map',
     devServer: {

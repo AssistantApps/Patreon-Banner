@@ -2,7 +2,11 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const { twitchEntryPoints } = require('./webpack.entryPoints.js');
 
-module.exports = (_env, argv) => merge(common(_env, { ...argv, entryPoints: twitchEntryPoints }), {
+const localArgs = {
+  entryPoints: twitchEntryPoints,
+}
+
+module.exports = (_env, argv) => merge(common(_env, { ...argv, ...localArgs }), {
   mode: 'production',
   devtool: 'inline-source-map',
   // devServer: {
@@ -21,5 +25,9 @@ module.exports = (_env, argv) => merge(common(_env, { ...argv, entryPoints: twit
       },
       name: false
     }
+  },
+  output: {
+    publicPath: '/',
+    filename: '[name].[contenthash].bundle.js',
   }
 });

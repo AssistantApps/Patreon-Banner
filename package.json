@@ -4,9 +4,9 @@
   "description": "",
   "scripts": {
     "test": "jest",
-    "start": "webpack serve --mode development --config webpack.dev.js",
-    "build": "webpack --mode production --config webpack.prod.js",
-    "buildTwitch": "webpack --mode production --config webpack.twitch.js",
+    "start": "webpack serve --mode development --config ./webpack.dev.js",
+    "build": "webpack --mode production --config ./webpack.prod.js",
+    "buildTwitch": "webpack --mode production --config ./webpack.twitch.js",
     "zipbuild": "cd dist && bestzip ../release/%npm_package_version%.zip ./",
     "twitch": "npm-run-all --sequential buildTwitch zipbuild",
     "cert": "./bin/generate_cert.sh server",

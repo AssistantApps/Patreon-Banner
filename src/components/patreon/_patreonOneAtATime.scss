@@ -1,0 +1,23 @@
+#patreonOneAtATime {
+
+    position: relative;
+    // overflow: hidden;
+
+    // div[class^=".patron-pos-"] {}
+    .patron-pos.preload {
+        position: absolute;
+        top: -50px;
+    }
+
+    .patron-pos.top {
+        transform: translateY(-50px);
+    }
+
+    .patron-pos.bottom {
+        transform: translateY(50px);
+    }
+
+    .transition {
+        transition: all 250ms;
+    }
+}

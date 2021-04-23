@@ -8,6 +8,7 @@ import { patreonTestData } from '../../constants/testData/patreonTestData';
 import { Footer } from '../../components/common/footer'
 import { BasicImage } from '../../components/core/image';
 import { PatreonMarquee } from '../../components/patreon/patreonMarquee';
+import { PatreonOneAtATime } from '../../components/patreon/patreonOneAtATime';
 
 interface IContainerProps {
     setDisplayType: (displayType: DisplayType) => void
@@ -81,6 +82,12 @@ export const ExamplePagePresenter: React.FC<IProps> = (props: IProps) => {
                                     props.displayType === DisplayType.Marquee &&
                                     <div className="display-test-marquee">
                                         <PatreonMarquee patronSettings={patreonTestData().value} />
+                                    </div>
+                                }
+                                {
+                                    props.displayType === DisplayType.OneAtATime &&
+                                    <div className="display-test-one-at-a-time">
+                                        <PatreonOneAtATime patronSettings={patreonTestData().value} />
                                     </div>
                                 }
                             </div>

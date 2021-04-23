@@ -1,10 +1,20 @@
 #patreonMarquee .patreon-container.marquee-container {
-    height: unset;
-    max-height: 50px;
-    background-color: rgba(0, 0, 0, 0.3);
-
     .patron-container {
         margin-left: 3em;
+    }
+}
+
+#patreonMarquee .patreon-container.marquee-container,
+#patreonOneAtATime .patron-container {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+#patreonMarquee .patreon-container.marquee-container,
+#patreonOneAtATime {
+    height: unset;
+    max-height: 50px;
+
+    .patron-container {
         display: flex;
         min-width: 200px;
 

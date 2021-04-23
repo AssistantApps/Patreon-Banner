@@ -2,8 +2,8 @@ import React, { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 
 import { DependencyInjectionProvider } from '../integration/dependencyInjection';
-import prodConfigJson from '../Config/config.production.json';
-import devConfigJson from '../Config/config.development.json';
+import prodConfigJson from '../config/config.production.json';
+import devConfigJson from '../config/config.development.json';
 import { getEntireConfig, getAnalytics, getConsoleLogDebug } from '../helper/configHelper';
 import { isDev } from '../helper/devDetect';
 

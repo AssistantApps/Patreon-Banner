@@ -18,33 +18,28 @@ const testPatrons = [
     createTestPatronData('Richard Hull'),
     createTestPatronData('Patrick Hodge'),
     createTestPatronData('Scott Flores'),
-    // createTestPatronData('Xander Kent'),
-    // createTestPatronData('Owen Cooper'),
-    // createTestPatronData('Elias Gallegos'),
-    // createTestPatronData('Christopher Lara'),
-    // createTestPatronData('Marc Patton'),
-    // createTestPatronData('Ibrahim Colon'),
-    // createTestPatronData('Franklin Mcclure'),
-    // createTestPatronData('Felix Fox'),
-    // createTestPatronData('Eden Clements'),
-    // createTestPatronData('Isabella Steele'),
-    // createTestPatronData('Annie Copeland'),
-    // createTestPatronData('Teresa Gilbert'),
-    // createTestPatronData('Casey Mccann'),
-    // createTestPatronData('Rosie Simpson'),
+    createTestPatronData('Xander Kent'),
+    createTestPatronData('Owen Cooper'),
+    createTestPatronData('Elias Gallegos'),
+    createTestPatronData('Christopher Lara'),
+    createTestPatronData('Marc Patton'),
+    createTestPatronData('Ibrahim Colon'),
+    createTestPatronData('Franklin Mcclure'),
+    createTestPatronData('Felix Fox'),
+    createTestPatronData('Eden Clements'),
+    createTestPatronData('Isabella Steele'),
+    createTestPatronData('Annie Copeland'),
+    createTestPatronData('Teresa Gilbert'),
+    createTestPatronData('Casey Mccann'),
+    createTestPatronData('Rosie Simpson'),
 ];
 
 const shuffle = (array: Array<PatreonItemViewModel>) => {
     var currentIndex = array.length, temporaryValue, randomIndex;
-
-    // While there remain elements to shuffle...
     while (0 !== currentIndex) {
-
-        // Pick a remaining element...
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
 
-        // And swap it with the current element.
         temporaryValue = array[currentIndex];
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;

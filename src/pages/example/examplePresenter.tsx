@@ -8,6 +8,7 @@ import { patreonTestData } from '../../constants/testData/patreonTestData';
 import { Footer } from '../../components/common/footer'
 import { BasicImage } from '../../components/core/image';
 import { PatreonMarquee } from '../../components/patreon/patreonMarquee';
+import { PatreonVerticalList } from '../../components/patreon/patreonVerticalList';
 import { PatreonOneAtATime } from '../../components/patreon/patreonOneAtATime';
 
 interface IContainerProps {
@@ -83,6 +84,12 @@ export const ExamplePagePresenter: React.FC<IProps> = (props: IProps) => {
                                     props.displayType === DisplayType.Marquee &&
                                     <div className="display-test-marquee">
                                         <PatreonMarquee patronSettings={patreonTestData().value} />
+                                    </div>
+                                }
+                                {
+                                    props.displayType === DisplayType.VerticalList &&
+                                    <div className="display-test-list">
+                                        <PatreonVerticalList patronSettings={patreonTestData().value} />
                                     </div>
                                 }
                                 {

@@ -4,7 +4,12 @@
     }
 }
 
+#patreonVerticalList .patron-container {
+    margin-right: 1em;
+}
+
 #patreonMarquee .patreon-container.marquee-container,
+#patreonVerticalList,
 #patreonOneAtATime .patron-container {
     background-color: rgba(0, 0, 0, 0.3);
 }
@@ -13,13 +18,18 @@
 #patreonOneAtATime {
     height: unset;
     max-height: 50px;
+}
 
+#patreonMarquee .patreon-container.marquee-container,
+#patreonVerticalList,
+#patreonOneAtATime {
     .patron-container {
         display: flex;
         min-width: 200px;
 
         img {
             max-height: 50px;
+            margin-right: 5px;
         }
 
         h3,

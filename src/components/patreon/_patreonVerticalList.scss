@@ -1,0 +1,27 @@
+#patreonVerticalList {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+
+    // &:hover {
+    //     .list {
+    //         animation-play-state: paused;
+    //     }
+    // }
+
+    .list {
+        position: relative;
+        animation: verticalList 15s linear infinite;
+    }
+}
+
+@keyframes verticalList {
+    0% {
+        transform: translateY(0)
+    }
+
+    100% {
+        transform: translateY(-100%)
+    }
+}

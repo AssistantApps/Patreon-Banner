@@ -33,6 +33,12 @@
       width: 200px;
     }
 
+    .bg {
+      background-color: #935d8c;
+      background-image: linear-gradient(45deg, #0d6372 15%, #341e77 85%);
+      margin-bottom: -50rem;
+    }
+
     .opacity80 {
       background-color: #333333;
       opacity: 0.8;
@@ -43,15 +49,11 @@
 <body>
   <script src="https://extension-files.twitch.tv/helper/v1/twitch-ext.min.js"></script>
   <div id="assistantApp-Patreon" class="bg">
-    <div className="full-page-loader opacity80"></div>
-    <div className="full-page-loader">
-      <div className="cssload-container">
-        <ul className="cssload-flex-container">
-          <li style="list-style-type: none">
-            <img src="/assets/img/loader.svg" draggable="false" alt="loading-animation" />
-            <h2 className="largeHeading">Loading...</h2>
-          </li>
-        </ul>
+    <div class="full-page-loader bg"></div>
+    <div class="full-page-loader">
+      <div class="cssload-container">
+        <img src="/assets/img/loader.svg" draggable="false" alt="loading-animation" />
+        <h2 class="largeHeading">Loading...</h2>
       </div>
     </div>
   </div>

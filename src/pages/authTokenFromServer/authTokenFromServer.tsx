@@ -28,7 +28,6 @@ export const AuthTokenFromServerPageUnconnected: React.FC<IProps> = (props: IPro
         }
 
         props.loginService.loginWithPatreonOAuthCode(patreonCode, props.storageService).then((result: Result) => {
-            debugger;
             if (result.isSuccess) {
                 history.push(routes.config);
             } else {

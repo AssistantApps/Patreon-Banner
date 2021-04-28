@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as storageType from '../constants/enum/storageType';
+import * as storageKey from '../constants/storageKey';
 import { Result, ResultWithValue } from '../contracts/results/ResultWithValue';
 import { getApi } from '../helper/configHelper';
 import { anyObject } from '../helper/typescriptHacks';
@@ -18,7 +18,7 @@ export class BaseApiService {
 
     try {
       const storageServ = new StorageService();
-      const tokenFromStorage = storageServ.get<string>(storageType.token);
+      const tokenFromStorage = storageServ.get<string>(storageKey.authToken);
       if (tokenFromStorage.isSuccess) this.setInterceptors(tokenFromStorage.value);
     } catch (ex) { }
   }

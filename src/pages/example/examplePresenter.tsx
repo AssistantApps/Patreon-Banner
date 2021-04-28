@@ -63,6 +63,7 @@ export const ExamplePagePresenter: React.FC<IProps> = (props: IProps) => {
                                             )
                                             return (
                                                 <FormControlLabel
+                                                    key={`option-${cBoxDetails.displayType}`}
                                                     labelPlacement="bottom"
                                                     control={radioComp}
                                                     label={labelComp}

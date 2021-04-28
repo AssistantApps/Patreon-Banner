@@ -7,13 +7,6 @@ import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonVie
 
 import './_patreonOneAtATime.scss';
 
-enum OneAtATimePosition {
-    top = 0,
-    visible = 1,
-    bottom = 2,
-}
-const numOneAtATimePositions = 3;
-
 interface IProps {
     patronSettings: PatreonViewModel;
     isReversed?: boolean;
@@ -22,8 +15,7 @@ interface IProps {
 interface IState {
     intervalId: NodeJS.Timeout | any;
     currentItemIndex: number;
-    currentItemPosition: OneAtATimePosition;
-    endingItemPosition: OneAtATimePosition;
+    timerIndex: number;
     isReversed: boolean;
 }
 
@@ -32,20 +24,17 @@ export class PatreonOneAtATime extends React.Component<IProps, IState> {
         super(props);
 
         const isReversed = (this.props.isReversed ?? false);
-        const startingItemPosition = isReversed ? OneAtATimePosition.top : OneAtATimePosition.bottom;
-        const endingItemPosition = isReversed ? OneAtATimePosition.bottom : OneAtATimePosition.top;
 
         this.state = {
             intervalId: undefined,
             currentItemIndex: 0,
-            currentItemPosition: startingItemPosition,
-            endingItemPosition,
+            timerIndex: -1,
             isReversed,
         };
     }
 
     componentDidMount() {
-        var intervalId = setInterval(this.timer, 2500);
+        var intervalId = setInterval(this.timer, 1500);
         this.setState(() => ({ intervalId }));
     }
 
@@ -62,71 +51,57 @@ export class PatreonOneAtATime extends React.Component<IProps, IState> {
         return newIndex;
     }
 
-    getPreviousOneAtATimePosition = (current: OneAtATimePosition): OneAtATimePosition => {
-        if (current === OneAtATimePosition.visible) {
-            return OneAtATimePosition.top;
-        }
-        if (current === OneAtATimePosition.bottom) {
-            return OneAtATimePosition.visible;
-        }
-
-        return OneAtATimePosition.top;
-    }
-
     timer = () => {
-        const { currentItemPosition } = this.state;
-
-        let currentItemPositionNum = currentItemPosition as number;
-        currentItemPositionNum += (this.state.isReversed ? -1 : 1)
-
-        let getNextItem = false;
-        let newCurrentItemPosition = 0;
-        if (currentItemPositionNum < (OneAtATimePosition.top as number)) {
-            newCurrentItemPosition = this.getPreviousIndex(numOneAtATimePositions, currentItemPositionNum);
-            getNextItem = true;
-        } else if (currentItemPositionNum > (OneAtATimePosition.bottom as number)) {
-            newCurrentItemPosition = this.getNextIndex(numOneAtATimePositions, currentItemPositionNum);
-            getNextItem = true;
-        } else {
-            newCurrentItemPosition = currentItemPositionNum as number
-        }
-
         this.setState((prevState: IState) => {
+            const { timerIndex } = prevState;
+            const remainder = timerIndex % 2;
+            const numPatrons = this.props.patronSettings.patrons.length;
+            const maxTimerIndex = (numPatrons * 2);
+
             let newIndex = prevState.currentItemIndex;
-            if (getNextItem) newIndex = this.getNextIndex(this.props.patronSettings.patrons.length, prevState.currentItemIndex);
+            if (timerIndex > -1 && remainder !== 1) newIndex = this.getNextIndex(numPatrons + 1, prevState.currentItemIndex);
+
+            let newTimerIndex = this.getNextIndex(maxTimerIndex, timerIndex);
+            if (timerIndex === (maxTimerIndex - 1)) {
+                newTimerIndex = 0;
+                newIndex = this.getNextIndex(numPatrons + 1, prevState.currentItemIndex);
+            }
 
             return {
+                timerIndex: newTimerIndex,
                 currentItemIndex: newIndex,
-                currentItemPosition: newCurrentItemPosition,
             }
         })
     }
 
     render() {
-        let nextPatronIndex = this.getNextIndex(this.props.patronSettings.patrons.length, this.state.currentItemIndex);
-        let doubleNextPatronIndex = this.getNextIndex(this.props.patronSettings.patrons.length, nextPatronIndex);
+        const { currentItemIndex, isReversed } = this.state;
+        const pxOffest = isReversed
+            ? ((this.props.patronSettings.patrons.length - currentItemIndex) * -50)
+            : (currentItemIndex * -50);
 
-        const currentPatron: PatreonItemViewModel = this.props.patronSettings.patrons[this.state.currentItemIndex];
-        const nextPatron: PatreonItemViewModel = this.props.patronSettings.patrons[nextPatronIndex];
-        const doubleNextPatron: PatreonItemViewModel = this.props.patronSettings.patrons[doubleNextPatronIndex];
+        const patrons = this.props.patronSettings?.patrons ?? [];
+        if (patrons.length < 1) return (<div id="patreonOneAtATime"></div>);
+        if (isReversed) patrons.reverse();
 
-        const currentPatronPosition: OneAtATimePosition = this.state.currentItemPosition;
-        const nextPatronPosition: OneAtATimePosition = this.getPreviousOneAtATimePosition(currentPatronPosition);
-        const doubleNextPatronPosition: OneAtATimePosition = this.getPreviousOneAtATimePosition(nextPatronPosition);
+        const transformValue = 'translateY(' + pxOffest + 'px)';
 
-        const shouldTransition = this.state.currentItemPosition != this.state.endingItemPosition;
+        const [firstPatron, ...unused] = patrons;
 
         return (
             <div id="patreonOneAtATime">
-                <div className={classNames('patron-pos', OneAtATimePosition[doubleNextPatronPosition], { 'transition': shouldTransition })}>
-                    <PatreonTile key={doubleNextPatron.name} {...doubleNextPatron} />
+                <div className={classNames('patron-pos', { 'transition': currentItemIndex !== 0 })} style={{ transform: transformValue }}>
+                    {
+                        patrons != null &&
+                        patrons.map((item: PatreonItemViewModel) => (
+                            <PatreonTile key={item.name} {...item} />
+                        ))
+                    }
+                    <PatreonTile key={firstPatron.name + ' -first'} {...firstPatron} />
                 </div>
-                <div className={classNames('patron-pos', OneAtATimePosition[nextPatronPosition], { 'transition': shouldTransition })}>
-                    <PatreonTile key={nextPatron.name} {...nextPatron} />
-                </div>
-                <div className={classNames('patron-pos', OneAtATimePosition[currentPatronPosition], { 'transition': shouldTransition })}>
-                    <PatreonTile key={currentPatron.name} {...currentPatron} />
-                </div>
+                {/* Debugging
+                <span style={{ position: 'absolute', top: 0, left: 0 }}>{timerIndex}</span> 
+                */}
             </div>
         );
     }

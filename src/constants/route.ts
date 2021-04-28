@@ -8,7 +8,7 @@ export const display = '/display';
 export const displayWithGuid = '/display/:guid';
 
 export const patreonSuccess = '/patreon-success';
-export const authTokenFromServerWithParams = '/auth/:guid/:token/:timeTillExpiry';
+export const authTokenFromServer = '/auth';
 
 export const error = '/error';
 export const errorWithCode = '/error/:code';

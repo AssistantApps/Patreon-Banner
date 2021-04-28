@@ -3,6 +3,6 @@
     "consoleLogDebug": true,
     "useServiceWorker": false,
     "reportWebVitals": false,
-    "apiUrl": "https://8cc19b1e264f.ngrok.io",
+    "apiUrl": "https://localhost:44308",
     "appUrl": "https://localhost:8080"
 }

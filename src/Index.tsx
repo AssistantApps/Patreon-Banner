@@ -39,7 +39,7 @@ const App: React.FC = () => {
 
                     <Route path={route.patreonSuccess} component={SuccessfulPatreonLoginFromTwitchPage} />
 
-                    <Route path={route.authTokenFromServerWithParams} component={AuthTokenFromServerPage} />
+                    <Route path={route.authTokenFromServer} component={AuthTokenFromServerPage} />
 
                     <Route path={route.errorWithCode} component={ErrorPage} />
                     <Route exact={true} path={route.error} component={ErrorPage} />

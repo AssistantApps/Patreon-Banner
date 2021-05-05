@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import * as qs from 'query-string';
+import React, { useEffect } from 'react';
 import { withRouter, useHistory } from 'react-router-dom';
+import * as qs from 'query-string';
 
 import * as routes from '../../constants/route';
 import * as storageKey from '../../constants/storageKey';

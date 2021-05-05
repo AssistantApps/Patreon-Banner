@@ -14,7 +14,7 @@ export const PatreonTile: React.FC<IPatronTileProps> = (props: IPatronTileProps)
                 imageUrl={props.imageUrl}
                 imageName={props.name}
             />
-            <h4>{props.name}</h4>
+            <h4 className="noselect">{props.name}</h4>
         </div>
     );
 }

@@ -1,21 +1,21 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import * as qs from 'query-string';
 
 import { PatreonMarquee } from '../../components/patreon/patreonMarquee';
-
-
-import { withServices } from '../../integration/dependencyInjection';
-
-import { dependencyInjectionToProps, IExpectedServices } from './display.dependencyInjection';
 import { NetworkState } from '../../constants/enum/networkState';
 import { patreonTestData } from '../../constants/testData/patreonTestData';
 import { ResultWithValue } from '../../contracts/results/ResultWithValue';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
 import { anyObject } from '../../helper/typescriptHacks';
 import { setDocumentTitle } from '../../helper/documentHelper';
-import { withRouter } from 'react-router-dom';
+import { withServices } from '../../integration/dependencyInjection';
+
+import { dependencyInjectionToProps, IExpectedServices } from './display.dependencyInjection';
 
 interface IWithoutExpectedServices {
     match?: any
+    location?: any
 }
 
 interface IProps extends IExpectedServices, IWithoutExpectedServices { }
@@ -41,7 +41,11 @@ export class DisplayPageUnconnected extends React.Component<IProps, IState> {
     }
 
     getPatronSettings = async () => {
-        const { match: { params } } = this.props;
+        let params: any = qs.parse(this.props.location.search);
+
+        if (params == null || params.guid == null) {
+            params = this.props?.match?.params;
+        }
 
         let patronsResult: ResultWithValue<PatreonViewModel> = anyObject;
         if (params.guid != null) {

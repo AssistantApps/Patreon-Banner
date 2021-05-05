@@ -20,5 +20,5 @@ export const getSubConfig = (property: string, subProperty: string) => getEntire
 export const getEntireConfig = () => window.config;
 
 export const getDisplayUrl = (guid: string) => (getApp() != null && guid != null)
-    ? `${getApp()}/display/${guid}`
+    ? `${getApp()}/display.html?guid=${guid}`
     : '';

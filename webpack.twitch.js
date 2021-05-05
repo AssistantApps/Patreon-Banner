@@ -27,7 +27,7 @@ module.exports = (_env, argv) => merge(common(_env, { ...argv, ...localArgs }), 
     }
   },
   output: {
-    publicPath: '/',
+    publicPath: '',
     filename: '[name].[contenthash].bundle.js',
   }
 });

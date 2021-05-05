@@ -21,9 +21,18 @@
         position: absolute;
         top: 5px;
         right: 5px;
+        border: none;
 
         img {
             width: 25px;
         }
+    }
+
+    #testData {
+        position: absolute;
+        top: 50%;
+        right: -20px;
+        transform: rotate(90deg);
+        color: white;
     }
 }

@@ -5,7 +5,13 @@ module.exports = {
             outputHtml: 'index.html',
             template: 'template-non-twitch.html',
             build: true,
-        }
+        },
+        Display: {
+            path: './src/Display.tsx',
+            outputHtml: 'display.html',
+            template: './template.html',
+            build: true,
+        },
     },
     twitchEntryPoints: {
         Config: {
@@ -19,12 +25,6 @@ module.exports = {
             outputHtml: "panel.html",
             template: './template.html',
             build: true
-        },
-        Display: {
-            path: './src/Display.tsx',
-            outputHtml: 'display.html',
-            template: './template.html',
-            build: true,
         },
         // VideoComponent: {
         //   path: "./src/VideoComponent.js",

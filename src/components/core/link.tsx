@@ -6,6 +6,7 @@ import { home } from '../../constants/route'
 import { site } from "../../constants/site";
 
 interface IProps {
+    id?: string;
     href: string;
     onClick?: () => void;
     additionalClassNames?: string;
@@ -14,7 +15,7 @@ interface IProps {
 
 export const BasicLink = (props: IProps) => {
     const appendRef = (baseUrl: string) => {
-        if (baseUrl.includes('@')) return baseUrl;
+        if (baseUrl.includes('patreonbanner.com') || baseUrl.includes('@')) return baseUrl;
         if (baseUrl.includes('?')) {
             return baseUrl + `&ref=${site.ref}`;
         }
@@ -30,6 +31,7 @@ export const BasicLink = (props: IProps) => {
 
     return (
         <a
+            id={props.id}
             href={appendRef(props.href)}
             target="_blank"
             rel="noopener noreferrer"

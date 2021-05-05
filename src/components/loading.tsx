@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 
 export const Loading: React.FC = () => {
@@ -22,7 +23,11 @@ export const Loading: React.FC = () => {
     );
 }
 
-export const SmallLoading: React.FC = () => {
+interface ISmallLoadingProps {
+    additionalClasses?: string
+}
+
+export const SmallLoading: React.FC<ISmallLoadingProps> = (props: ISmallLoadingProps) => {
     return (
         <div className="container">
             <div className="row">
@@ -31,6 +36,7 @@ export const SmallLoading: React.FC = () => {
                         src="assets/img/loader.svg"
                         draggable="false"
                         alt="loading-animation"
+                        className={classNames(props.additionalClasses)}
                         style={{ height: '75px', display: 'inline' }}
                     />
                     <h2 className="largeHeading" style={{ verticalAlign: 'middle' }}>Loading...</h2>

@@ -14,6 +14,18 @@ module.exports = {
             template: './template.html',
             build: true
         },
+        Panel: {
+            path: "./src/Panel.tsx",
+            outputHtml: "panel.html",
+            template: './template.html',
+            build: true
+        },
+        Display: {
+            path: './src/Display.tsx',
+            outputHtml: 'display.html',
+            template: './template.html',
+            build: true,
+        },
         // VideoComponent: {
         //   path: "./src/VideoComponent.js",
         //   outputHtml: "video_component.html",
@@ -22,11 +34,6 @@ module.exports = {
         // VideoOverlay: {
         //   path: "./src/VideoOverlay.js",
         //   outputHtml: "video_overlay.html",
-        //   build: true
-        // },
-        // Panel: {
-        //   path: "./src/Panel.js",
-        //   outputHtml: "panel.html",
         //   build: true
         // },
         // LiveConfig: {

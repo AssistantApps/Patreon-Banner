@@ -23,3 +23,12 @@
             transparent 75%,
             transparent)
 }
+
+.no-scrollbar::-webkit-scrollbar,
+.no-scrollbar *::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar-track,
+.no-scrollbar *::-webkit-scrollbar-track,
+.no-scrollbar::-webkit-scrollbar-thumb,
+.no-scrollbar *::-webkit-scrollbar-thumb {
+    display: none;
+}

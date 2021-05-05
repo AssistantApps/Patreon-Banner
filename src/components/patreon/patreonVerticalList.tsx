@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React from 'react';
 
 import { PatreonTile } from '../../components/patreon/patreonTile';
@@ -34,7 +33,7 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
         const animDuration = patrons.length * 1.5;
 
         return (
-            <div id="patreonVerticalList">
+            <div id="patreonVerticalList" className="no-scrollbar">
                 <div className="list" style={{ animationDuration: `${animDuration}s` }}>
                     {
                         patrons != null &&

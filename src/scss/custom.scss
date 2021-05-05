@@ -9,6 +9,7 @@
 html {
     min-height: 100vh;
     scroll-behavior: smooth;
+    overflow-x: hidden;
 
     ::selection {
         color: white;
@@ -136,6 +137,7 @@ html {
 @import 'custom/_twitch.scss';
 @import 'custom/_image.scss';
 @import 'custom/_patreon.scss';
+@import 'custom/_panel.scss';
 @import 'custom/_icon.scss';
 @import 'custom/_displayType.scss';
 @import 'custom/_error.scss';

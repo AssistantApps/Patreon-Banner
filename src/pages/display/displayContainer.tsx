@@ -72,7 +72,7 @@ export class DisplayPageUnconnected extends React.Component<IProps, IState> {
         if (patreonNetworkState === NetworkState.Loading) return <span></span>
 
         return (
-            <div id="main" className="height-100vh" draggable={false}>
+            <div id="display" className="height-100vh" draggable={false}>
                 <PatreonMarquee patronSettings={patronSettings} />
             </div>
         );

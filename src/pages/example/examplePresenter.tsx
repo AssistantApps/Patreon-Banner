@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControl, FormControlLabel, FormLabel, RadioGroup, Radio } from '@material-ui/core';
+import { FormControl, FormControlLabel, FormLabel, RadioGroup, Radio, FormGroup, Checkbox } from '@material-ui/core';
 
 import { AppImage } from '../../constants/appImage';
 import { DisplayType } from '../../constants/enum/displayType';
@@ -185,6 +185,43 @@ export const ExamplePagePresenter: React.FC<IProps> = (props: IProps) => {
                                             />
                                         </div>
                                     }
+                                </div>
+                            </div>
+                            <hr />
+                            <div className="row">
+                                <div className="col-6">
+                                    <div className="mt1">
+                                        <label>Profile picture settings</label>
+                                        <BasicImage
+                                            key="https://ui-avatars.com/api/?size=128"
+                                            imageUrl="https://ui-avatars.com/api/?size=128"
+                                            imageName="Demo Patron"
+                                            classNames="float-left mr2"
+                                        />
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    checked={true}
+                                                    onChange={(_) => { }}
+                                                    name="hasRoundedProfilePics"
+                                                    color="primary"
+                                                />
+                                            }
+                                            label="Rounded profile pictures"
+                                        />
+                                        <input type="number"
+                                            min={0}
+                                            max={100}
+                                            name="border-radius-input"
+                                            style={{ display: 'inline-block', width: 'unset' }}
+                                            value={'25'}
+                                            placeholder={'pickerCurrentValue'}
+                                            onChange={(event: any) => {
+                                                event.persist();
+                                                const value = event?.target?.value ?? '';
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>

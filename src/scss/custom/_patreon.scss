@@ -1,4 +1,6 @@
 #patreonMarquee .patreon-container.marquee-container {
+    overflow-y: hidden;
+
     .patron-container {
         margin-left: 3em;
     }
@@ -39,6 +41,7 @@
     .patron-container {
         display: flex;
         min-width: 200px;
+        max-width: 400px;
 
         img {
             max-height: 50px;

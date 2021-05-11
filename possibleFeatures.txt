@@ -15,8 +15,8 @@
 
 Configs
 - Speed of Marquee
-- Speed of OneAtATime
 - Speed of VerticalList
+- Speed of OneAtATime
 - Background color 
     - Free users: 7 options (Check serverside)
     - PRO users: Hex editor

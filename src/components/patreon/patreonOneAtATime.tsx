@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import { PatreonTile } from '../../components/patreon/patreonTile';
+import { DesignPalette } from '../../constants/designPalette';
 import { PatreonItemViewModel } from '../../contracts/generated/ViewModel/patreonItemViewModel';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
 
@@ -15,31 +16,54 @@ interface IProps {
 interface IState {
     intervalId: NodeJS.Timeout | any;
     currentItemIndex: number;
+    timerInterval: number;
     timerIndex: number;
-    isReversed: boolean;
 }
 
 export class PatreonOneAtATime extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
-        const isReversed = (this.props.isReversed ?? false);
-
         this.state = {
             intervalId: undefined,
             currentItemIndex: 0,
+            timerInterval: 0,
             timerIndex: -1,
-            isReversed,
         };
     }
 
     componentDidMount() {
-        var intervalId = setInterval(this.timer, 1500);
-        this.setState(() => ({ intervalId }));
+        this.setTimer();
+    }
+
+    shouldComponentUpdate(nextProps: IProps, nextState: IState) {
+        if (this.props.isReversed !== nextProps.isReversed) return true;
+        if (this.props.patronSettings !== nextProps.patronSettings) return true;
+
+        if (this.state.timerIndex !== nextState.timerIndex) return true;
+        if (this.state.timerInterval !== nextState.timerInterval) return true;
+        if (this.state.currentItemIndex !== nextState.currentItemIndex) return true;
+
+        return false;
+    }
+
+    componentDidUpdate() {
+        this.setTimer();
     }
 
     componentWillUnmount() {
         if (this.state.intervalId) clearInterval(this.state.intervalId);
+    }
+
+    setTimer = () => {
+        if (this.state.intervalId) clearInterval(this.state.intervalId);
+
+        let timerInterval = +this.props.patronSettings.settings.oneAtATimeSpeed;
+        const selectedValue = DesignPalette.oneAtATimeSpeedTicks.find(t => t.value === (+timerInterval));
+        if (selectedValue != null && selectedValue.realValue != null) timerInterval = (+selectedValue.realValue);
+
+        var intervalId = setInterval(this.timer, timerInterval);
+        this.setState(() => ({ intervalId, timerInterval }));
     }
 
     getNextIndex = (arrLength: number, currentIndex: number) => this.getNewIndex(arrLength, currentIndex, 1);
@@ -75,7 +99,9 @@ export class PatreonOneAtATime extends React.Component<IProps, IState> {
     }
 
     render() {
-        const { currentItemIndex, isReversed } = this.state;
+        const { currentItemIndex, timerInterval } = this.state;
+        const isReversed = (this.props.isReversed ?? false);
+
         const pxOffest = isReversed
             ? ((this.props.patronSettings.patrons.length - currentItemIndex) * -50)
             : (currentItemIndex * -50);
@@ -89,10 +115,18 @@ export class PatreonOneAtATime extends React.Component<IProps, IState> {
         const [firstPatron, ...unused] = patrons;
         const foregroundColour = this.props.patronSettings.settings.foregroundColour;
 
+        const styleObj = {
+            backgroundColor: this.props.patronSettings.settings.backgroundColour,
+            opacity: this.props.patronSettings.settings.backgroundOpacity / 100,
+        };
+
+        let transProp: string | undefined;
+        if (currentItemIndex !== 0) transProp = `all ${timerInterval / 3 * 4}ms`;
+
         return (
             <div id="patreonOneAtATime">
-                <div className="patreon-container-background" style={{ backgroundColor: this.props.patronSettings.settings.backgroundColour }}></div>
-                <div className={classNames('patron-pos', { 'transition': currentItemIndex !== 0 })} style={{ transform: transformValue }}>
+                <div className="patreon-container-background" style={styleObj}></div>
+                <div className="patron-pos" style={{ transform: transformValue, transition: transProp }}>
                     {
                         patrons != null &&
                         patrons.map((item: PatreonItemViewModel) => (

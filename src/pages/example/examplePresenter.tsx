@@ -3,7 +3,7 @@ import { FormControl, FormControlLabel, FormLabel, RadioGroup, Radio } from '@ma
 
 import { AppImage } from '../../constants/appImage';
 import { DisplayType } from '../../constants/enum/displayType';
-import { ColourPalette } from '../../constants/colourPalette';
+import { DesignPalette } from '../../constants/designPalette';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
 
 import { ColourPicker } from '../../components/common/colourPicker/colourPicker'
@@ -13,6 +13,8 @@ import { PatreonMarquee } from '../../components/patreon/patreonMarquee';
 import { PatreonVerticalList } from '../../components/patreon/patreonVerticalList';
 import { PatreonOneAtATime } from '../../components/patreon/patreonOneAtATime';
 import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/patreonSettingsViewModel';
+import { SpeedPicker } from '../../components/common/slider/speedPicker';
+import { DefaultTooltip } from '../../components/common/tooltip/tooltip';
 
 interface IContainerProps {
     testData: PatreonViewModel;
@@ -44,10 +46,7 @@ export const ExamplePagePresenter: React.FC<IProps> = (props: IProps) => {
 
     const patronSettings = {
         ...props.testData,
-        settings: {
-            foregroundColour: props.settings.foregroundColour,
-            backgroundColour: props.settings.backgroundColour,
-        }
+        settings: { ...props.settings }
     }
 
     return (
@@ -113,15 +112,14 @@ export const ExamplePagePresenter: React.FC<IProps> = (props: IProps) => {
                                     </div>
                                 }
                             </div>
-                            <hr className="mt0 mb1" />
-                            <div className="row">
+                            <div className="row mt3 mb1">
                                 <div className="col-6">
                                     <label>Text Colour</label>
                                     <ColourPicker
                                         id="foregroundColour"
-                                        defaultValue={ColourPalette.foregroundDefault}
+                                        defaultValue={DesignPalette.foregroundDefault}
                                         currentValue={props.settings.foregroundColour}
-                                        availableColours={ColourPalette.foregroundOptions}
+                                        availableColours={DesignPalette.foregroundOptions}
                                         onChange={props.editSettings('foregroundColour')}
                                     />
                                 </div>
@@ -129,11 +127,64 @@ export const ExamplePagePresenter: React.FC<IProps> = (props: IProps) => {
                                     <label>Background Colour</label>
                                     <ColourPicker
                                         id="backgroundColour"
-                                        defaultValue={ColourPalette.backgroundDefault}
+                                        defaultValue={DesignPalette.backgroundDefault}
                                         currentValue={props.settings.backgroundColour}
-                                        availableColours={ColourPalette.backgroundOptions}
+                                        availableColours={DesignPalette.backgroundOptions}
                                         onChange={props.editSettings('backgroundColour')}
                                     />
+                                    <div className="mt1">
+                                        <label>Background Opacity</label>
+                                        <SpeedPicker
+                                            min={DesignPalette.backgroundOpacityMin}
+                                            max={DesignPalette.backgroundOpacityMax}
+                                            value={props.settings.backgroundOpacity}
+                                            onChange={(newValue: number) => props.editSettings('backgroundOpacity')(newValue.toString())}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div className="row">
+                                <div className="col-12">
+                                    {
+                                        props.displayType === DisplayType.Marquee &&
+                                        <div className="mt1">
+                                            <label>Speed of Patrons scrolling</label>
+                                            <SpeedPicker
+                                                className="ph3"
+                                                availableTicks={DesignPalette.marqueSpeedTicks}
+                                                value={props.settings.marqueSpeed}
+                                                valueLabelDisplay="off"
+                                                onChange={(newValue: number) => props.editSettings('marqueSpeed')(newValue.toString())}
+                                            />
+                                        </div>
+                                    }
+                                    {
+                                        props.displayType === DisplayType.VerticalList &&
+                                        <div className="mt1">
+                                            <label>Time per Patron <DefaultTooltip message="Duration of list animation = (time per patron) x (number of patrons)"></DefaultTooltip></label>
+                                            <SpeedPicker
+                                                className="ph3"
+                                                availableTicks={DesignPalette.verticalListSpeedTicks}
+                                                value={props.settings.verticalListSpeed}
+                                                valueLabelDisplay="off"
+                                                onChange={(newValue: number) => props.editSettings('verticalListSpeed')(newValue.toString())}
+                                            />
+                                        </div>
+                                    }
+                                    {
+                                        props.displayType === DisplayType.OneAtATime &&
+                                        <div className="mt1">
+                                            <label>Time on screen per Patron</label>
+                                            <SpeedPicker
+                                                className="ph3"
+                                                availableTicks={DesignPalette.oneAtATimeSpeedTicks}
+                                                value={props.settings.oneAtATimeSpeed}
+                                                valueLabelDisplay="off"
+                                                onChange={(newValue: number) => props.editSettings('oneAtATimeSpeed')(newValue.toString())}
+                                            />
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         </div>

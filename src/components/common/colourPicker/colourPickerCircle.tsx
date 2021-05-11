@@ -13,7 +13,7 @@ interface IProps {
 export const ColourPickerCircle: React.FC<IProps> = (props: IProps) => {
 
     let localHex = handleHex(props.colourHex);
-    console.log(localHex)
+
     const styleObj: any = {
         marginTop: '0.25em',
         marginRight: '0.25em',

@@ -20,7 +20,6 @@ export const ColourPicker: React.FC<IProps> = (props: IProps) => {
 
     const setColour = (newValue: string) => () => {
         const correctedHex = handleHex(newValue);
-        console.log(correctedHex);
         props?.onChange?.(correctedHex);
     }
 

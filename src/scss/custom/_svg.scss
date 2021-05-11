@@ -1,0 +1,37 @@
+// .badge-sm {
+//     line-height: 1rem;
+//     font-size: .75rem;
+//     padding: .125rem .625rem;
+// }
+
+// .badge,
+// .badge-sm {
+//     border-radius: 9999px;
+// }
+
+// .badge {
+//     background-color: #edebfe;
+//     background-color: rgba(237, 235, 254, var(--bg-opacity));
+//     font-weight: 500;
+//     display: inline-flex;
+//     align-items: center;
+//     line-height: 1.25rem;
+//     color: #5521b5;
+//     color: rgba(85, 33, 181, var(--text-opacity));
+//     font-size: .875rem;
+//     padding: .125rem .5rem;
+// }
+
+.checkmark {
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 100%;
+}
+
+.lock {
+    //w-auto h-3 text-purple-800 mr-1
+    width: auto;
+    height: .75rem;
+    margin-right: .25rem;
+    color: var(--primary);
+}

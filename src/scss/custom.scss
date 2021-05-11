@@ -66,12 +66,20 @@ html {
     margin-top: 2em;
 }
 
+.mt3 {
+    margin-top: 3em;
+}
+
 .mt5 {
     margin-top: 5em;
 }
 
 .ml1 {
     margin-left: 1em;
+}
+
+.mr1 {
+    margin-right: 1em;
 }
 
 .mr3 {
@@ -134,10 +142,12 @@ html {
 }
 
 @import "custom/_scrollbar";
+@import "custom/_colourPicker";
 @import 'custom/_twitch.scss';
 @import 'custom/_image.scss';
 @import 'custom/_patreon.scss';
 @import 'custom/_panel.scss';
 @import 'custom/_icon.scss';
+@import 'custom/_svg.scss';
 @import 'custom/_displayType.scss';
 @import 'custom/_error.scss';

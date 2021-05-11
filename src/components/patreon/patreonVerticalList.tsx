@@ -31,14 +31,16 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
         if (patrons.length < 1) return (<div id="patreonVerticalList"></div>);
 
         const animDuration = patrons.length * 1.5;
+        const foregroundColour = this.props.patronSettings.settings.foregroundColour;
 
         return (
             <div id="patreonVerticalList" className="no-scrollbar">
+                <div className="patreon-container-background" style={{ backgroundColor: this.props.patronSettings.settings.backgroundColour }}></div>
                 <div className="list" style={{ animationDuration: `${animDuration}s` }}>
                     {
                         patrons != null &&
                         patrons.map((item: PatreonItemViewModel) => (
-                            <PatreonTile key={`list1-${item.name}`} {...item} />
+                            <PatreonTile key={`list1-${item.name}`} {...item} foregroundColour={foregroundColour} />
                         ))
                     }
                 </div>
@@ -46,7 +48,7 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
                     {
                         patrons != null &&
                         patrons.map((item: PatreonItemViewModel) => (
-                            <PatreonTile key={`list2-${item.name}`} {...item} />
+                            <PatreonTile key={`list2-${item.name}`} {...item} foregroundColour={foregroundColour} />
                         ))
                     }
                 </div>

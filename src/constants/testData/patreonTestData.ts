@@ -1,6 +1,7 @@
 import { PatreonItemViewModel } from "../../contracts/generated/ViewModel/patreonItemViewModel";
 import { PatreonViewModel } from "../../contracts/generated/ViewModel/patreonViewModel";
 import { ResultWithValue } from "../../contracts/results/ResultWithValue";
+import { anyObject } from "../../helper/typescriptHacks";
 
 
 const createTestPatronData = (name: string): PatreonItemViewModel => {
@@ -55,6 +56,7 @@ export const patreonTestData = (): ResultWithValue<PatreonViewModel> => {
             userGuid: '',
             patrons: shuffle(testPatrons),
             saveDate: new Date(),
+            settings: anyObject
         },
         errorMessage: ''
     }

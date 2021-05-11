@@ -11,3 +11,28 @@
  - Premium can change to everyday
 6. Allow custom CSS
  - Premium only
+
+
+Configs
+- Speed of Marquee
+- Speed of OneAtATime
+- Speed of VerticalList
+- Background color 
+    - Free users: 7 options (Check serverside)
+    - PRO users: Hex editor
+- Text color
+    - Free users: White or Black (Check serverside)
+    - PRO users: Hex editor
+- Rounded images
+    - Free users: true or false (Check serverside)
+    - PRO users: px value
+- Custom CSS (PRO)
+    - Ability to Test
+- Frequency of Patrons list update
+    - Free users: 5 to 7 (cheesy thank you message, or slide from burning servers to normal servers)
+    - PRO users: 1 to 7 (no slider images)
+
+
+Payment options:
+- Join my Patreon
+- https://github.com/bchavez/Coinbase.Commerce

@@ -8,16 +8,29 @@
     margin-right: 1em;
 }
 
-#patreonMarquee .patreon-container.marquee-container,
-#patreonVerticalList,
-#patreonOneAtATime .patron-container {
-    background-color: rgba(0, 0, 0, 0.3);
+#patreonMarquee .patreon-container-background,
+#patreonVerticalList .patreon-container-background,
+#patreonOneAtATime .patreon-container-background {
+    background-color: rgb(0, 0, 0);
+    opacity: 0.3;
+}
+
+#patreonMarquee .patreon-container-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
 }
 
 #patreonMarquee .patreon-container.marquee-container,
 #patreonOneAtATime {
     height: unset;
     max-height: 50px;
+
+    img {
+        height: 50px;
+    }
 }
 
 #patreonMarquee .patreon-container.marquee-container,

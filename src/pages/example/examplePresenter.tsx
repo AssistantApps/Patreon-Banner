@@ -3,16 +3,22 @@ import { FormControl, FormControlLabel, FormLabel, RadioGroup, Radio } from '@ma
 
 import { AppImage } from '../../constants/appImage';
 import { DisplayType } from '../../constants/enum/displayType';
-import { patreonTestData } from '../../constants/testData/patreonTestData';
+import { ColourPalette } from '../../constants/colourPalette';
+import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
 
+import { ColourPicker } from '../../components/common/colourPicker/colourPicker'
 import { Footer } from '../../components/common/footer'
 import { BasicImage } from '../../components/core/image';
 import { PatreonMarquee } from '../../components/patreon/patreonMarquee';
 import { PatreonVerticalList } from '../../components/patreon/patreonVerticalList';
 import { PatreonOneAtATime } from '../../components/patreon/patreonOneAtATime';
+import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/patreonSettingsViewModel';
 
 interface IContainerProps {
-    setDisplayType: (displayType: DisplayType) => void
+    testData: PatreonViewModel;
+    settings: PatreonSettingsViewModel;
+    setDisplayType: (displayType: DisplayType) => void;
+    editSettings: (name: string) => (value: string) => void;
 }
 
 interface IProps extends IContainerProps {
@@ -34,7 +40,15 @@ export const ExamplePagePresenter: React.FC<IProps> = (props: IProps) => {
             imageUrl: `/${AppImage.displayTypeOneAtATime}`,
             displayType: DisplayType.OneAtATime,
         }
-    ]
+    ];
+
+    const patronSettings = {
+        ...props.testData,
+        settings: {
+            foregroundColour: props.settings.foregroundColour,
+            backgroundColour: props.settings.backgroundColour,
+        }
+    }
 
     return (
         <div className="wrapper pt5">
@@ -83,21 +97,44 @@ export const ExamplePagePresenter: React.FC<IProps> = (props: IProps) => {
                                 {
                                     props.displayType === DisplayType.Marquee &&
                                     <div className="display-test-marquee">
-                                        <PatreonMarquee patronSettings={patreonTestData().value} />
+                                        <PatreonMarquee patronSettings={patronSettings} />
                                     </div>
                                 }
                                 {
                                     props.displayType === DisplayType.VerticalList &&
                                     <div className="display-test-list">
-                                        <PatreonVerticalList patronSettings={patreonTestData().value} />
+                                        <PatreonVerticalList patronSettings={patronSettings} />
                                     </div>
                                 }
                                 {
                                     props.displayType === DisplayType.OneAtATime &&
                                     <div className="display-test-one-at-a-time">
-                                        <PatreonOneAtATime patronSettings={patreonTestData().value} />
+                                        <PatreonOneAtATime patronSettings={patronSettings} />
                                     </div>
                                 }
+                            </div>
+                            <hr className="mt0 mb1" />
+                            <div className="row">
+                                <div className="col-6">
+                                    <label>Text Colour</label>
+                                    <ColourPicker
+                                        id="foregroundColour"
+                                        defaultValue={ColourPalette.foregroundDefault}
+                                        currentValue={props.settings.foregroundColour}
+                                        availableColours={ColourPalette.foregroundOptions}
+                                        onChange={props.editSettings('foregroundColour')}
+                                    />
+                                </div>
+                                <div className="col-6">
+                                    <label>Background Colour</label>
+                                    <ColourPicker
+                                        id="backgroundColour"
+                                        defaultValue={ColourPalette.backgroundDefault}
+                                        currentValue={props.settings.backgroundColour}
+                                        availableColours={ColourPalette.backgroundOptions}
+                                        onChange={props.editSettings('backgroundColour')}
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>

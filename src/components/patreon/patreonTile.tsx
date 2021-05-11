@@ -3,7 +3,7 @@ import { BasicImage } from '../../components/core/image';
 import { PatreonItemViewModel } from '../../contracts/generated/ViewModel/patreonItemViewModel';
 
 interface IPatronTileProps extends PatreonItemViewModel {
-
+    foregroundColour?: string;
 }
 
 export const PatreonTile: React.FC<IPatronTileProps> = (props: IPatronTileProps) => {
@@ -14,7 +14,7 @@ export const PatreonTile: React.FC<IPatronTileProps> = (props: IPatronTileProps)
                 imageUrl={props.imageUrl}
                 imageName={props.name}
             />
-            <h4 className="noselect">{props.name}</h4>
+            <h4 className="noselect" style={{ color: props.foregroundColour }}>{props.name}</h4>
         </div>
     );
 }

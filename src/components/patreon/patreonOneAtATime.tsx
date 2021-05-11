@@ -87,14 +87,16 @@ export class PatreonOneAtATime extends React.Component<IProps, IState> {
         const transformValue = 'translateY(' + pxOffest + 'px)';
 
         const [firstPatron, ...unused] = patrons;
+        const foregroundColour = this.props.patronSettings.settings.foregroundColour;
 
         return (
             <div id="patreonOneAtATime">
+                <div className="patreon-container-background" style={{ backgroundColor: this.props.patronSettings.settings.backgroundColour }}></div>
                 <div className={classNames('patron-pos', { 'transition': currentItemIndex !== 0 })} style={{ transform: transformValue }}>
                     {
                         patrons != null &&
                         patrons.map((item: PatreonItemViewModel) => (
-                            <PatreonTile key={item.name} {...item} />
+                            <PatreonTile key={item.name} {...item} foregroundColour={foregroundColour} />
                         ))
                     }
                     <PatreonTile key={firstPatron.name + ' -first'} {...firstPatron} />

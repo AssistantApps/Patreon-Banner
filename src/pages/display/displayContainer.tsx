@@ -12,6 +12,7 @@ import { setDocumentTitle } from '../../helper/documentHelper';
 import { withServices } from '../../integration/dependencyInjection';
 
 import { dependencyInjectionToProps, IExpectedServices } from './display.dependencyInjection';
+import { DefaultPatreonSettings } from '../../constants/designPalette';
 
 interface IWithoutExpectedServices {
     match?: any
@@ -65,7 +66,7 @@ export class DisplayPageUnconnected extends React.Component<IProps, IState> {
 
         this.setState(() => {
             return {
-                patronSettings: patronsResult.value,
+                patronSettings: { ...patronsResult.value, settings: DefaultPatreonSettings }, //TODO remove this when settings are added
                 patreonNetworkState: NetworkState.Success,
             }
         });

@@ -12,7 +12,8 @@ interface IProps {
 
 export const PatreonMarquee: React.FC<IProps> = (props: IProps) => {
     const {
-        foregroundColour, backgroundColour, backgroundOpacity, marqueSpeed
+        foregroundColour, backgroundColour, backgroundOpacity, marqueSpeed,
+        isProfilePicRounded, profilePicRoundedValue
     } = props.patronSettings.settings;
 
     let realValue = +marqueSpeed;
@@ -31,10 +32,8 @@ export const PatreonMarquee: React.FC<IProps> = (props: IProps) => {
                 {
                     props?.patronSettings?.patrons != null &&
                     props.patronSettings?.patrons.map((item: PatreonItemViewModel) => (
-                        <PatreonTile
-                            key={item.name}
-                            {...item}
-                            foregroundColour={foregroundColour}
+                        <PatreonTile key={item.name} {...item} foregroundColour={foregroundColour}
+                            isProfilePicRounded={isProfilePicRounded} profilePicRoundedValue={profilePicRoundedValue}
                         />
                     ))
                 }

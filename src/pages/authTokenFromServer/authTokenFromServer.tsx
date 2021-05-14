@@ -20,28 +20,31 @@ export const AuthTokenFromServerPageUnconnected: React.FC<IProps> = (props: IPro
     const history = useHistory();
 
     useEffect(() => {
+        const currentGuid = props.storageService?.get<string>(storageKey.userGuid);
+        if (currentGuid != null && currentGuid.isSuccess) {
+            props.loggingService.log('config is not null');
+            history.push(routes.config);
+            return;
+        }
+
         const queryObj: any = qs.parse(props.location.search);
         const patreonCode = queryObj?.code;
 
         if (patreonCode == null) {
+            props.loggingService.log('Patreon Access code is null');
             history.push(routes.error);
         }
 
         props.loginService.loginWithPatreonOAuthCode(patreonCode, props.storageService).then((result: Result) => {
             if (result.isSuccess) {
+                props.loggingService.log('Patreon Access code login success!');
                 history.push(routes.config);
             } else {
-                props.loggingService.error(result.errorMessage);
+                props.loggingService.error('Unable to log in with Auth code ', result.errorMessage);
                 history.push(routes.error);
             }
         });
     });
-
-    const currentGuid = props.storageService?.get<string>(storageKey.userGuid);
-    if (currentGuid != null && currentGuid.isSuccess) {
-        history.push(routes.config);
-        return (<span></span>);
-    }
 
     return (
         <div className="wrapper pt5">

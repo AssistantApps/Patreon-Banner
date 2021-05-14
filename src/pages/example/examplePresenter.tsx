@@ -12,9 +12,11 @@ import { BasicImage } from '../../components/core/image';
 import { PatreonMarquee } from '../../components/patreon/patreonMarquee';
 import { PatreonVerticalList } from '../../components/patreon/patreonVerticalList';
 import { PatreonOneAtATime } from '../../components/patreon/patreonOneAtATime';
-import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/patreonSettingsViewModel';
 import { SpeedPicker } from '../../components/common/slider/speedPicker';
 import { DefaultTooltip } from '../../components/common/tooltip/tooltip';
+import { PatreonTile } from '../../components/patreon/patreonTile';
+
+import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/patreonSettingsViewModel';
 
 interface IContainerProps {
     testData: PatreonViewModel;
@@ -188,27 +190,23 @@ export const ExamplePagePresenter: React.FC<IProps> = (props: IProps) => {
                                 </div>
                             </div>
                             <hr />
-                            <div className="row">
-                                <div className="col-6">
-                                    <div className="mt1">
-                                        <label>Profile picture settings</label>
-                                        <BasicImage
-                                            key="https://ui-avatars.com/api/?size=128"
-                                            imageUrl="https://ui-avatars.com/api/?size=128"
-                                            imageName="Demo Patron"
-                                            classNames="float-left mr2"
-                                        />
-                                        <FormControlLabel
-                                            control={
-                                                <Checkbox
-                                                    checked={true}
-                                                    onChange={(_) => { }}
-                                                    name="hasRoundedProfilePics"
-                                                    color="primary"
-                                                />
-                                            }
-                                            label="Rounded profile pictures"
-                                        />
+                            <div className="row mt2">
+                                <div className="col-12">
+                                    <label>Profile picture settings</label>
+
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                checked={props.settings.isProfilePicRounded}
+                                                onChange={(_) => { }}
+                                                name="hasRoundedProfilePics"
+                                                color="primary"
+                                            />
+                                        }
+                                        label="Rounded profile pictures"
+                                    />
+                                    {
+                                        props.settings.isProfilePicRounded &&
                                         <input type="number"
                                             min={0}
                                             max={100}
@@ -221,7 +219,7 @@ export const ExamplePagePresenter: React.FC<IProps> = (props: IProps) => {
                                                 const value = event?.target?.value ?? '';
                                             }}
                                         />
-                                    </div>
+                                    }
                                 </div>
                             </div>
                         </div>

@@ -74,7 +74,7 @@ export class DisplayPageUnconnected extends React.Component<IProps, IState> {
 
     render() {
         const { patronSettings, patreonNetworkState } = this.state;
-        if (patreonNetworkState === NetworkState.Loading) return <span></span>
+        if (patreonNetworkState !== NetworkState.Success) return <span></span>
 
         return (
             <div id="display" className="height-100vh" draggable={false}>

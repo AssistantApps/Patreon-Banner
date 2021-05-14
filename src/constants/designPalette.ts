@@ -31,6 +31,7 @@ export const DesignPalette = {
     ],
     //
     verticalListSpeedDefault: 4,
+    panelVerticalListSpeedDefault: 4,
     verticalListSpeedTicks: [
         { value: 1, realValue: 250, label: '250ms' }, { value: 2, realValue: 500, label: '500ms' },
         { value: 3, realValue: 1000, label: '1000ms' }, { value: 4, realValue: 1500, label: 'default' },
@@ -44,7 +45,7 @@ export const DesignPalette = {
         { value: 5, realValue: 1500, label: '3s' }, { value: 6, realValue: 2000, label: '4s' },
     ],
     //
-    panelVerticalListSpeedDefault: 1,
+    profilePicRoundedValue: 25,
 }
 
 export const DefaultPatreonSettings: PatreonSettingsViewModel = {
@@ -55,4 +56,6 @@ export const DefaultPatreonSettings: PatreonSettingsViewModel = {
     verticalListSpeed: DesignPalette.verticalListSpeedDefault,
     oneAtATimeSpeed: DesignPalette.oneAtATimeSpeedDefault,
     panelVerticalListSpeed: DesignPalette.panelVerticalListSpeedDefault,
+    isProfilePicRounded: false,
+    profilePicRoundedValue: DesignPalette.profilePicRoundedValue,
 }

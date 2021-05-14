@@ -99,6 +99,8 @@ export class PatreonOneAtATime extends React.Component<IProps, IState> {
     }
 
     render() {
+        const settings = this.props.patronSettings.settings;
+        const { isProfilePicRounded, profilePicRoundedValue } = settings;
         const { currentItemIndex, timerInterval } = this.state;
         const isReversed = (this.props.isReversed ?? false);
 
@@ -113,11 +115,11 @@ export class PatreonOneAtATime extends React.Component<IProps, IState> {
         const transformValue = 'translateY(' + pxOffest + 'px)';
 
         const [firstPatron, ...unused] = patrons;
-        const foregroundColour = this.props.patronSettings.settings.foregroundColour;
+        const foregroundColour = settings.foregroundColour;
 
         const styleObj = {
-            backgroundColor: this.props.patronSettings.settings.backgroundColour,
-            opacity: this.props.patronSettings.settings.backgroundOpacity / 100,
+            backgroundColor: settings.backgroundColour,
+            opacity: settings.backgroundOpacity / 100,
         };
 
         let transProp: string | undefined;
@@ -130,10 +132,14 @@ export class PatreonOneAtATime extends React.Component<IProps, IState> {
                     {
                         patrons != null &&
                         patrons.map((item: PatreonItemViewModel) => (
-                            <PatreonTile key={item.name} {...item} foregroundColour={foregroundColour} />
+                            <PatreonTile key={item.name} {...item} foregroundColour={foregroundColour}
+                                isProfilePicRounded={isProfilePicRounded} profilePicRoundedValue={profilePicRoundedValue}
+                            />
                         ))
                     }
-                    <PatreonTile key={firstPatron.name + ' -first'} {...firstPatron} />
+                    <PatreonTile key={firstPatron.name + ' -first'} {...firstPatron}
+                        isProfilePicRounded={isProfilePicRounded} profilePicRoundedValue={profilePicRoundedValue}
+                    />
                 </div>
                 {/* Debugging
                 <span style={{ position: 'absolute', top: 0, left: 0 }}>{timerIndex}</span> 

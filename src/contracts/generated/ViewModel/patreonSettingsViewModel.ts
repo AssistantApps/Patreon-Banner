@@ -6,4 +6,6 @@ export interface PatreonSettingsViewModel {
     verticalListSpeed: number;
     oneAtATimeSpeed: number;
     panelVerticalListSpeed: number;
+    isProfilePicRounded: boolean;
+    profilePicRoundedValue: number;
 }

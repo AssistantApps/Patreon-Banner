@@ -32,7 +32,8 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
         if (patrons.length < 1) return (<div id="patreonVerticalList"></div>);
 
         const {
-            foregroundColour, backgroundColour, backgroundOpacity, verticalListSpeed
+            foregroundColour, backgroundColour, backgroundOpacity, verticalListSpeed,
+            isProfilePicRounded, profilePicRoundedValue
         } = this.props.patronSettings.settings;
 
         let realValue = +verticalListSpeed;
@@ -53,7 +54,9 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
                     {
                         patrons != null &&
                         patrons.map((item: PatreonItemViewModel) => (
-                            <PatreonTile key={`list1-${item.name}`} {...item} foregroundColour={foregroundColour} />
+                            <PatreonTile key={`list1-${item.name}`} {...item} foregroundColour={foregroundColour}
+                                isProfilePicRounded={isProfilePicRounded} profilePicRoundedValue={profilePicRoundedValue}
+                            />
                         ))
                     }
                 </div>
@@ -61,7 +64,9 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
                     {
                         patrons != null &&
                         patrons.map((item: PatreonItemViewModel) => (
-                            <PatreonTile key={`list2-${item.name}`} {...item} foregroundColour={foregroundColour} />
+                            <PatreonTile key={`list2-${item.name}`} {...item} foregroundColour={foregroundColour}
+                                isProfilePicRounded={isProfilePicRounded} profilePicRoundedValue={profilePicRoundedValue}
+                            />
                         ))
                     }
                 </div>

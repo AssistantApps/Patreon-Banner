@@ -1,4 +1,20 @@
+import { AppImage } from "./appImage";
+import { DisplayType } from "./enum/displayType";
+
 export const patreonApiUrl = 'https://www.patreon.com';
 export const patreonApiOAuthUrl = `${patreonApiUrl}/oauth2/authorize`;
 
-export const apiPatronOAuthClientId = '-fdaJApJ7dq2Ew3q7vi2VU7GcYcPaDfbTPE4vPP2igKDO7itczZagmtf-9JARsgz';
+export const displayTypeCheckBoxes = [
+    {
+        imageUrl: `/${AppImage.displayTypeMarquee}`,
+        displayType: DisplayType.Marquee,
+    },
+    {
+        imageUrl: `/${AppImage.displayTypeVerticalList}`,
+        displayType: DisplayType.VerticalList,
+    },
+    {
+        imageUrl: `/${AppImage.displayTypeOneAtATime}`,
+        displayType: DisplayType.OneAtATime,
+    }
+];

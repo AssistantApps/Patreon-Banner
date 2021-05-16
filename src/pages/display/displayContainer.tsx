@@ -78,7 +78,7 @@ export class DisplayPageUnconnected extends React.Component<IProps, IState> {
 
         return (
             <div id="display" className="height-100vh" draggable={false}>
-                <PatreonMarquee patronSettings={patronSettings} />
+                <PatreonMarquee patronVm={patronSettings} />
             </div>
         );
     }

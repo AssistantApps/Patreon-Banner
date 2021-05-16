@@ -8,7 +8,7 @@ import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonVie
 import './_patreonVerticalList.scss';
 
 interface IProps {
-    patronSettings: PatreonViewModel;
+    patronVm: PatreonViewModel;
     isReversed?: boolean;
 }
 
@@ -28,13 +28,13 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
     }
 
     render() {
-        const patrons = this.props.patronSettings?.patrons ?? [];
+        const patrons = this.props.patronVm?.patrons ?? [];
         if (patrons.length < 1) return (<div id="patreonVerticalList"></div>);
 
         const {
             foregroundColour, backgroundColour, backgroundOpacity, verticalListSpeed,
             isProfilePicRounded, profilePicRoundedValue
-        } = this.props.patronSettings.settings;
+        } = this.props.patronVm.settings;
 
         let realValue = +verticalListSpeed;
         const selectedValue = DesignPalette.verticalListSpeedTicks.find(t => t.value === (+verticalListSpeed));

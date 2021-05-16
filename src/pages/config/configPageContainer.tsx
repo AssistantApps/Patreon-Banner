@@ -23,6 +23,8 @@ interface IProps extends IExpectedServices, IWithoutExpectedServices { }
 interface IState {
     fetchExistingStatus: NetworkState;
     existingSettingsPayload: PatreonViewModel;
+    showCustomisations: boolean;
+    customisationTabIndex: number;
 }
 
 export class ConfigPageContainerUnconnected extends React.Component<IProps, IState> {
@@ -32,6 +34,8 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
         this.state = {
             fetchExistingStatus: NetworkState.Pending,
             existingSettingsPayload: anyObject,
+            showCustomisations: false,
+            customisationTabIndex: 0,
         };
     }
 
@@ -71,11 +75,27 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
         });
     }
 
+    toggleShowCustomisations = () => {
+        this.setState((prevState: IState) => {
+            return {
+                showCustomisations: !prevState.showCustomisations,
+            }
+        });
+    }
+
+    setCustomisationTabIndex = (newCustomisationTabIndex: number) => {
+        this.setState({
+            customisationTabIndex: newCustomisationTabIndex,
+        });
+    }
+
     render() {
         return (
             <ConfigPagePresenter
                 {...this.state}
                 {...this.props}
+                toggleShowCustomisations={this.toggleShowCustomisations}
+                setCustomisationTabIndex={this.setCustomisationTabIndex}
             />
         )
     }

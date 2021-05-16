@@ -9,7 +9,7 @@ import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonVie
 import './_patreonOneAtATime.scss';
 
 interface IProps {
-    patronSettings: PatreonViewModel;
+    patronVm: PatreonViewModel;
     isReversed?: boolean;
 }
 
@@ -38,7 +38,7 @@ export class PatreonOneAtATime extends React.Component<IProps, IState> {
 
     shouldComponentUpdate(nextProps: IProps, nextState: IState) {
         if (this.props.isReversed !== nextProps.isReversed) return true;
-        if (this.props.patronSettings !== nextProps.patronSettings) return true;
+        if (this.props.patronVm !== nextProps.patronVm) return true;
 
         if (this.state.timerIndex !== nextState.timerIndex) return true;
         if (this.state.timerInterval !== nextState.timerInterval) return true;
@@ -58,7 +58,7 @@ export class PatreonOneAtATime extends React.Component<IProps, IState> {
     setTimer = () => {
         if (this.state.intervalId) clearInterval(this.state.intervalId);
 
-        let timerInterval = +this.props.patronSettings.settings.oneAtATimeSpeed;
+        let timerInterval = +this.props.patronVm.settings.oneAtATimeSpeed;
         const selectedValue = DesignPalette.oneAtATimeSpeedTicks.find(t => t.value === (+timerInterval));
         if (selectedValue != null && selectedValue.realValue != null) timerInterval = (+selectedValue.realValue);
 
@@ -79,7 +79,7 @@ export class PatreonOneAtATime extends React.Component<IProps, IState> {
         this.setState((prevState: IState) => {
             const { timerIndex } = prevState;
             const remainder = timerIndex % 2;
-            const numPatrons = this.props.patronSettings.patrons.length;
+            const numPatrons = this.props.patronVm.patrons.length;
             const maxTimerIndex = (numPatrons * 2);
 
             let newIndex = prevState.currentItemIndex;
@@ -99,16 +99,16 @@ export class PatreonOneAtATime extends React.Component<IProps, IState> {
     }
 
     render() {
-        const settings = this.props.patronSettings.settings;
+        const settings = this.props.patronVm.settings;
         const { isProfilePicRounded, profilePicRoundedValue } = settings;
         const { currentItemIndex, timerInterval } = this.state;
         const isReversed = (this.props.isReversed ?? false);
 
         const pxOffest = isReversed
-            ? ((this.props.patronSettings.patrons.length - currentItemIndex) * -50)
+            ? ((this.props.patronVm.patrons.length - currentItemIndex) * -50)
             : (currentItemIndex * -50);
 
-        const patrons = this.props.patronSettings?.patrons ?? [];
+        const patrons = this.props.patronVm?.patrons ?? [];
         if (patrons.length < 1) return (<div id="patreonOneAtATime"></div>);
         if (isReversed) patrons.reverse();
 

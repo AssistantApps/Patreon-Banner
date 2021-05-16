@@ -1,4 +1,9 @@
+﻿/* Auto Generated */
+
 export interface PatreonSettingsViewModel {
+    guid: string;
+    userGuid: string;
+    displayType: number;
     foregroundColour: string;
     backgroundColour: string;
     backgroundOpacity: number;
@@ -8,4 +13,5 @@ export interface PatreonSettingsViewModel {
     panelVerticalListSpeed: number;
     isProfilePicRounded: boolean;
     profilePicRoundedValue: number;
+    lastModifiedDate: Date;
 }

@@ -1,4 +1,5 @@
 import { PatreonSettingsViewModel } from "../contracts/generated/ViewModel/patreonSettingsViewModel";
+import { DisplayType } from "./enum/displayType";
 
 const patronForegroundColours = [
     '#FFFFFF',
@@ -30,25 +31,26 @@ export const DesignPalette = {
         { value: 5, realValue: 8, label: 'fast' }, { value: 6, realValue: 14, label: 'very fast' }, { value: 7, realValue: 20, label: 'very very fast' }
     ],
     //
-    verticalListSpeedDefault: 4,
-    panelVerticalListSpeedDefault: 4,
+    verticalListSpeedDefault: 6,
+    panelVerticalListSpeedDefault: 6,
     verticalListSpeedTicks: [
         { value: 1, realValue: 250, label: '250ms' }, { value: 2, realValue: 500, label: '500ms' },
-        { value: 3, realValue: 1000, label: '1000ms' }, { value: 4, realValue: 1500, label: 'default' },
-        { value: 5, realValue: 2000, label: '2000ms' }, { value: 6, realValue: 3000, label: '3000ms' },
+        { value: 4, realValue: 1000, label: '1000ms' }, { value: 6, realValue: 1500, label: 'default' },
+        { value: 8, realValue: 2000, label: '2000ms' }, { value: 12, realValue: 3000, label: '3000ms' },
     ],
     //
     oneAtATimeSpeedDefault: 2,
     oneAtATimeSpeedTicks: [
         { value: 1, realValue: 500, label: '1s' }, { value: 2, realValue: 750, label: 'default' },
         { value: 3, realValue: 1000, label: '2s' }, { value: 4, realValue: 1250, label: '2.5s' },
-        { value: 5, realValue: 1500, label: '3s' }, { value: 6, realValue: 2000, label: '4s' },
+        { value: 5, realValue: 1500, label: '3s' }, { value: 6, realValue: 1750, label: '.35s' }, { value: 7, realValue: 2000, label: '4s' },
     ],
     //
     profilePicRoundedValue: 25,
 }
 
 export const DefaultPatreonSettings: PatreonSettingsViewModel = {
+    displayType: DisplayType.Marquee,
     foregroundColour: DesignPalette.foregroundDefault,
     backgroundColour: DesignPalette.backgroundDefault,
     backgroundOpacity: DesignPalette.backgroundOpacityDefault,
@@ -58,4 +60,8 @@ export const DefaultPatreonSettings: PatreonSettingsViewModel = {
     panelVerticalListSpeed: DesignPalette.panelVerticalListSpeedDefault,
     isProfilePicRounded: false,
     profilePicRoundedValue: DesignPalette.profilePicRoundedValue,
+
+    guid: '',
+    userGuid: '',
+    lastModifiedDate: new Date(),
 }

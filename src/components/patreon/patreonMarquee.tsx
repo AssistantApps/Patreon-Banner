@@ -7,14 +7,14 @@ import { PatreonItemViewModel } from '../../contracts/generated/ViewModel/patreo
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
 
 interface IProps {
-    patronSettings: PatreonViewModel;
+    patronVm: PatreonViewModel;
 }
 
 export const PatreonMarquee: React.FC<IProps> = (props: IProps) => {
     const {
         foregroundColour, backgroundColour, backgroundOpacity, marqueSpeed,
         isProfilePicRounded, profilePicRoundedValue
-    } = props.patronSettings.settings;
+    } = props.patronVm.settings;
 
     let realValue = +marqueSpeed;
     const selectedValue = DesignPalette.marqueSpeedTicks.find(t => t.value === (+marqueSpeed));
@@ -30,8 +30,8 @@ export const PatreonMarquee: React.FC<IProps> = (props: IProps) => {
             <div className="patreon-container-background" style={styleObj}></div>
             <Marquee gradient={false} className="patreon-container" speed={5 * realValue}>
                 {
-                    props?.patronSettings?.patrons != null &&
-                    props.patronSettings?.patrons.map((item: PatreonItemViewModel) => (
+                    props?.patronVm?.patrons != null &&
+                    props.patronVm?.patrons.map((item: PatreonItemViewModel) => (
                         <PatreonTile key={item.name} {...item} foregroundColour={foregroundColour}
                             isProfilePicRounded={isProfilePicRounded} profilePicRoundedValue={profilePicRoundedValue}
                         />

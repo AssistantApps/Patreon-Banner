@@ -98,12 +98,24 @@ html {
     margin-bottom: 1em;
 }
 
+.mb2 {
+    margin-bottom: 2em;
+}
+
 .m-h-auto {
     margin: 0 auto;
 }
 
 .pt1 {
-    padding-top: 1em;
+    padding-top: 1em !important;
+}
+
+.pt2 {
+    padding-top: 2em !important;
+}
+
+.pt3 {
+    padding-top: 3em !important;
 }
 
 .pt5 {
@@ -164,3 +176,4 @@ html {
 @import 'custom/_svg.scss';
 @import 'custom/_displayType.scss';
 @import 'custom/_error.scss';
+@import 'custom/_segmentedControl.scss';

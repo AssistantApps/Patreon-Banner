@@ -1,5 +1,6 @@
 import React from 'react';
 import { BasicImage } from '../../components/core/image';
+import { DesignPalette } from '../../constants/designPalette';
 import { PatreonItemViewModel } from '../../contracts/generated/ViewModel/patreonItemViewModel';
 
 interface IPatronTileProps extends PatreonItemViewModel {
@@ -23,11 +24,20 @@ interface IPatronTileImageProps extends PatreonItemViewModel {
 }
 
 export const PatreonTileImage: React.FC<IPatronTileImageProps> = (props: IPatronTileImageProps) => {
+
+    let profilePicRoundedValue = DesignPalette.profilePicRoundedValue;
+    if (props.isProfilePicRounded) {
+        profilePicRoundedValue = props.profilePicRoundedValue;
+    } else {
+        profilePicRoundedValue = 0;
+    }
+
     return (
         <BasicImage
             key={props.imageUrl}
             imageUrl={props.imageUrl}
             imageName={props.name}
+            style={{ borderRadius: `${profilePicRoundedValue}px` }}
         />
     );
 }

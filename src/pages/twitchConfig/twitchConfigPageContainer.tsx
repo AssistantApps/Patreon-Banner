@@ -30,7 +30,7 @@ interface IState {
     submissionStatus: NetworkState;
     showFormValidation: boolean;
 
-    showAdvanced: boolean;
+    showCustomisations: boolean;
 
     // Twitch
     twitch: any;
@@ -52,7 +52,7 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
             submissionStatus: NetworkState.Pending,
             showFormValidation: false,
 
-            showAdvanced: false,
+            showCustomisations: false,
 
             // Twitch
             twitch: window.Twitch ? window.Twitch.ext : null,
@@ -161,10 +161,10 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
         });
     }
 
-    toggleAdvancedMode = (newValue?: boolean) => {
+    toggleShowCustomisations = () => {
         this.setState((prevState: IState) => {
             return {
-                showAdvanced: newValue ?? !prevState.showAdvanced,
+                showCustomisations: !prevState.showCustomisations,
             }
         });
     }
@@ -215,7 +215,7 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
                 {...this.props}
                 editFormValues={this.editFormValues}
                 submitConfigForm={this.submitConfigForm}
-                toggleAdvancedMode={this.toggleAdvancedMode}
+                toggleShowCustomisations={this.toggleShowCustomisations}
             />
         )
     }

@@ -56,11 +56,8 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
     }
 
     const existingFetchSuccessful = props.fetchExistingStatus === NetworkState.Success;
-    const showPatreonLoginButton = existingFetchSuccessful === false;
     const userDisplayUrl = getDisplayUrl(props.existingSettingsPayload?.userGuid);
-
     const showBrowserSourceSettings = (props.showCustomisations && props.fetchExistingStatus === NetworkState.Success && props.existingSettingsPayload.patrons != null && props.customisationTabIndex === 0);
-    const showTwitchPanelSettings = (props.showCustomisations && props.fetchExistingStatus === NetworkState.Success && props.existingSettingsPayload.patrons != null && props.customisationTabIndex === 1);
 
     const styleObj: any = {};
     if (props.showCustomisations) {
@@ -79,31 +76,27 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                             {renderStatusSection(props)}
 
                             {
-                                showPatreonLoginButton &&
-                                <PatreonButton onClick={() => {
-                                    const url = patronOAuthUrl();
-                                    props.loggingService?.log('url', url);
-                                    window.location.href = url;
-                                }} />
-                            }
-
-                            {
-                                existingFetchSuccessful &&
-                                <div className="pos-rel">
-                                    <TextInput
-                                        key="displayUrl"
-                                        id="displayUrl"
-                                        name="displayUrl"
-                                        label="Browser Source Url"
-                                        value={userDisplayUrl}
-                                        onChange={() => { }}
-                                        placeholder="An Error has occurred"
-                                    />
-                                    <a href={userDisplayUrl} target="_blank" rel="noopener noreferrer"
-                                        className="icon medium icon-browser" draggable={false}
-                                        style={{ position: 'absolute', top: '1.45rem', right: '0.1rem' }}
-                                    ></a>
-                                </div>
+                                (existingFetchSuccessful === false)
+                                    ? <PatreonButton onClick={() => {
+                                        const url = patronOAuthUrl();
+                                        props.loggingService?.log('url', url);
+                                        window.location.href = url;
+                                    }} />
+                                    : <div className="pos-rel">
+                                        <TextInput
+                                            key="displayUrl"
+                                            id="displayUrl"
+                                            name="displayUrl"
+                                            label="Browser Source Url"
+                                            value={userDisplayUrl}
+                                            onChange={() => { }}
+                                            placeholder="An Error has occurred"
+                                        />
+                                        <a href={userDisplayUrl} target="_blank" rel="noopener noreferrer"
+                                            className="icon medium icon-browser" draggable={false}
+                                            style={{ position: 'absolute', top: '1.45rem', right: '0.1rem' }}
+                                        ></a>
+                                    </div>
                             }
                         </div>
                     </div>
@@ -123,18 +116,20 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                     </div>
                 </section>
                 {
-                    showBrowserSourceSettings &&
-                    <BrowserSourceSettings
-                        patreonData={props.existingSettingsPayload}
-                        onSave={(_) => { }}
-                    />
-                }
-                {
-                    showTwitchPanelSettings &&
-                    <TwitchPanelSettings
-                        patreonData={props.existingSettingsPayload}
-                        onSave={(_) => { }}
-                    />
+                    props.showCustomisations &&
+                    <>
+                        {
+                            showBrowserSourceSettings
+                                ? <BrowserSourceSettings
+                                    patreonData={props.existingSettingsPayload}
+                                    onSave={(_) => { }}
+                                />
+                                : <TwitchPanelSettings
+                                    patreonData={props.existingSettingsPayload}
+                                    onSave={(_) => { }}
+                                />
+                        }
+                    </>
                 }
             </div>
 

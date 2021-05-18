@@ -5,5 +5,7 @@ export interface PatreonItemViewModel {
     imageUrl: string;
     thumbnailUrl: string;
     url: string;
-    totalAmountCents: number;
+    perMonthContributionCents?: number;
+    lifetimeContributionCents?: number;
+    joinedDate: Date;
 }

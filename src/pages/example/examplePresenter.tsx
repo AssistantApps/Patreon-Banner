@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { AppImage } from '../../constants/appImage';
-import { DisplayType } from '../../constants/enum/displayType';
+import { PatreonBannerDisplayType } from '../../contracts/generated/Enum/patreonBannerDisplayType';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
 
 import { Footer } from '../../components/common/footer'
@@ -12,12 +11,12 @@ import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/pa
 interface IContainerProps {
     testData: PatreonViewModel;
     settings: PatreonSettingsViewModel;
-    setDisplayType: (displayType: DisplayType) => void;
+    setDisplayType: (displayType: PatreonBannerDisplayType) => void;
     editSettings: (name: string) => (value: string) => void;
 }
 
 interface IProps extends IContainerProps {
-    displayType: DisplayType;
+    displayType: PatreonBannerDisplayType;
 }
 
 export const ExamplePagePresenter: React.FC<IProps> = (props: IProps) => {

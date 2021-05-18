@@ -7,6 +7,8 @@ import { PatreonViewModel } from '../../../contracts/generated/ViewModel/patreon
 import { getApp } from '../../../helper/configHelper';
 
 import { PatreonVerticalList } from '../patreonVerticalList';
+import classNames from 'classnames';
+import { anyObject } from '../../../helper/typescriptHacks';
 
 
 interface IProps {
@@ -17,9 +19,21 @@ interface IProps {
 
 export const PatreonPanelPresenter: React.FC<IProps> = (props: IProps) => {
     const { patronVm, isTestData } = props;
+    const { panelUseDefaultBackground, panelCustomBackgroundImageUrl } = patronVm.settings;
+
+    let styleObj: any = anyObject;
+    const useBackgroundImage = (panelUseDefaultBackground == false && panelCustomBackgroundImageUrl.length > 10);
+    if (useBackgroundImage) {
+        styleObj = {
+            backgroundImage: `url(${panelCustomBackgroundImageUrl})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+        };
+    }
 
     return (
-        <div id="panel" className="bg" draggable={false}>
+        <div id="panel" className={classNames({ 'bg': panelUseDefaultBackground })} style={styleObj} draggable={false}>
             <PatreonVerticalList patronVm={patronVm} />
             <BasicLink id="ad" href={getApp()}>
                 <BasicImage imageUrl={AppImage.logo100} />

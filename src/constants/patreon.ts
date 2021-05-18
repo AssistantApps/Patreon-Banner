@@ -1,5 +1,5 @@
 import { AppImage } from "./appImage";
-import { DisplayType } from "./enum/displayType";
+import { PatreonBannerDisplayType } from "../contracts/generated/Enum/patreonBannerDisplayType";
 
 export const patreonApiUrl = 'https://www.patreon.com';
 export const patreonApiOAuthUrl = `${patreonApiUrl}/oauth2/authorize`;
@@ -7,14 +7,14 @@ export const patreonApiOAuthUrl = `${patreonApiUrl}/oauth2/authorize`;
 export const displayTypeCheckBoxes = [
     {
         imageUrl: `/${AppImage.displayTypeMarquee}`,
-        displayType: DisplayType.Marquee,
+        displayType: PatreonBannerDisplayType.marque,
     },
     {
         imageUrl: `/${AppImage.displayTypeVerticalList}`,
-        displayType: DisplayType.VerticalList,
+        displayType: PatreonBannerDisplayType.verticalList,
     },
     {
         imageUrl: `/${AppImage.displayTypeOneAtATime}`,
-        displayType: DisplayType.OneAtATime,
+        displayType: PatreonBannerDisplayType.oneAtATime,
     }
 ];

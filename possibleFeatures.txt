@@ -17,6 +17,14 @@ Configs
 - Speed of Marquee
 - Speed of VerticalList
 - Speed of OneAtATime
+
+- Limit Patrons visible
+    - Min monthly donation
+    - Min LifeTime donation
+- Order by
+    - LifeTime donation
+    - Date joined
+
 - Background color 
     - Free users: 7 options (Check serverside)
     - PRO users: Hex editor

@@ -1,25 +1,16 @@
 import React from 'react';
-import { FormControl, FormControlLabel, FormLabel, RadioGroup, Radio, Checkbox } from '@material-ui/core';
 import { sha1 } from 'object-hash'
-
-import { DisplayType } from '../../constants/enum/displayType';
-import { DefaultPatreonSettings, DesignPalette } from '../../constants/designPalette';
-import { displayTypeCheckBoxes } from '../../constants/patreon';
-import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
-
-import { ColourPicker } from '../../components/common/colourPicker/colourPicker'
-import { Footer } from '../../components/common/footer'
-import { BasicImage } from '../../components/core/image';
-import { PatreonMarquee } from '../../components/patreon/patreonMarquee';
-import { PatreonVerticalList } from '../../components/patreon/patreonVerticalList';
-import { PatreonOneAtATime } from '../../components/patreon/patreonOneAtATime';
-import { SpeedPicker } from '../../components/common/slider/speedPicker';
-import { DefaultTooltip } from '../../components/common/tooltip/tooltip';
-
-import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/patreonSettingsViewModel';
 import classNames from 'classnames';
-import { CommonSettings, CommonSettingsFooter } from './commonSettings';
+
+import { DefaultPatreonSettings } from '../../constants/designPalette';
+import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
+import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/patreonSettingsViewModel';
+
 import { PatreonPanelPresenter } from '../patreon/panel/patreonPanelPresenter';
+
+import { CommonSettings } from './commonSettings';
+import { Checkbox, FormControlLabel } from '@material-ui/core';
+import { Lock } from '../common/svg/lock';
 
 
 interface IState {
@@ -72,7 +63,13 @@ export class TwitchPanelSettings extends React.Component<IProps, IState> {
                 ...this.state.settings
             }
         }
+        const { settings } = patronVm;
         const showSave = (this.state.propSettingsHash != this.state.settingsHash);
+
+        /*
+        panelUseDefaultBackground
+panelCustomBackgroundImageUrl
+*/
 
         return (
             <section id="browser-source-settings" className="main pt3">
@@ -89,8 +86,48 @@ export class TwitchPanelSettings extends React.Component<IProps, IState> {
                             </div>
                         </div>
 
-                        <div className="row mb1">
+                        <div className="row mt1 mb2">
                             <CommonSettings patronVm={patronVm} editSettings={this.editSettings} />
+                        </div>
+                        <hr />
+                        <div className="row mt2">
+                            <div className="col-12">
+                                <label>Panel Background</label>
+
+                                <FormControlLabel
+                                    label="Use default"
+                                    control={
+                                        <Checkbox
+                                            checked={settings.panelUseDefaultBackground}
+                                            onChange={(_: any) => this.editSettings<boolean>('panelUseDefaultBackground')(!settings.panelUseDefaultBackground)}
+                                            name="useDefaulBackground"
+                                            color="primary"
+                                        />
+                                    }
+                                />
+
+                                {
+                                    (settings.panelUseDefaultBackground == false) &&
+                                    <div className={classNames({ 'premium-locked': !patronVm.isPremium })}>
+                                        <input type="text"
+                                            name="border-radius-input"
+                                            style={{ display: 'inline-block', width: 'calc(100% - 2em)', marginRight: '1em' }}
+                                            value={settings.panelCustomBackgroundImageUrl}
+                                            placeholder={'https://i.imgur.com/sKV54PO.jpg'}
+                                            onChange={(event: any) => {
+                                                event.persist();
+                                                const value = event?.target?.value;
+                                                this.editSettings<string>('panelCustomBackgroundImageUrl')(value);
+                                            }}
+                                        />
+                                        <Lock classNames="ml1" />
+                                        {
+                                            (patronVm.isPremium == false) &&
+                                            <Lock classNames="ml1" />
+                                        }
+                                    </div>
+                                }
+                            </div>
                         </div>
                         <hr className="mt2 mb2" />
                         <div className="ta-center">

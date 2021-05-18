@@ -1,17 +1,19 @@
 ﻿/* Auto Generated */
 
+import { PatreonBannerDisplayType } from "./../Enum/patreonBannerDisplayType";
+
 export interface PatreonSettingsViewModel {
-    guid: string;
-    userGuid: string;
-    displayType: number;
+    displayType: PatreonBannerDisplayType;
     foregroundColour: string;
     backgroundColour: string;
     backgroundOpacity: number;
     marqueSpeed: number;
     verticalListSpeed: number;
     oneAtATimeSpeed: number;
-    panelVerticalListSpeed: number;
     isProfilePicRounded: boolean;
     profilePicRoundedValue: number;
+    panelVerticalListSpeed: number;
+    panelUseDefaultBackground: boolean;
+    panelCustomBackgroundImageUrl: string;
     lastModifiedDate: Date;
 }

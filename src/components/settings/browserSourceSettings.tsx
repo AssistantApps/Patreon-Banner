@@ -1,9 +1,9 @@
 import React from 'react';
-import { FormControlLabel, Checkbox, FormControl, FormLabel, RadioGroup, Radio } from '@material-ui/core';
+import { FormControlLabel, FormControl, RadioGroup, Radio } from '@material-ui/core';
 import { sha1 } from 'object-hash'
 
-import { DisplayType } from '../../constants/enum/displayType';
 import { DefaultPatreonSettings, DesignPalette } from '../../constants/designPalette';
+import { PatreonBannerDisplayType } from '../../contracts/generated/Enum/patreonBannerDisplayType';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
 
 import { SpeedPicker } from '../common/slider/speedPicker';
@@ -111,19 +111,19 @@ export class BrowserSourceSettings extends React.Component<IProps, IState> {
                                 <h2 className="m0">Your awesome stream!</h2>
                             </div>
                             {
-                                patronSettings.displayType === DisplayType.Marquee &&
+                                patronSettings.displayType === PatreonBannerDisplayType.marque &&
                                 <div className="display-test-marquee">
                                     <PatreonMarquee patronVm={patronVm} />
                                 </div>
                             }
                             {
-                                patronSettings.displayType === DisplayType.VerticalList &&
+                                patronSettings.displayType === PatreonBannerDisplayType.verticalList &&
                                 <div className="display-test-list">
                                     <PatreonVerticalList patronVm={patronVm} />
                                 </div>
                             }
                             {
-                                patronSettings.displayType === DisplayType.OneAtATime &&
+                                patronSettings.displayType === PatreonBannerDisplayType.oneAtATime &&
                                 <div className="display-test-one-at-a-time">
                                     <PatreonOneAtATime patronVm={patronVm} />
                                 </div>
@@ -136,7 +136,7 @@ export class BrowserSourceSettings extends React.Component<IProps, IState> {
                         <div className="row">
                             <div className="col-12">
                                 {
-                                    patronSettings.displayType === DisplayType.Marquee &&
+                                    patronSettings.displayType === PatreonBannerDisplayType.marque &&
                                     <div className="mt1">
                                         <label>Speed of Patrons scrolling</label>
                                         <SpeedPicker
@@ -149,7 +149,7 @@ export class BrowserSourceSettings extends React.Component<IProps, IState> {
                                     </div>
                                 }
                                 {
-                                    patronSettings.displayType === DisplayType.VerticalList &&
+                                    patronSettings.displayType === PatreonBannerDisplayType.verticalList &&
                                     <div className="mt1">
                                         <label>Time per Patron <DefaultTooltip message="Duration of list animation = (time per patron) x (number of patrons)"></DefaultTooltip></label>
                                         <SpeedPicker
@@ -162,7 +162,7 @@ export class BrowserSourceSettings extends React.Component<IProps, IState> {
                                     </div>
                                 }
                                 {
-                                    patronSettings.displayType === DisplayType.OneAtATime &&
+                                    patronSettings.displayType === PatreonBannerDisplayType.oneAtATime &&
                                     <div className="mt1">
                                         <label>Time on screen per Patron</label>
                                         <SpeedPicker

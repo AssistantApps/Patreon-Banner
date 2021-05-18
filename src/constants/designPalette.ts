@@ -1,5 +1,5 @@
 import { PatreonSettingsViewModel } from "../contracts/generated/ViewModel/patreonSettingsViewModel";
-import { DisplayType } from "./enum/displayType";
+import { PatreonBannerDisplayType } from "../contracts/generated/Enum/patreonBannerDisplayType";
 
 const patronForegroundColours = [
     '#FFFFFF',
@@ -50,18 +50,17 @@ export const DesignPalette = {
 }
 
 export const DefaultPatreonSettings: PatreonSettingsViewModel = {
-    displayType: DisplayType.Marquee,
+    displayType: PatreonBannerDisplayType.marque,
     foregroundColour: DesignPalette.foregroundDefault,
     backgroundColour: DesignPalette.backgroundDefault,
     backgroundOpacity: DesignPalette.backgroundOpacityDefault,
     marqueSpeed: DesignPalette.marqueSpeedDefault,
     verticalListSpeed: DesignPalette.verticalListSpeedDefault,
     oneAtATimeSpeed: DesignPalette.oneAtATimeSpeedDefault,
-    panelVerticalListSpeed: DesignPalette.panelVerticalListSpeedDefault,
     isProfilePicRounded: false,
     profilePicRoundedValue: DesignPalette.profilePicRoundedValue,
-
-    guid: '',
-    userGuid: '',
+    panelVerticalListSpeed: DesignPalette.panelVerticalListSpeedDefault,
+    panelUseDefaultBackground: true,
+    panelCustomBackgroundImageUrl: '',
     lastModifiedDate: new Date(),
 }

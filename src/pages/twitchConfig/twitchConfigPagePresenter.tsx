@@ -127,7 +127,9 @@ export const TwitchConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                 (props.showCustomisations) &&
                 <TwitchPanelSettings
                     patreonData={props.existingSettingsPayload}
-                    onSave={(_) => { }}
+                    showSaveButton={false}
+                    editSettings={<T extends unknown>(name: string) => (value: T) => { }}
+                    onSave={() => { }}
                 />
             }
         </div>

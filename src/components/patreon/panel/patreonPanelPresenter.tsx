@@ -22,7 +22,7 @@ export const PatreonPanelPresenter: React.FC<IProps> = (props: IProps) => {
     const { panelUseDefaultBackground, panelCustomBackgroundImageUrl } = patronVm.settings;
 
     let styleObj: any = anyObject;
-    const useBackgroundImage = (panelUseDefaultBackground == false && panelCustomBackgroundImageUrl.length > 10);
+    const useBackgroundImage = (panelUseDefaultBackground == false && panelCustomBackgroundImageUrl && panelCustomBackgroundImageUrl.length > 10);
     if (useBackgroundImage) {
         styleObj = {
             backgroundImage: `url(${panelCustomBackgroundImageUrl})`,

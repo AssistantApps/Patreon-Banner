@@ -16,6 +16,7 @@ import { getDisplayUrl } from '../../helper/configHelper';
 import { patronOAuthUrl } from '../../integration/patreonOAuth';
 
 import { IExpectedServices } from './configPage.dependencyInjection';
+import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/patreonSettingsViewModel';
 
 
 /* TODO - Undo display none when enabling settings feature */
@@ -24,10 +25,16 @@ const enableCustomizationsFeature = true;
 export interface IConfigPagePresenterProps {
     fetchExistingStatus: NetworkState;
     existingSettingsPayload: PatreonViewModel;
+
+    showSaveButton: boolean;
+
     showCustomisations: boolean;
     customisationTabIndex: number;
+
     toggleShowCustomisations: () => void;
     setCustomisationTabIndex: (newCustomisationTabIndex: number) => void;
+    editSettings: <T extends unknown>(name: string) => (value: T) => void;
+    saveSettings: () => void;
 }
 
 interface IProps extends IConfigPagePresenterProps, IExpectedServices { }
@@ -61,6 +68,7 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
 
     const existingFetchSuccessful = props.fetchExistingStatus === NetworkState.Success;
     const userDisplayUrl = getDisplayUrl(props.existingSettingsPayload?.userGuid);
+    const hasUserConfig = existingFetchSuccessful && props.existingSettingsPayload && props.existingSettingsPayload.userGuid;
     const showBrowserSourceSettings = (props.showCustomisations && props.fetchExistingStatus === NetworkState.Success && props.existingSettingsPayload.patrons != null && props.customisationTabIndex === 0);
 
     const styleObj: any = {};
@@ -106,11 +114,11 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                     </div>
                     <div className="ta-center" style={{ display: enableCustomizationsFeature ? undefined : 'none' }}>
                         {
-                            (props.showCustomisations === false) &&
+                            (props.showCustomisations === false && hasUserConfig) &&
                             <button className="primary button mt1" onClick={props.toggleShowCustomisations}>Customize</button>
                         }
                         {
-                            (props.showCustomisations && existingFetchSuccessful && props.existingSettingsPayload/* && props.existingSettingsPayload.hasTwitch*/) &&
+                            (props.showCustomisations && hasUserConfig/* && props.existingSettingsPayload.hasTwitch*/) &&
                             <SegmentedControl
                                 options={[{ label: 'Browser Source settings', value: 0 }, { label: 'Twitch Panel settings', value: 1 }]}
                                 onChange={props.setCustomisationTabIndex}
@@ -125,11 +133,15 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                             showBrowserSourceSettings
                                 ? <BrowserSourceSettings
                                     patreonData={props.existingSettingsPayload}
-                                    onSave={(_) => { }}
+                                    showSaveButton={props.showSaveButton}
+                                    editSettings={props.editSettings}
+                                    onSave={props.saveSettings}
                                 />
                                 : <TwitchPanelSettings
                                     patreonData={props.existingSettingsPayload}
-                                    onSave={(_) => { }}
+                                    showSaveButton={props.showSaveButton}
+                                    editSettings={props.editSettings}
+                                    onSave={props.saveSettings}
                                 />
                         }
                     </>

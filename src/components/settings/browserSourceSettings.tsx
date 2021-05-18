@@ -19,175 +19,131 @@ import { PatreonVerticalList } from '../patreon/patreonVerticalList';
 import { PatreonOneAtATime } from '../patreon/patreonOneAtATime';
 
 
-interface IState {
-    settings: PatreonSettingsViewModel;
-    propSettingsHash: string;
-    settingsHash: string;
-}
-
 interface IProps {
     patreonData: PatreonViewModel;
-    onSave: (settings: PatreonSettingsViewModel) => void
+    showSaveButton: boolean;
+    onSave: () => void;
+    editSettings: <T extends unknown>(name: string) => (value: T) => void;
 }
 
-export class BrowserSourceSettings extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
-        super(props);
+export const BrowserSourceSettings: React.FC<IProps> = (props: IProps) => {
+    const patronVm = props?.patreonData;
+    const patronSettings = patronVm.settings ?? DefaultPatreonSettings;
 
-        const settings = props?.patreonData?.settings ?? DefaultPatreonSettings;
-
-        this.state = {
-            settings: DefaultPatreonSettings,
-            propSettingsHash: sha1(settings),
-            settingsHash: sha1(settings),
-        }
-    }
-
-    editSettings = <T extends unknown>(name: string) => (value: T) => {
-        this.setState((prevState: IState) => {
-            const settings: PatreonSettingsViewModel = {
-                ...prevState.settings,
-                [name]: value
-            };
-
-            return {
-                settings,
-                settingsHash: sha1(settings),
-            }
-        });
-    }
-
-    save = () => {
-        this.props?.onSave?.(this.state.settings)
-    }
-
-    render() {
-        const patronVm: PatreonViewModel = {
-            ...this.props.patreonData,
-            settings: {
-                ...this.props.patreonData.settings,
-                ...this.state.settings
-            }
-        }
-        const patronSettings = patronVm.settings;
-
-        const showSave = (this.state.propSettingsHash != this.state.settingsHash);
-
-        return (
-            <section id="browser-source-settings" className="main pt1">
-                <div className="spotlight">
-                    <div className="content">
-                        <FormControl component="fieldset" style={{ width: '100%' }}>
-                            <RadioGroup row aria-label="position" name="position" defaultValue="top" className="mt1">
-                                {
-                                    displayTypeCheckBoxes.map((cBoxDetails: any) => {
-                                        const radioComp = (
-                                            <Radio
-                                                color="primary"
-                                                checked={cBoxDetails.displayType === patronSettings.displayType}
-                                            />
-                                        );
-                                        const labelComp = (
-                                            <BasicImage
-                                                imageUrl={cBoxDetails.imageUrl}
-                                                classNames="display-type"
-                                            />
-                                        )
-                                        return (
-                                            <FormControlLabel
-                                                key={`option-${cBoxDetails.displayType}`}
-                                                labelPlacement="bottom"
-                                                control={radioComp}
-                                                label={labelComp}
-                                                onClick={() => this.editSettings('displayType')(cBoxDetails.displayType)}
-                                            />
-                                        );
-                                    })
-                                }
-                            </RadioGroup>
-                        </FormControl>
-                        <div className="display-test">
-                            <div className="display-test-inner">
-                                <h2 className="m0">Your awesome stream!</h2>
+    return (
+        <section id="browser-source-settings" className="main pt1">
+            <div className="spotlight">
+                <div className="content">
+                    <FormControl component="fieldset" style={{ width: '100%' }}>
+                        <RadioGroup row aria-label="position" name="position" defaultValue="top" className="mt1">
+                            {
+                                displayTypeCheckBoxes.map((cBoxDetails: any) => {
+                                    const radioComp = (
+                                        <Radio
+                                            color="primary"
+                                            checked={cBoxDetails.displayType === patronSettings.displayType}
+                                        />
+                                    );
+                                    const labelComp = (
+                                        <BasicImage
+                                            imageUrl={cBoxDetails.imageUrl}
+                                            classNames="display-type"
+                                        />
+                                    )
+                                    return (
+                                        <FormControlLabel
+                                            key={`option-${cBoxDetails.displayType}`}
+                                            labelPlacement="bottom"
+                                            control={radioComp}
+                                            label={labelComp}
+                                            onClick={() => props.editSettings('displayType')(cBoxDetails.displayType)}
+                                        />
+                                    );
+                                })
+                            }
+                        </RadioGroup>
+                    </FormControl>
+                    <div className="display-test">
+                        <div className="display-test-inner">
+                            <h2 className="m0">Your awesome stream!</h2>
+                        </div>
+                        {
+                            patronSettings.displayType === PatreonBannerDisplayType.marque &&
+                            <div className="display-test-marquee">
+                                <PatreonMarquee patronVm={patronVm} />
                             </div>
+                        }
+                        {
+                            patronSettings.displayType === PatreonBannerDisplayType.verticalList &&
+                            <div className="display-test-list">
+                                <PatreonVerticalList patronVm={patronVm} />
+                            </div>
+                        }
+                        {
+                            patronSettings.displayType === PatreonBannerDisplayType.oneAtATime &&
+                            <div className="display-test-one-at-a-time">
+                                <PatreonOneAtATime patronVm={patronVm} />
+                            </div>
+                        }
+                    </div>
+                    <div className="row mt2 mb1">
+                        <CommonSettings patronVm={patronVm} editSettings={props.editSettings} />
+                    </div>
+                    <hr />
+                    <div className="row">
+                        <div className="col-12">
                             {
                                 patronSettings.displayType === PatreonBannerDisplayType.marque &&
-                                <div className="display-test-marquee">
-                                    <PatreonMarquee patronVm={patronVm} />
+                                <div className="mt1">
+                                    <label>Speed of Patrons scrolling</label>
+                                    <SpeedPicker
+                                        className="ph3"
+                                        availableTicks={DesignPalette.marqueSpeedTicks}
+                                        value={patronSettings.marqueSpeed}
+                                        valueLabelDisplay="off"
+                                        onChange={(newValue: number) => props.editSettings('marqueSpeed')(newValue.toString())}
+                                    />
                                 </div>
                             }
                             {
                                 patronSettings.displayType === PatreonBannerDisplayType.verticalList &&
-                                <div className="display-test-list">
-                                    <PatreonVerticalList patronVm={patronVm} />
+                                <div className="mt1">
+                                    <label>Time per Patron <DefaultTooltip message="Duration of list animation = (time per patron) x (number of patrons)"></DefaultTooltip></label>
+                                    <SpeedPicker
+                                        className="ph3"
+                                        availableTicks={DesignPalette.verticalListSpeedTicks}
+                                        value={patronSettings.verticalListSpeed}
+                                        valueLabelDisplay="off"
+                                        onChange={(newValue: number) => props.editSettings('verticalListSpeed')(newValue.toString())}
+                                    />
                                 </div>
                             }
                             {
                                 patronSettings.displayType === PatreonBannerDisplayType.oneAtATime &&
-                                <div className="display-test-one-at-a-time">
-                                    <PatreonOneAtATime patronVm={patronVm} />
+                                <div className="mt1">
+                                    <label>Time on screen per Patron</label>
+                                    <SpeedPicker
+                                        className="ph3"
+                                        availableTicks={DesignPalette.oneAtATimeSpeedTicks}
+                                        value={patronSettings.oneAtATimeSpeed}
+                                        valueLabelDisplay="off"
+                                        onChange={props.editSettings<number>('oneAtATimeSpeed')}
+                                    />
                                 </div>
                             }
                         </div>
-                        <div className="row mt2 mb1">
-                            <CommonSettings patronVm={patronVm} editSettings={this.editSettings} />
-                        </div>
-                        <hr />
-                        <div className="row">
-                            <div className="col-12">
-                                {
-                                    patronSettings.displayType === PatreonBannerDisplayType.marque &&
-                                    <div className="mt1">
-                                        <label>Speed of Patrons scrolling</label>
-                                        <SpeedPicker
-                                            className="ph3"
-                                            availableTicks={DesignPalette.marqueSpeedTicks}
-                                            value={patronSettings.marqueSpeed}
-                                            valueLabelDisplay="off"
-                                            onChange={(newValue: number) => this.editSettings('marqueSpeed')(newValue.toString())}
-                                        />
-                                    </div>
-                                }
-                                {
-                                    patronSettings.displayType === PatreonBannerDisplayType.verticalList &&
-                                    <div className="mt1">
-                                        <label>Time per Patron <DefaultTooltip message="Duration of list animation = (time per patron) x (number of patrons)"></DefaultTooltip></label>
-                                        <SpeedPicker
-                                            className="ph3"
-                                            availableTicks={DesignPalette.verticalListSpeedTicks}
-                                            value={patronSettings.verticalListSpeed}
-                                            valueLabelDisplay="off"
-                                            onChange={(newValue: number) => this.editSettings('verticalListSpeed')(newValue.toString())}
-                                        />
-                                    </div>
-                                }
-                                {
-                                    patronSettings.displayType === PatreonBannerDisplayType.oneAtATime &&
-                                    <div className="mt1">
-                                        <label>Time on screen per Patron</label>
-                                        <SpeedPicker
-                                            className="ph3"
-                                            availableTicks={DesignPalette.oneAtATimeSpeedTicks}
-                                            value={patronSettings.oneAtATimeSpeed}
-                                            valueLabelDisplay="off"
-                                            onChange={this.editSettings<number>('oneAtATimeSpeed')}
-                                        />
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                        <hr />
-                        <CommonSettingsFooter patronVm={patronVm} editSettings={this.editSettings} />
-                        <hr className="mt2 mb2" />
-                        <div className="ta-center">
-                            <div
-                                className={classNames('primary button', { disabled: !showSave })}
-                                onClick={this.save}
-                            >Save</div>
-                        </div>
+                    </div>
+                    <hr />
+                    <CommonSettingsFooter patronVm={patronVm} editSettings={props.editSettings} />
+                    <hr className="mt2 mb2" />
+                    <div className="ta-center">
+                        <div
+                            className={classNames('primary button', { disabled: !props.showSaveButton })}
+                            onClick={props.onSave}
+                        >Save</div>
                     </div>
                 </div>
-            </section>
-        );
-    }
+            </div>
+        </section>
+    );
 }

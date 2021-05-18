@@ -31,7 +31,9 @@ export const ExamplePagePresenter: React.FC<IProps> = (props: IProps) => {
             <div id="main">
                 <BrowserSourceSettings
                     patreonData={patronVm}
-                    onSave={(_) => { }}
+                    showSaveButton={false}
+                    editSettings={<T extends unknown>(name: string) => (value: T) => { }}
+                    onSave={() => { }}
                 />
             </div>
 

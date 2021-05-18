@@ -9,6 +9,9 @@ import { withServices } from '../../integration/dependencyInjection';
 
 import { dependencyInjectionToProps, IExpectedServices } from './configPage.dependencyInjection';
 import { ConfigPagePresenter } from './configPagePresenter';
+import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/patreonSettingsViewModel';
+import Swal from 'sweetalert2';
+import { sha1 } from 'object-hash';
 
 declare global {
     interface Window {
@@ -21,8 +24,13 @@ interface IWithoutExpectedServices { }
 interface IProps extends IExpectedServices, IWithoutExpectedServices { }
 
 interface IState {
+    userGuid: string;
     fetchExistingStatus: NetworkState;
+
     existingSettingsPayload: PatreonViewModel;
+    initialSettingsHash: string;
+    settingsHash: string;
+
     showCustomisations: boolean;
     customisationTabIndex: number;
 }
@@ -32,8 +40,13 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
         super(props);
 
         this.state = {
+            userGuid: '',
             fetchExistingStatus: NetworkState.Pending,
+
             existingSettingsPayload: anyObject,
+            initialSettingsHash: '',
+            settingsHash: '',
+
             showCustomisations: false,
             customisationTabIndex: 0,
         };
@@ -49,6 +62,7 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
     setLoadingForFetchExistingSettings = (userGuid: string) => {
         this.setState(() => {
             return {
+                userGuid,
                 fetchExistingStatus: NetworkState.Loading
             }
         }, () => this.fetchExistingSettings(userGuid))
@@ -70,7 +84,9 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
         this.setState(() => {
             return {
                 fetchExistingStatus: NetworkState.Success,
-                existingSettingsPayload: existingSettingsresult.value
+                existingSettingsPayload: existingSettingsresult.value,
+                initialSettingsHash: sha1(existingSettingsresult.value.settings),
+                settingsHash: sha1(existingSettingsresult.value.settings),
             }
         });
     }
@@ -89,13 +105,54 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
         });
     }
 
+    editSettings = <T extends unknown>(name: string) => (value: T) => {
+        this.setState((prevState: IState) => {
+            const settings: PatreonSettingsViewModel = {
+                ...prevState.existingSettingsPayload.settings,
+                [name]: value
+            };
+
+            return {
+                existingSettingsPayload: {
+                    ...prevState.existingSettingsPayload,
+                    settings,
+                },
+                settingsHash: sha1(settings),
+            }
+        });
+    }
+
+    prepareToSaveSettings = async () => {
+        this.setState({
+            fetchExistingStatus: NetworkState.Loading,
+        }, () => this.saveSettings());
+    }
+
+    saveSettings = async () => {
+        const userGuid = this.state.userGuid;
+        const settings = this.state.existingSettingsPayload.settings;
+
+        const saveSettingsResult = await this.props.patreonService.submitSettings(userGuid, settings);
+        if (!saveSettingsResult.isSuccess) {
+            Swal.fire('Ooops', 'Something went wrong', 'error');
+            this.setState({
+                fetchExistingStatus: NetworkState.Success,
+            });
+            return;
+        }
+        await this.fetchExistingSettings(this.state.userGuid);
+    }
+
     render() {
         return (
             <ConfigPagePresenter
                 {...this.state}
                 {...this.props}
+                showSaveButton={(this.state.initialSettingsHash != this.state.settingsHash)}
                 toggleShowCustomisations={this.toggleShowCustomisations}
                 setCustomisationTabIndex={this.setCustomisationTabIndex}
+                saveSettings={this.prepareToSaveSettings}
+                editSettings={this.editSettings}
             />
         )
     }

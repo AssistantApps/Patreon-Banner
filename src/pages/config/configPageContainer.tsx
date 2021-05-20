@@ -1,17 +1,18 @@
 import React from 'react';
+import Swal from 'sweetalert2';
+import { sha1 } from 'object-hash';
 
 import * as storageKey from '../../constants/storageKey';
 import { NetworkState } from '../../constants/enum/networkState';
+import { DefaultPatreonSettings } from '../../constants/designPalette';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
+import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/patreonSettingsViewModel';
 import { anyObject } from '../../helper/typescriptHacks';
 
 import { withServices } from '../../integration/dependencyInjection';
 
-import { dependencyInjectionToProps, IExpectedServices } from './configPage.dependencyInjection';
 import { ConfigPagePresenter } from './configPagePresenter';
-import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/patreonSettingsViewModel';
-import Swal from 'sweetalert2';
-import { sha1 } from 'object-hash';
+import { dependencyInjectionToProps, IExpectedServices } from './configPage.dependencyInjection';
 
 declare global {
     interface Window {
@@ -54,7 +55,7 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
 
     componentDidMount() {
         const currentGuid = this.props.storageService?.get<string>(storageKey.userGuid);
-        if (currentGuid != null && currentGuid.isSuccess) {
+        if (currentGuid != null && currentGuid.isSuccess && currentGuid.value && currentGuid.value.length > 5) {
             this.setLoadingForFetchExistingSettings(currentGuid.value);
         }
     }
@@ -72,6 +73,7 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
         var existingSettingsresult = await this.props.patreonService.getFromGuid(userGuid);
         if (!existingSettingsresult.isSuccess) {
             this.props.loggingService?.error(existingSettingsresult.errorMessage);
+            this.props.storageService?.remove<string>(storageKey.userGuid);
 
             this.setState(() => {
                 return {
@@ -84,7 +86,10 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
         this.setState(() => {
             return {
                 fetchExistingStatus: NetworkState.Success,
-                existingSettingsPayload: existingSettingsresult.value,
+                existingSettingsPayload: {
+                    ...existingSettingsresult.value,
+                    settings: existingSettingsresult.value.settings ?? DefaultPatreonSettings
+                },
                 initialSettingsHash: sha1(existingSettingsresult.value.settings),
                 settingsHash: sha1(existingSettingsresult.value.settings),
             }
@@ -111,6 +116,8 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
                 ...prevState.existingSettingsPayload.settings,
                 [name]: value
             };
+
+            console.log(settings);
 
             return {
                 existingSettingsPayload: {

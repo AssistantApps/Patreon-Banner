@@ -1,22 +1,21 @@
 import React from 'react';
+import classNames from 'classnames';
 import { FormControlLabel, FormControl, RadioGroup, Radio } from '@material-ui/core';
-import { sha1 } from 'object-hash'
 
+import { displayTypeCheckBoxes } from '../../constants/patreon';
 import { DefaultPatreonSettings, DesignPalette } from '../../constants/designPalette';
 import { PatreonBannerDisplayType } from '../../contracts/generated/Enum/patreonBannerDisplayType';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
 
 import { SpeedPicker } from '../common/slider/speedPicker';
 import { DefaultTooltip } from '../common/tooltip/tooltip';
-import { CommonSettings, CommonSettingsFooter } from './commonSettings';
-
-import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/patreonSettingsViewModel';
-import classNames from 'classnames';
-import { displayTypeCheckBoxes } from '../../constants/patreon';
 import { BasicImage } from '../core/image';
 import { PatreonMarquee } from '../patreon/patreonMarquee';
 import { PatreonVerticalList } from '../patreon/patreonVerticalList';
 import { PatreonOneAtATime } from '../patreon/patreonOneAtATime';
+
+import { CommonSettings, CommonSettingsFooter } from './commonSettings';
+import { anyObject } from '../../helper/typescriptHacks';
 
 
 interface IProps {
@@ -27,8 +26,10 @@ interface IProps {
 }
 
 export const BrowserSourceSettings: React.FC<IProps> = (props: IProps) => {
-    const patronVm = props?.patreonData;
-    const patronSettings = patronVm.settings ?? DefaultPatreonSettings;
+    const patronVm: PatreonViewModel = {
+        ...(props?.patreonData ?? anyObject),
+        settings: props?.patreonData?.settings ?? DefaultPatreonSettings
+    };
 
     return (
         <section id="browser-source-settings" className="main pt1">
@@ -41,7 +42,7 @@ export const BrowserSourceSettings: React.FC<IProps> = (props: IProps) => {
                                     const radioComp = (
                                         <Radio
                                             color="primary"
-                                            checked={cBoxDetails.displayType === patronSettings.displayType}
+                                            checked={cBoxDetails.displayType === patronVm.settings.displayType}
                                         />
                                     );
                                     const labelComp = (
@@ -68,64 +69,82 @@ export const BrowserSourceSettings: React.FC<IProps> = (props: IProps) => {
                             <h2 className="m0">Your awesome stream!</h2>
                         </div>
                         {
-                            patronSettings.displayType === PatreonBannerDisplayType.marque &&
+                            patronVm.settings.displayType === PatreonBannerDisplayType.marque &&
                             <div className="display-test-marquee">
-                                <PatreonMarquee patronVm={patronVm} />
+                                <PatreonMarquee
+                                    patrons={patronVm.patrons}
+                                    settings={patronVm.settings}
+                                    premiumLevel={patronVm.premiumLevel}
+                                />
                             </div>
                         }
                         {
-                            patronSettings.displayType === PatreonBannerDisplayType.verticalList &&
+                            patronVm.settings.displayType === PatreonBannerDisplayType.verticalList &&
                             <div className="display-test-list">
-                                <PatreonVerticalList patronVm={patronVm} />
+                                <PatreonVerticalList
+                                    patrons={patronVm.patrons}
+                                    settings={patronVm.settings}
+                                    premiumLevel={patronVm.premiumLevel}
+                                />
                             </div>
                         }
                         {
-                            patronSettings.displayType === PatreonBannerDisplayType.oneAtATime &&
+                            patronVm.settings.displayType === PatreonBannerDisplayType.oneAtATime &&
                             <div className="display-test-one-at-a-time">
-                                <PatreonOneAtATime patronVm={patronVm} />
+                                <PatreonOneAtATime
+                                    patrons={patronVm.patrons}
+                                    settings={patronVm.settings}
+                                    premiumLevel={patronVm.premiumLevel}
+                                />
                             </div>
                         }
                     </div>
                     <div className="row mt2 mb1">
-                        <CommonSettings patronVm={patronVm} editSettings={props.editSettings} />
+                        <CommonSettings
+                            patronVm={patronVm}
+                            textColourProp="foregroundColour"
+                            backgroundColourProp="backgroundColour"
+                            backgroundOpacityProp="backgroundOpacity"
+                            editSettings={props.editSettings}
+                        />
                     </div>
                     <hr />
                     <div className="row">
                         <div className="col-12">
                             {
-                                patronSettings.displayType === PatreonBannerDisplayType.marque &&
+                                patronVm.settings.displayType === PatreonBannerDisplayType.marque &&
                                 <div className="mt1">
                                     <label>Speed of Patrons scrolling</label>
                                     <SpeedPicker
                                         className="ph3"
                                         availableTicks={DesignPalette.marqueSpeedTicks}
-                                        value={patronSettings.marqueSpeed}
+                                        value={patronVm.settings.marqueSpeed}
                                         valueLabelDisplay="off"
                                         onChange={(newValue: number) => props.editSettings('marqueSpeed')(newValue.toString())}
                                     />
                                 </div>
                             }
                             {
-                                patronSettings.displayType === PatreonBannerDisplayType.verticalList &&
+                                patronVm.settings.displayType === PatreonBannerDisplayType.verticalList &&
                                 <div className="mt1">
                                     <label>Time per Patron <DefaultTooltip message="Duration of list animation = (time per patron) x (number of patrons)"></DefaultTooltip></label>
                                     <SpeedPicker
                                         className="ph3"
                                         availableTicks={DesignPalette.verticalListSpeedTicks}
-                                        value={patronSettings.verticalListSpeed}
+                                        value={patronVm.settings.verticalListSpeed}
                                         valueLabelDisplay="off"
                                         onChange={(newValue: number) => props.editSettings('verticalListSpeed')(newValue.toString())}
                                     />
                                 </div>
                             }
                             {
-                                patronSettings.displayType === PatreonBannerDisplayType.oneAtATime &&
+                                patronVm.settings.displayType === PatreonBannerDisplayType.oneAtATime &&
                                 <div className="mt1">
                                     <label>Time on screen per Patron</label>
                                     <SpeedPicker
                                         className="ph3"
                                         availableTicks={DesignPalette.oneAtATimeSpeedTicks}
-                                        value={patronSettings.oneAtATimeSpeed}
+                                        value={patronVm.settings.oneAtATimeSpeed}
                                         valueLabelDisplay="off"
                                         onChange={props.editSettings<number>('oneAtATimeSpeed')}
                                     />
@@ -134,7 +153,12 @@ export const BrowserSourceSettings: React.FC<IProps> = (props: IProps) => {
                         </div>
                     </div>
                     <hr />
-                    <CommonSettingsFooter patronVm={patronVm} editSettings={props.editSettings} />
+                    <CommonSettingsFooter
+                        patronVm={patronVm}
+                        isProfilePicRoundedProp="isProfilePicRounded"
+                        profilePicRoundedValueProp="profilePicRoundedValue"
+                        editSettings={props.editSettings}
+                    />
                     <hr className="mt2 mb2" />
                     <div className="ta-center">
                         <div

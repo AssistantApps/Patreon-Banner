@@ -1,13 +1,14 @@
 import React from 'react';
+import classNames from 'classnames';
 
 import { BasicImage } from '../../core/image';
 import { BasicLink } from '../../core/link';
 import { AppImage } from '../../../constants/appImage';
 import { PatreonViewModel } from '../../../contracts/generated/ViewModel/patreonViewModel';
 import { getApp } from '../../../helper/configHelper';
+import { getPanelSettings } from '../../../helper/panelSettingsHelper';
 
 import { PatreonVerticalList } from '../patreonVerticalList';
-import classNames from 'classnames';
 import { anyObject } from '../../../helper/typescriptHacks';
 
 
@@ -34,7 +35,11 @@ export const PatreonPanelPresenter: React.FC<IProps> = (props: IProps) => {
 
     return (
         <div id="panel" className={classNames({ 'bg': panelUseDefaultBackground })} style={styleObj} draggable={false}>
-            <PatreonVerticalList patronVm={patronVm} />
+            <PatreonVerticalList
+                patrons={patronVm.patrons}
+                premiumLevel={patronVm.premiumLevel}
+                settings={getPanelSettings(patronVm.settings)}
+            />
             <BasicLink id="ad" href={getApp()}>
                 <BasicImage imageUrl={AppImage.logo100} />
             </BasicLink>

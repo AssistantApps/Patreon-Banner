@@ -59,7 +59,7 @@ export const patreonTestData = (): ResultWithValue<PatreonViewModel> => {
             settings: anyObject,
             tiers: [],
             hasTwitch: true,
-            isPremium: true,
+            premiumLevel: 100,
         },
         errorMessage: ''
     }

@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React from 'react';
 
 import { handleHex } from '../../../helper/colourHelper';
-import { Lock } from '../svg/lock';
+import { Premium } from '../svg/premium';
 import { ColourPickerCircle } from './colourPickerCircle';
 
 interface IProps {
@@ -46,7 +46,7 @@ export const ColourPicker: React.FC<IProps> = (props: IProps) => {
                         }
                     </div>
                 </div>
-                <div className={classNames('col-12', { 'premium-locked': !isUserPremium })} style={{ display: 'flex' }}>
+                <div className={classNames('col-12 flex', { 'premium-locked': !isUserPremium })}>
                     <ColourPickerCircle
                         key={`customColour-${props.id}`}
                         colourHex={pickerCurrentValue}
@@ -67,7 +67,7 @@ export const ColourPicker: React.FC<IProps> = (props: IProps) => {
                     />
                     {
                         (isUserPremium == false) &&
-                        <Lock classNames="ml1" />
+                        <Premium classNames="ml1" />
                     }
                 </div>
             </div>

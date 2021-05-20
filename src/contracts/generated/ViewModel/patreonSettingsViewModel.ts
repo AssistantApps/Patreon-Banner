@@ -12,8 +12,13 @@ export interface PatreonSettingsViewModel {
     oneAtATimeSpeed: number;
     isProfilePicRounded: boolean;
     profilePicRoundedValue: number;
+    panelForegroundColour: string;
+    panelBackgroundColour: string;
+    panelBackgroundOpacity: number;
     panelVerticalListSpeed: number;
     panelUseDefaultBackground: boolean;
     panelCustomBackgroundImageUrl: string;
+    panelIsProfilePicRounded: boolean;
+    panelProfilePicRoundedValue: number;
     lastModifiedDate: Date;
 }

@@ -25,7 +25,7 @@ export class StorageService {
         }
     }
 
-    public set<T>(key: string, data: T, expiry?: Date): void {
+    public set<T>(key: string, data?: T, expiry?: Date): void {
         var oneHourFromNow = moment().add(1, 'hour');
 
         const item: StorageItem<T> = {
@@ -34,5 +34,9 @@ export class StorageService {
         };
 
         localStorage.setItem(key, JSON.stringify(item));
+    }
+
+    public remove<T>(key: string): void {
+        localStorage.removeItem(key);
     }
 }

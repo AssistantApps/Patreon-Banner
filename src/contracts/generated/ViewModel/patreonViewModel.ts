@@ -6,9 +6,9 @@ import { UserPatreonTierViewModel } from "./userPatreonTierViewModel";
 
 export interface PatreonViewModel {
     userGuid: string;
+    premiumLevel: number;
     patrons: PatreonItemViewModel[];
     hasTwitch: boolean;
-    isPremium: boolean;
     settings: PatreonSettingsViewModel;
     tiers: UserPatreonTierViewModel[];
     saveDate: Date;

@@ -7,44 +7,56 @@ import { ColourPicker } from '../../components/common/colourPicker/colourPicker'
 import { SpeedPicker } from '../../components/common/slider/speedPicker';
 import { Checkbox, FormControlLabel } from '@material-ui/core';
 import classNames from 'classnames';
-import { Lock } from '../common/svg/lock';
+import { Premium } from '../common/svg/premium';
+import { PatronLevel } from '../../constants/patreonLevel';
 
-interface IProps {
+interface ICommonProps {
     patronVm: PatreonViewModel;
     editSettings: <T extends unknown>(name: string) => (value: T) => void;
 }
 
-export const CommonSettings: React.FC<IProps> = (props: IProps) => {
+interface ICommonSettingsProps extends ICommonProps {
+    textColourProp: string;
+    backgroundColourProp: string;
+    backgroundOpacityProp: string;
+}
+
+export const CommonSettings: React.FC<ICommonSettingsProps> = (props: ICommonSettingsProps) => {
     const patronVm = props.patronVm;
     const settings = patronVm.settings;
+
+    const backgroundOpacity = (settings as any)?.[props.backgroundOpacityProp] ?? '';
+    debugger;
+
     return (
         <>
             <div className="col-6">
                 <label>Text Colour</label>
                 <ColourPicker
-                    id="foregroundColour"
+                    id={props.textColourProp}
                     defaultValue={DesignPalette.foregroundDefault}
-                    currentValue={settings.foregroundColour}
+                    currentValue={(settings as any)?.[props.textColourProp] ?? ''}
                     availableColours={DesignPalette.foregroundOptions}
-                    onChange={props.editSettings('foregroundColour')}
+                    onChange={props.editSettings(props.textColourProp)}
                 />
             </div>
             <div className="col-6">
                 <label>Patron Background Colour</label>
                 <ColourPicker
-                    id="backgroundColour"
+                    id={props.backgroundColourProp}
                     defaultValue={DesignPalette.backgroundDefault}
-                    currentValue={settings.backgroundColour}
+                    currentValue={(settings as any)?.[props.backgroundColourProp] ?? ''}
                     availableColours={DesignPalette.backgroundOptions}
-                    onChange={props.editSettings('backgroundColour')}
+                    onChange={props.editSettings(props.backgroundColourProp)}
                 />
                 <div className="mt1">
                     <label>Background Opacity</label>
                     <SpeedPicker
+                        id={props.backgroundOpacityProp}
                         min={DesignPalette.backgroundOpacityMin}
                         max={DesignPalette.backgroundOpacityMax}
-                        value={settings.backgroundOpacity}
-                        onChange={(newValue: number) => props.editSettings('backgroundOpacity')(newValue.toString())}
+                        value={(settings as any)?.[props.backgroundOpacityProp] ?? ''}
+                        onChange={(newValue: number) => props.editSettings(props.backgroundOpacityProp)(newValue.toString())}
                     />
                 </div>
             </div>
@@ -53,10 +65,17 @@ export const CommonSettings: React.FC<IProps> = (props: IProps) => {
 }
 
 
-export const CommonSettingsFooter: React.FC<IProps> = (props: IProps) => {
+interface ICommonSettingsFooterProps extends ICommonProps {
+    isProfilePicRoundedProp: string;
+    profilePicRoundedValueProp: string;
+}
+
+export const CommonSettingsFooter: React.FC<ICommonSettingsFooterProps> = (props: ICommonSettingsFooterProps) => {
     const patronVm = props.patronVm;
-    const settings = patronVm.settings;
-    const isUserPremium = (patronVm as any).isUserPremium ?? false;
+    const premiumLocked = patronVm.premiumLevel < PatronLevel.level1.patreonLevelRequirement;
+
+    const isProfilePicRounded = (patronVm.settings as any)?.[props.isProfilePicRoundedProp] ?? DesignPalette.isProfilePicRounded;
+    const profilePicRoundedValue = (patronVm.settings as any)?.[props.profilePicRoundedValueProp] ?? DesignPalette.profilePicRoundedValue;
 
     return (
         <div className="row mt2">
@@ -67,36 +86,38 @@ export const CommonSettingsFooter: React.FC<IProps> = (props: IProps) => {
                     label="Rounded profile pictures"
                     control={
                         <Checkbox
-                            checked={settings.isProfilePicRounded}
-                            onChange={(_: any) => props.editSettings<boolean>('isProfilePicRounded')(!settings.isProfilePicRounded)}
-                            name="hasRoundedProfilePics"
+                            name={props.isProfilePicRoundedProp}
+                            checked={isProfilePicRounded}
+                            onChange={(_: any) => props.editSettings<boolean>(props.isProfilePicRoundedProp)(!isProfilePicRounded)}
                             color="primary"
                         />
                     }
                 />
                 {
-                    settings.isProfilePicRounded &&
+                    isProfilePicRounded &&
                     <>
                         <br />
-                        <div className={classNames({ 'premium-locked': !patronVm.isPremium })} style={{ display: 'inline-flex' }}>
+                        <div className={classNames('inline-flex', { 'premium-locked': premiumLocked })}>
                             <input type="number"
                                 min={0}
                                 max={10000}
                                 name="border-radius-input"
-                                disabled={!patronVm.isPremium}
+                                disabled={premiumLocked}
                                 style={{ display: 'inline-block', width: 'unset' }}
-                                value={settings.profilePicRoundedValue}
-                                placeholder={'pickerCurrentValue'}
+                                value={profilePicRoundedValue}
+                                placeholder={'10'}
                                 onChange={(event: any) => {
                                     event.persist();
                                     const value = event?.target?.value ?? DesignPalette.profilePicRoundedValue;
-                                    props.editSettings<number>('profilePicRoundedValue')(value);
+                                    props.editSettings<number>(props.profilePicRoundedValueProp)(value);
                                 }}
                             />
                             <span className="noselect mt1" style={{ marginLeft: '5px' }}>px</span>
                             {
-                                (isUserPremium == false) &&
-                                <Lock classNames="ml1" />
+                                premiumLocked &&
+                                <div className="ml1 premium-crown-container">
+                                    <Premium classNames="full-height" />
+                                </div>
                             }
                         </div>
                     </>

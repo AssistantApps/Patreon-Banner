@@ -43,9 +43,10 @@ export const DesignPalette = {
     oneAtATimeSpeedTicks: [
         { value: 1, realValue: 500, label: '1s' }, { value: 2, realValue: 750, label: 'default' },
         { value: 3, realValue: 1000, label: '2s' }, { value: 4, realValue: 1250, label: '2.5s' },
-        { value: 5, realValue: 1500, label: '3s' }, { value: 6, realValue: 1750, label: '.35s' }, { value: 7, realValue: 2000, label: '4s' },
+        { value: 5, realValue: 1500, label: '3s' }, { value: 6, realValue: 1750, label: '3.5s' }, { value: 7, realValue: 2000, label: '4s' },
     ],
     //
+    isProfilePicRounded: false,
     profilePicRoundedValue: 25,
 }
 
@@ -57,10 +58,17 @@ export const DefaultPatreonSettings: PatreonSettingsViewModel = {
     marqueSpeed: DesignPalette.marqueSpeedDefault,
     verticalListSpeed: DesignPalette.verticalListSpeedDefault,
     oneAtATimeSpeed: DesignPalette.oneAtATimeSpeedDefault,
-    isProfilePicRounded: false,
+    isProfilePicRounded: DesignPalette.isProfilePicRounded,
     profilePicRoundedValue: DesignPalette.profilePicRoundedValue,
+
+    panelForegroundColour: DesignPalette.foregroundDefault,
+    panelBackgroundColour: DesignPalette.backgroundDefault,
+    panelBackgroundOpacity: DesignPalette.backgroundOpacityDefault,
     panelVerticalListSpeed: DesignPalette.panelVerticalListSpeedDefault,
     panelUseDefaultBackground: true,
     panelCustomBackgroundImageUrl: '',
+    panelIsProfilePicRounded: DesignPalette.isProfilePicRounded,
+    panelProfilePicRoundedValue: DesignPalette.profilePicRoundedValue,
+
     lastModifiedDate: new Date(),
 }

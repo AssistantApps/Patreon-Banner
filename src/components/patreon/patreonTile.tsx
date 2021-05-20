@@ -1,10 +1,12 @@
 import React from 'react';
 import { BasicImage } from '../../components/core/image';
+import { PatronLevel } from '../../constants/patreonLevel';
 import { DesignPalette } from '../../constants/designPalette';
 import { PatreonItemViewModel } from '../../contracts/generated/ViewModel/patreonItemViewModel';
 
 interface IPatronTileProps extends PatreonItemViewModel {
     foregroundColour?: string;
+    premiumLevel: number;
     isProfilePicRounded: boolean;
     profilePicRoundedValue: number;
 }
@@ -19,6 +21,7 @@ export const PatreonTile: React.FC<IPatronTileProps> = (props: IPatronTileProps)
 }
 
 interface IPatronTileImageProps extends PatreonItemViewModel {
+    premiumLevel: number;
     isProfilePicRounded: boolean;
     profilePicRoundedValue: number;
 }
@@ -27,7 +30,7 @@ export const PatreonTileImage: React.FC<IPatronTileImageProps> = (props: IPatron
 
     let profilePicRoundedValue = DesignPalette.profilePicRoundedValue;
     if (props.isProfilePicRounded) {
-        profilePicRoundedValue = props.profilePicRoundedValue;
+        if (props.premiumLevel >= PatronLevel.level1.patreonLevelRequirement) profilePicRoundedValue = props.profilePicRoundedValue;
     } else {
         profilePicRoundedValue = 0;
     }

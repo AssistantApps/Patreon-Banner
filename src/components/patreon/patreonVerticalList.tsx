@@ -7,8 +7,20 @@ import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonVie
 
 import './_patreonVerticalList.scss';
 
+interface IVerticalListRequiredSettingsProps {
+    foregroundColour: string;
+    backgroundColour: string;
+    backgroundOpacity: number;
+    verticalListSpeed: number;
+    isProfilePicRounded: boolean;
+    profilePicRoundedValue: number;
+
+}
+
 interface IProps {
-    patronVm: PatreonViewModel;
+    premiumLevel: number;
+    patrons: Array<PatreonItemViewModel>;
+    settings: IVerticalListRequiredSettingsProps;
     isReversed?: boolean;
 }
 
@@ -28,13 +40,13 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
     }
 
     render() {
-        const patrons = this.props.patronVm?.patrons ?? [];
+        const patrons = this.props.patrons ?? [];
         if (patrons.length < 1) return (<div id="patreonVerticalList"></div>);
 
         const {
             foregroundColour, backgroundColour, backgroundOpacity, verticalListSpeed,
             isProfilePicRounded, profilePicRoundedValue
-        } = this.props.patronVm.settings;
+        } = this.props.settings;
 
         let realValue = +verticalListSpeed;
         const selectedValue = DesignPalette.verticalListSpeedTicks.find(t => t.value === (+verticalListSpeed));
@@ -56,6 +68,7 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
                         patrons.map((item: PatreonItemViewModel) => (
                             <PatreonTile key={`list1-${item.name}`} {...item} foregroundColour={foregroundColour}
                                 isProfilePicRounded={isProfilePicRounded} profilePicRoundedValue={profilePicRoundedValue}
+                                premiumLevel={this.props.premiumLevel}
                             />
                         ))
                     }
@@ -66,6 +79,7 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
                         patrons.map((item: PatreonItemViewModel) => (
                             <PatreonTile key={`list2-${item.name}`} {...item} foregroundColour={foregroundColour}
                                 isProfilePicRounded={isProfilePicRounded} profilePicRoundedValue={profilePicRoundedValue}
+                                premiumLevel={this.props.premiumLevel}
                             />
                         ))
                     }

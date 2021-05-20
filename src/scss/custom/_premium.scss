@@ -1,3 +1,12 @@
 .premium-locked {
-    opacity: 0.4;
+    display: none !important;
+
+    >* {
+        opacity: 0.4;
+
+        &.premium-crown,
+        &.premium-crown-container {
+            opacity: 1;
+        }
+    }
 }

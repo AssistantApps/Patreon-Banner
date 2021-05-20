@@ -16,6 +16,7 @@ import { PatreonOneAtATime } from '../patreon/patreonOneAtATime';
 
 import { CommonSettings, CommonSettingsFooter } from './commonSettings';
 import { anyObject } from '../../helper/typescriptHacks';
+import { PatreonDisplaySwitcher } from '../patreon/patreonDisplaySwitcher';
 
 
 interface IProps {
@@ -68,36 +69,9 @@ export const BrowserSourceSettings: React.FC<IProps> = (props: IProps) => {
                         <div className="display-test-inner">
                             <h2 className="m0">Your awesome stream!</h2>
                         </div>
-                        {
-                            patronVm.settings.displayType === PatreonBannerDisplayType.marque &&
-                            <div className="display-test-marquee">
-                                <PatreonMarquee
-                                    patrons={patronVm.patrons}
-                                    settings={patronVm.settings}
-                                    premiumLevel={patronVm.premiumLevel}
-                                />
-                            </div>
-                        }
-                        {
-                            patronVm.settings.displayType === PatreonBannerDisplayType.verticalList &&
-                            <div className="display-test-list">
-                                <PatreonVerticalList
-                                    patrons={patronVm.patrons}
-                                    settings={patronVm.settings}
-                                    premiumLevel={patronVm.premiumLevel}
-                                />
-                            </div>
-                        }
-                        {
-                            patronVm.settings.displayType === PatreonBannerDisplayType.oneAtATime &&
-                            <div className="display-test-one-at-a-time">
-                                <PatreonOneAtATime
-                                    patrons={patronVm.patrons}
-                                    settings={patronVm.settings}
-                                    premiumLevel={patronVm.premiumLevel}
-                                />
-                            </div>
-                        }
+                        <div className="display-test-container">
+                            <PatreonDisplaySwitcher patronVm={patronVm} />
+                        </div>
                     </div>
                     <div className="row mt2 mb1">
                         <CommonSettings

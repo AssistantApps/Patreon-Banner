@@ -25,9 +25,6 @@ export const CommonSettings: React.FC<ICommonSettingsProps> = (props: ICommonSet
     const patronVm = props.patronVm;
     const settings = patronVm.settings;
 
-    const backgroundOpacity = (settings as any)?.[props.backgroundOpacityProp] ?? '';
-    debugger;
-
     return (
         <>
             <div className="col-6">

@@ -121,6 +121,7 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                             (props.showCustomisations && hasUserConfig/* && props.existingSettingsPayload.hasTwitch*/) &&
                             <SegmentedControl
                                 options={[{ label: 'Browser Source settings', value: 0 }, { label: 'Twitch Panel settings', value: 1 }]}
+                                defaultSelectedOptionIndex={props.customisationTabIndex}
                                 onChange={props.setCustomisationTabIndex}
                             />
                         }

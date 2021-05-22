@@ -72,6 +72,10 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
             addPatreonStaticButton = true;
         }
 
+        if (this.props.campaignUrl == null) {
+            addPatreonHoverButton = false;
+        }
+
         if (this.props.isBrowserSource == true) {
             addPatreonStaticButton = false;
             addPatreonHoverButton = false;

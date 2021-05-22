@@ -4,6 +4,7 @@
     right: 0;
     height: 100%;
     overflow: hidden;
+    transition: background-color 500ms ease-in-out;
 
     .patreon-container-background {
         position: absolute;

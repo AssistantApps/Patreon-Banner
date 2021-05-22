@@ -33,7 +33,7 @@ export const BrowserSourceSettings: React.FC<IProps> = (props: IProps) => {
     };
 
     return (
-        <section id="browser-source-settings" className="main pt1">
+        <section id="browser-source-settings" className="main pt0">
             <div className="spotlight">
                 <div className="content">
                     <FormControl component="fieldset" style={{ width: '100%' }}>
@@ -88,7 +88,7 @@ export const BrowserSourceSettings: React.FC<IProps> = (props: IProps) => {
                             {
                                 patronVm.settings.displayType === PatreonBannerDisplayType.marque &&
                                 <div className="mt1">
-                                    <label>Speed of Patrons scrolling</label>
+                                    <label className="label">Speed of Patrons scrolling</label>
                                     <SpeedPicker
                                         className="ph3"
                                         availableTicks={DesignPalette.marqueSpeedTicks}
@@ -101,7 +101,7 @@ export const BrowserSourceSettings: React.FC<IProps> = (props: IProps) => {
                             {
                                 patronVm.settings.displayType === PatreonBannerDisplayType.verticalList &&
                                 <div className="mt1">
-                                    <label>Time per Patron <DefaultTooltip message="Duration of list animation = (time per patron) x (number of patrons)"></DefaultTooltip></label>
+                                    <label className="label">Time per Patron <DefaultTooltip message="Duration of list animation = (time per patron) x (number of patrons)"></DefaultTooltip></label>
                                     <SpeedPicker
                                         className="ph3"
                                         availableTicks={DesignPalette.verticalListSpeedTicks}
@@ -114,7 +114,7 @@ export const BrowserSourceSettings: React.FC<IProps> = (props: IProps) => {
                             {
                                 patronVm.settings.displayType === PatreonBannerDisplayType.oneAtATime &&
                                 <div className="mt1">
-                                    <label>Time on screen per Patron</label>
+                                    <label className="label">Time on screen per Patron</label>
                                     <SpeedPicker
                                         className="ph3"
                                         availableTicks={DesignPalette.oneAtATimeSpeedTicks}

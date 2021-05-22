@@ -59,6 +59,7 @@ export const patreonTestData = (): ResultWithValue<PatreonViewModel> => {
             settings: anyObject,
             tiers: [],
             hasTwitch: true,
+            campaignUrl: '',
             premiumLevel: 100,
         },
         errorMessage: ''

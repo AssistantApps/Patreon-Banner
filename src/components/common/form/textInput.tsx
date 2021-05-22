@@ -53,7 +53,7 @@ export class TextInput extends React.Component<IProps, IState> {
             <>
                 {
                     this.props.label &&
-                    <label htmlFor={this.props.name} style={{ margin: 0 }}>{this.props.label}</label>
+                    <label className="label" htmlFor={this.props.name} style={{ margin: 0 }}>{this.props.label}</label>
                 }
                 <input type="text"
                     id={this.props.id}

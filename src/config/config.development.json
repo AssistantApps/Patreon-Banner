@@ -3,7 +3,7 @@
     "consoleLogDebug": true,
     "useServiceWorker": false,
     "reportWebVitals": false,
-    "apiUrl": "https://localhost:44308",
+    "apiUrl": "https://20394de19779.ngrok.io",
     "appUrl": "https://localhost:8080",
     "apiPatronOAuthClientId": "-fdaJApJ7dq2Ew3q7vi2VU7GcYcPaDfbTPE4vPP2igKDO7itczZagmtf-9JARsgz"
 }

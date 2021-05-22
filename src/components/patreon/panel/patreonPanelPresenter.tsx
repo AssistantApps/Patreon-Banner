@@ -37,6 +37,7 @@ export const PatreonPanelPresenter: React.FC<IProps> = (props: IProps) => {
         <div id="panel" className={classNames({ 'bg': panelUseDefaultBackground })} style={styleObj} draggable={false}>
             <PatreonVerticalList
                 patrons={patronVm.patrons}
+                campaignUrl={patronVm.campaignUrl}
                 premiumLevel={patronVm.premiumLevel}
                 settings={getPanelSettings(patronVm.settings)}
             />

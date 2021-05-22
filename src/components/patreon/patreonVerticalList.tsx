@@ -1,9 +1,10 @@
+import classNames from 'classnames';
 import React from 'react';
 
 import { PatreonTile } from '../../components/patreon/patreonTile';
 import { DesignPalette } from '../../constants/designPalette';
 import { PatreonItemViewModel } from '../../contracts/generated/ViewModel/patreonItemViewModel';
-import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
+import { PatreonButton } from './patreonButton';
 
 import './_patreonVerticalList.scss';
 
@@ -14,13 +15,14 @@ interface IVerticalListRequiredSettingsProps {
     verticalListSpeed: number;
     isProfilePicRounded: boolean;
     profilePicRoundedValue: number;
-
 }
 
 interface IProps {
+    campaignUrl: string;
     premiumLevel: number;
     patrons: Array<PatreonItemViewModel>;
     settings: IVerticalListRequiredSettingsProps;
+    isBrowserSource?: boolean;
     isReversed?: boolean;
 }
 
@@ -40,7 +42,7 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
     }
 
     render() {
-        const patrons = this.props.patrons ?? [];
+        let patrons = this.props.patrons ?? [];
         if (patrons.length < 1) return (<div id="patreonVerticalList"></div>);
 
         const {
@@ -52,39 +54,73 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
         const selectedValue = DesignPalette.verticalListSpeedTicks.find(t => t.value === (+verticalListSpeed));
         if (selectedValue != null && selectedValue.realValue != null) realValue = (+selectedValue.realValue);
 
-        const styleObj = {
+        const backgroundStyleObj = {
             backgroundColor: backgroundColour,
             opacity: backgroundOpacity / 100,
         };
 
-        const animDuration = `${patrons.length * realValue}ms`;
+        const listStyleObj = {
+            animationName: 'none',
+            animationDuration: `${patrons.length * realValue}ms`,
+        };
 
+        let addPatreonStaticButton = false;
+        let addPatreonHoverButton = true;
+        if (patrons.length > 5) {
+            (listStyleObj.animationName as any) = undefined;
+        } else {
+            addPatreonStaticButton = true;
+        }
+
+        if (this.props.isBrowserSource == true) {
+            addPatreonStaticButton = false;
+            addPatreonHoverButton = false;
+        }
+
+        const classes = classNames('no-scrollbar', { 'bg-hover': (addPatreonStaticButton == false && addPatreonHoverButton) });
         return (
-            <div id="patreonVerticalList" className="no-scrollbar">
-                <div className="patreon-container-background" style={styleObj}></div>
-                <div className="list" style={{ animationDuration: animDuration }}>
+            <>
+                <div id="patreonVerticalList" className={classes}>
+                    <div className="patreon-container-background" style={backgroundStyleObj}></div>
+                    <div className="list" style={listStyleObj}>
+                        {
+                            patrons != null &&
+                            patrons.map((item: PatreonItemViewModel) => (
+                                <PatreonTile key={`list1-${item.name}`} {...item} foregroundColour={foregroundColour}
+                                    isProfilePicRounded={isProfilePicRounded} profilePicRoundedValue={profilePicRoundedValue}
+                                    premiumLevel={this.props.premiumLevel}
+                                />
+                            ))
+                        }
+                    </div>
                     {
-                        patrons != null &&
-                        patrons.map((item: PatreonItemViewModel) => (
-                            <PatreonTile key={`list1-${item.name}`} {...item} foregroundColour={foregroundColour}
-                                isProfilePicRounded={isProfilePicRounded} profilePicRoundedValue={profilePicRoundedValue}
-                                premiumLevel={this.props.premiumLevel}
-                            />
-                        ))
+                        (patrons.length > 5) &&
+                        <div className="list" style={listStyleObj}>
+                            {
+                                patrons != null &&
+                                patrons.map((item: PatreonItemViewModel) => (
+                                    <PatreonTile key={`list2-${item.name}`} {...item} foregroundColour={foregroundColour}
+                                        isProfilePicRounded={isProfilePicRounded} profilePicRoundedValue={profilePicRoundedValue}
+                                        premiumLevel={this.props.premiumLevel}
+                                    />
+                                ))
+                            }
+                        </div>
+                    }
+                    {
+                        addPatreonStaticButton &&
+                        <div className="flex pa-1-2">
+                            <PatreonButton classNames="m-h-auto" text="Join my Patreon" link={this.props.campaignUrl} />
+                        </div>
                     }
                 </div>
-                <div className="list" style={{ animationDuration: animDuration }}>
-                    {
-                        patrons != null &&
-                        patrons.map((item: PatreonItemViewModel) => (
-                            <PatreonTile key={`list2-${item.name}`} {...item} foregroundColour={foregroundColour}
-                                isProfilePicRounded={isProfilePicRounded} profilePicRoundedValue={profilePicRoundedValue}
-                                premiumLevel={this.props.premiumLevel}
-                            />
-                        ))
-                    }
-                </div>
-            </div>
+                {
+                    (addPatreonStaticButton == false && addPatreonHoverButton) &&
+                    <div className="pos-abs patreon-btn-hover flex pa-1-2">
+                        <PatreonButton classNames="m-h-auto" text="Join my Patreon" link={this.props.campaignUrl} />
+                    </div>
+                }
+            </>
         );
     }
 }

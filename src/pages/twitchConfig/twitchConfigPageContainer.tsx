@@ -1,16 +1,20 @@
 import React from 'react';
+import Swal from 'sweetalert2';
+import { sha1 } from 'object-hash';
 
 import { withServices } from '../../integration/dependencyInjection';
 import { NetworkState } from '../../constants/enum/networkState';
+import { DefaultPatreonSettings } from '../../constants/designPalette';
 
 import { TwitchUser } from '../../contracts/twitchAuth';
+import { ResultWithValue } from '../../contracts/results/ResultWithValue';
+import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/patreonSettingsViewModel';
 import { TwitchConfigViewModel } from '../../contracts/generated/ViewModel/twitchConfigViewModel';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
 import { anyObject } from '../../helper/typescriptHacks';
 
 import { dependencyInjectionToProps, IExpectedServices } from './twitchConfigPage.dependencyInjection';
 import { TwitchConfigPagePresenter } from './twitchConfigPagePresenter';
-import { isFormValid } from './twitchConfigPageValidations';
 
 declare global {
     interface Window {
@@ -25,12 +29,14 @@ interface IProps extends IExpectedServices, IWithoutExpectedServices { }
 interface IState {
     fetchExistingStatus: NetworkState;
     existingSettingsPayload: PatreonViewModel;
+    initialSettingsHash: string;
+    settingsHash: string;
 
     submissionData: TwitchConfigViewModel;
     submissionStatus: NetworkState;
-    showFormValidation: boolean;
 
     showCustomisations: boolean;
+    customisationTabIndex: number;
 
     // Twitch
     twitch: any;
@@ -46,13 +52,15 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
         this.state = {
             fetchExistingStatus: NetworkState.Pending,
             existingSettingsPayload: anyObject,
+            initialSettingsHash: '',
+            settingsHash: '',
 
             // Streamer Submission
             submissionData: anyObject,
             submissionStatus: NetworkState.Pending,
-            showFormValidation: false,
 
             showCustomisations: false,
+            customisationTabIndex: 0,
 
             // Twitch
             twitch: window.Twitch ? window.Twitch.ext : null,
@@ -83,15 +91,11 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
                         }
                     });
                 }
-            })
+            });
 
             this.state.twitch.listen('broadcast', (target: any, contentType: any, body: any) => {
                 this.props.loggingService.log?.('broadcast', `New PubSub message!\n${target}\n${contentType}\n${body}`);
-            })
-
-            // this.state.twitch.onVisibilityChanged((isVisible: any, _c: any) => {
-            //     this.visibilityChanged(isVisible);
-            // })
+            });
 
             this.state.twitch.onContext((context: any, delta: any) => {
                 this.props.loggingService.log?.('onContext', context, delta);
@@ -101,7 +105,6 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
                         twitchTheme: context.theme,
                     }
                 });
-                //this.contextUpdate(context, delta)
             })
         }
     }
@@ -130,7 +133,7 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
         this.props.loggingService.log?.('fetchExistingSettings', channelId);
         if (channelId == null) return;
 
-        var existingSettingsresult = await this.props.patreonService.getFromChannelId(channelId);
+        let existingSettingsresult = await this.props.patreonService.getFromChannelId(channelId);
         if (!existingSettingsresult.isSuccess) {
             this.props.loggingService?.error(existingSettingsresult.errorMessage);
 
@@ -145,18 +148,12 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
         this.setState(() => {
             return {
                 fetchExistingStatus: NetworkState.Success,
-                existingSettingsPayload: existingSettingsresult.value
-            }
-        });
-    }
-
-    editFormValues = (propName: string, propValue: string) => {
-        this.setState((prevState: IState) => {
-            return {
-                submissionData: {
-                    ...prevState.submissionData,
-                    [propName]: propValue
-                }
+                existingSettingsPayload: {
+                    ...existingSettingsresult.value,
+                    settings: existingSettingsresult.value.settings ?? DefaultPatreonSettings
+                },
+                initialSettingsHash: sha1(existingSettingsresult.value.settings),
+                settingsHash: sha1(existingSettingsresult.value.settings),
             }
         });
     }
@@ -169,43 +166,48 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
         });
     }
 
-    submitConfigForm = () => {
-        const isFormValidResult = isFormValid(this.state);
-        if (isFormValidResult.isSuccess === false) {
-            this.setState(() => {
-                return {
-                    showFormValidation: true,
-                }
-            });
-            return;
-        }
-
-        this.setState(() => {
-            return {
-                submissionStatus: NetworkState.Loading,
-            }
-        }, this.submitConfigFormFunc);
+    setCustomisationTabIndex = (newCustomisationTabIndex: number) => {
+        this.setState({
+            customisationTabIndex: newCustomisationTabIndex,
+        });
     }
 
-    private submitConfigFormFunc = async () => {
-        const apiSaveResult = await this.props.patreonService.submitTwitchConfigForm(this.state.submissionData);
-        if (!apiSaveResult.isSuccess) {
-            this.props.loggingService?.error(apiSaveResult.errorMessage);
-            //Swal
+    editSettings = <T extends unknown>(name: string) => (value: T) => {
+        this.setState((prevState: IState) => {
+            const settings: PatreonSettingsViewModel = {
+                ...prevState.existingSettingsPayload.settings,
+                [name]: value
+            };
 
-            this.setState(() => {
-                return {
-                    submissionStatus: NetworkState.Error,
-                }
+            return {
+                existingSettingsPayload: {
+                    ...prevState.existingSettingsPayload,
+                    settings,
+                },
+                settingsHash: sha1(settings),
+            }
+        });
+    }
+
+    prepareToSaveSettings = async () => {
+        this.setState({
+            fetchExistingStatus: NetworkState.Loading,
+        }, () => this.saveSettings());
+    }
+
+    saveSettings = async () => {
+        const channelId = this.state.submissionData.channelId;
+        const { userGuid, settings } = this.state.existingSettingsPayload;
+
+        const saveSettingsResult = await this.props.patreonService.submitSettings(userGuid, settings);
+        if (!saveSettingsResult.isSuccess) {
+            Swal.fire('Ooops', 'Something went wrong', 'error');
+            this.setState({
+                fetchExistingStatus: NetworkState.Error,
             });
             return;
         }
-
-        this.setState(() => {
-            return {
-                submissionStatus: NetworkState.Success,
-            }
-        });
+        await this.fetchExistingSettings(channelId);
     }
 
     render() {
@@ -213,9 +215,11 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
             <TwitchConfigPagePresenter
                 {...this.state}
                 {...this.props}
-                editFormValues={this.editFormValues}
-                submitConfigForm={this.submitConfigForm}
+                showSaveButton={(this.state.initialSettingsHash != this.state.settingsHash)}
                 toggleShowCustomisations={this.toggleShowCustomisations}
+                setCustomisationTabIndex={this.setCustomisationTabIndex}
+                saveSettings={this.prepareToSaveSettings}
+                editSettings={this.editSettings}
             />
         )
     }

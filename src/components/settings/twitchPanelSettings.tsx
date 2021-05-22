@@ -27,7 +27,7 @@ export const TwitchPanelSettings: React.FC<IProps> = (props: IProps) => {
     const premiumLocked = patronVm.premiumLevel < PatronLevel.level1.patreonLevelRequirement;
 
     return (
-        <section id="browser-source-settings" className="main pt3">
+        <section id="browser-source-settings" className="main pt0">
             <div className="spotlight">
                 <div className="content">
                     <div className="row mb1">
@@ -60,7 +60,7 @@ export const TwitchPanelSettings: React.FC<IProps> = (props: IProps) => {
                     <hr className="mt2 mb2" />
                     <div className="row mt2">
                         <div className="col-12">
-                            <label>Panel Background</label>
+                            <label className="label">Panel Background</label>
 
                             <FormControlLabel
                                 label="Use default"

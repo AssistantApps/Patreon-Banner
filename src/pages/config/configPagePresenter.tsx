@@ -16,11 +16,6 @@ import { getDisplayUrl } from '../../helper/configHelper';
 import { patronOAuthUrl } from '../../integration/patreonOAuth';
 
 import { IExpectedServices } from './configPage.dependencyInjection';
-import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/patreonSettingsViewModel';
-
-
-/* TODO - Undo display none when enabling settings feature */
-const enableCustomizationsFeature = true;
 
 export interface IConfigPagePresenterProps {
     fetchExistingStatus: NetworkState;
@@ -112,13 +107,13 @@ export const ConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                             }
                         </div>
                     </div>
-                    <div className="ta-center" style={{ display: enableCustomizationsFeature ? undefined : 'none' }}>
+                    <div className="ta-center">
                         {
                             (props.showCustomisations === false && hasUserConfig) &&
                             <button className="primary button mt1" onClick={props.toggleShowCustomisations}>Customize</button>
                         }
                         {
-                            (props.showCustomisations && hasUserConfig/* && props.existingSettingsPayload.hasTwitch*/) &&
+                            (props.showCustomisations && hasUserConfig && props.existingSettingsPayload.hasTwitch) &&
                             <SegmentedControl
                                 options={[{ label: 'Browser Source settings', value: 0 }, { label: 'Twitch Panel settings', value: 1 }]}
                                 defaultSelectedOptionIndex={props.customisationTabIndex}

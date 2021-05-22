@@ -117,8 +117,6 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
                 [name]: value
             };
 
-            console.log(settings);
-
             return {
                 existingSettingsPayload: {
                     ...prevState.existingSettingsPayload,
@@ -143,11 +141,11 @@ export class ConfigPageContainerUnconnected extends React.Component<IProps, ISta
         if (!saveSettingsResult.isSuccess) {
             Swal.fire('Ooops', 'Something went wrong', 'error');
             this.setState({
-                fetchExistingStatus: NetworkState.Success,
+                fetchExistingStatus: NetworkState.Error,
             });
             return;
         }
-        await this.fetchExistingSettings(this.state.userGuid);
+        await this.fetchExistingSettings(userGuid);
     }
 
     render() {

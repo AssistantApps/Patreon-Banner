@@ -1,3 +1,5 @@
+$patreonPrimary: rgb(255, 66, 77);
+
 #patreonMarquee .patreon-container.marquee-container {
     overflow-y: hidden;
 
@@ -58,5 +60,56 @@
             white-space: nowrap;
             font-weight: 500;
         }
+    }
+}
+
+.patreon-btn,
+#main button.patreon-btn,
+#main .button.patreon-btn {
+    background-color: $patreonPrimary;
+    box-shadow: unset;
+    border-radius: 9999px;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-weight: 500;
+    height: unset;
+    position: relative;
+    pointer-events: unset;
+    text-align: center;
+    text-decoration: none;
+    text-transform: none;
+    transition: all 300ms cubic-bezier(0.19, 1, 0.22, 1) 0s;
+    color: rgb(255, 255, 255) !important;
+    font-size: 1rem !important;
+
+    &:hover {
+        background-color: $patreonPrimary;
+    }
+
+    .background.background.background {
+        overflow: visible;
+    }
+
+    svg:not(:root) {
+        overflow: hidden;
+    }
+
+    .background {
+        margin-left: auto;
+        margin-right: auto;
+        animation: 1.116s linear 0s infinite normal none running cJiLXh;
+        display: block;
+        padding: 1.5px;
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+
+    .text {
+        -webkit-box-align: center;
+        align-items: center;
+        display: flex;
+        -webkit-box-pack: center;
+        justify-content: center;
+        visibility: visible;
     }
 }

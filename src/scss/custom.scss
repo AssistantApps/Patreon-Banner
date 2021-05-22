@@ -58,6 +58,10 @@ html {
     text-align: center;
 }
 
+.margin-center {
+    margin: 0 auto;
+}
+
 .m0 {
     margin: 0;
 }
@@ -114,6 +118,14 @@ html {
     margin: 0 auto;
 }
 
+.pa-1-2 {
+    padding: 0.5em;
+}
+
+.pt0 {
+    padding-top: 0 !important;
+}
+
 .pt1 {
     padding-top: 1em !important;
 }
@@ -128,6 +140,15 @@ html {
 
 .pt5 {
     padding-top: 5em;
+}
+
+.pr1 {
+    padding-right: 1em;
+}
+
+.ph2 {
+    padding-left: 2em !important;
+    padding-right: 2em !important;
 }
 
 .ph3 {
@@ -153,6 +174,10 @@ html {
 
 .pos-rel {
     position: relative;
+}
+
+.pos-abs {
+    position: absolute;
 }
 
 .float-left {

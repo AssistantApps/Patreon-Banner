@@ -9,7 +9,7 @@ interface IProps {
 export const Premium: React.FC<IProps> = (props: IProps) => {
     return (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={classNames('premium-crown', props.classNames)}>
-            <g clip-path="url(#prefix__clip0)"><path d="M13.174 17.44h-1.349v.003h1.349v-.003z" fill="#FFCB39">
+            <g clipPath="url(#prefix__clip0)"><path d="M13.174 17.44h-1.349v.003h1.349v-.003z" fill="#FFCB39">
             </path>
                 <path opacity="0.3" d="M13.174 17.44h-1.349v.003h1.349v-.003z" fill="#fff">
                 </path>

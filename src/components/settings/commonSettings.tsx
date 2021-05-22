@@ -28,7 +28,7 @@ export const CommonSettings: React.FC<ICommonSettingsProps> = (props: ICommonSet
     return (
         <>
             <div className="col-6">
-                <label>Text Colour</label>
+                <label className="label">Text Colour</label>
                 <ColourPicker
                     id={props.textColourProp}
                     defaultValue={DesignPalette.foregroundDefault}
@@ -38,7 +38,7 @@ export const CommonSettings: React.FC<ICommonSettingsProps> = (props: ICommonSet
                 />
             </div>
             <div className="col-6">
-                <label>Patron Background Colour</label>
+                <label className="label">Patron Background Colour</label>
                 <ColourPicker
                     id={props.backgroundColourProp}
                     defaultValue={DesignPalette.backgroundDefault}
@@ -47,7 +47,7 @@ export const CommonSettings: React.FC<ICommonSettingsProps> = (props: ICommonSet
                     onChange={props.editSettings(props.backgroundColourProp)}
                 />
                 <div className="mt1">
-                    <label>Background Opacity</label>
+                    <label className="label">Background Opacity</label>
                     <SpeedPicker
                         id={props.backgroundOpacityProp}
                         min={DesignPalette.backgroundOpacityMin}
@@ -77,7 +77,7 @@ export const CommonSettingsFooter: React.FC<ICommonSettingsFooterProps> = (props
     return (
         <div className="row mt2">
             <div className="col-12">
-                <label>Profile picture settings</label>
+                <label className="label">Profile picture settings</label>
 
                 <FormControlLabel
                     label="Rounded profile pictures"

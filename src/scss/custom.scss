@@ -231,6 +231,10 @@ html {
     }
 }
 
+.icon.medium.icon-browser::before {
+    font-size: 3.2rem;
+}
+
 @import "custom/_scrollbar";
 @import "custom/_colourPicker";
 @import 'custom/_twitch.scss';

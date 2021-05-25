@@ -5,7 +5,7 @@ export const Loading: React.FC = () => {
     return (
         <>
             <div className="full-page-loader opacity80"></div>
-            <div className="full-page-loader">
+            <div className="full-page-loader loader">
                 <div className="cssload-container">
                     <ul className="cssload-flex-container">
                         <li style={{ listStyleType: 'none' }}>
@@ -29,7 +29,7 @@ interface ISmallLoadingProps {
 
 export const SmallLoading: React.FC<ISmallLoadingProps> = (props: ISmallLoadingProps) => {
     return (
-        <div className="container">
+        <div className="container loader">
             <div className="row">
                 <div className="col-12" style={{ textAlign: 'center' }}>
                     <img

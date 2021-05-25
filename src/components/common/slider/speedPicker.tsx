@@ -9,7 +9,7 @@ interface ITickProps {
     label: string;
 }
 
-interface IProps {
+export interface ISpeedPickerProps {
     id?: string;
     value?: number;
     availableTicks?: Array<ITickProps>;
@@ -21,7 +21,7 @@ interface IProps {
     onChange?: (value: number) => void;
 }
 
-export const SpeedPicker: React.FC<IProps> = (props: IProps) => {
+export const SpeedPicker: React.FC<ISpeedPickerProps> = (props: ISpeedPickerProps) => {
 
     const marks = props.availableTicks ?? [];
     const min = marks.reduce((min, m) => m.value < min ? m.value : min, marks?.[0]?.value);

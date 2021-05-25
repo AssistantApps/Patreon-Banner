@@ -219,7 +219,7 @@ html {
     }
 
     .MuiTimelineContent-root.MuiTimelineItem-content {
-        flex: 3;
+        flex: 4;
     }
 }
 
@@ -227,6 +227,7 @@ html {
 @import "custom/_colourPicker";
 @import 'custom/_twitch.scss';
 @import 'custom/_image.scss';
+@import 'custom/_accordian.scss';
 @import 'custom/_patreon.scss';
 @import 'custom/_premium.scss';
 @import 'custom/_panel.scss';

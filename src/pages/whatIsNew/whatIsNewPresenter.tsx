@@ -1,10 +1,11 @@
 import React, { ReactNode } from 'react';
-import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineOppositeContent, TimelineDot } from '@material-ui/lab/';
+import Markdown from 'markdown-to-jsx';
 
 import { NetworkState } from '../../constants/enum/networkState';
 import { VersionViewModel } from '../../contracts/generated/AssistantApps/Version/versionViewModel';
 import { SmallLoading } from '../../components/loading';
-import { toShortDate } from '../../helper/datehelper';
+import { Accordian } from '../../components/common/accordian/accordian';
+import { toLongDate } from '../../helper/datehelper';
 
 interface IProps {
     whatIsNewItems: Array<VersionViewModel>;
@@ -26,32 +27,18 @@ export const WhatIsNewPresenter: React.FC<IProps> = (props: IProps) => {
     }
 
     const displayWhatIsNewData = (whatIsNewItems: Array<VersionViewModel>): ReactNode => {
+        const winItems = (whatIsNewItems ?? []);
         return (
-            <div className="row">
-                <div className="col-12">
-                    <Timeline className="left">
-                        {
-                            (whatIsNewItems ?? []).map((win: VersionViewModel) => {
-                                return (
-                                    <TimelineItem key={win.guid}>
-                                        <TimelineOppositeContent>
-                                            {toShortDate(win.activeDate)}
-                                        </TimelineOppositeContent>
-                                        <TimelineSeparator>
-                                            <TimelineDot />
-                                            <TimelineConnector />
-                                        </TimelineSeparator>
-                                        <TimelineContent>
-                                            {win.markdown}
-                                        </TimelineContent>
-                                    </TimelineItem>
-
-                                );
-                            })
-                        }
-                    </Timeline>
-                </div>
-            </div>
+            <Accordian
+                list={winItems.map((win: VersionViewModel, index: number) => {
+                    return {
+                        id: win.guid,
+                        defaultChecked: index === 0,
+                        title: toLongDate(win.activeDate),
+                        content: <Markdown>{win.markdown}</Markdown>,
+                    };
+                })}
+            />
         );
     }
 

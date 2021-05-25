@@ -10,6 +10,7 @@ import { PatreonPanelPresenter } from '../patreon/panel/patreonPanelPresenter';
 import { Premium } from '../common/svg/premium';
 
 import { CommonSettings, CommonSettingsFooter } from './commonSettings';
+import { NetworkState } from '../../constants/enum/networkState';
 
 interface IProps {
     patreonData: PatreonViewModel;
@@ -34,8 +35,8 @@ export const TwitchPanelSettings: React.FC<IProps> = (props: IProps) => {
                         <div className="col-12 mb1" >
                             <div style={{ width: '300px', height: '318px', overflow: 'hidden', position: 'relative', margin: '0 auto' }}>
                                 <PatreonPanelPresenter
-                                    isTestData={false}
                                     patronVm={patronVm}
+                                    patreonNetworkState={NetworkState.Success}
                                 />
                             </div>
                         </div>

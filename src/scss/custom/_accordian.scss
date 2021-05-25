@@ -1,0 +1,100 @@
+input.acc {
+    position: absolute;
+    right: 0;
+    opacity: 0;
+    z-index: -1;
+}
+
+// Layout
+.acc-row {
+    display: flex;
+
+    .acc-col {
+        flex: 1;
+
+        &:last-child {
+            margin-left: 1em;
+        }
+    }
+}
+
+#main .tab>.tab-label {
+    color: white;
+}
+
+/* Accordion styles */
+.tabs {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.5);
+}
+
+.tab {
+    width: 100%;
+    overflow: hidden;
+
+    .tab-label {
+        display: flex;
+        justify-content: space-between;
+        margin: 0;
+        padding: 1em 1.5em;
+        background: _palette(accent);
+        font-weight: bold;
+        cursor: pointer;
+
+        &:before {
+            opacity: 0;
+        }
+
+        /* Icon */
+        &:hover {
+            background: darken(_palette(accent), 10%);
+        }
+
+        &::after {
+            content: "\276F";
+            width: 1em;
+            height: 1em;
+            text-align: center;
+            transition: all .35s;
+        }
+    }
+
+    .tab-content {
+        max-height: 0;
+        padding: 0 2em;
+        color: _palette(accent);
+        background: white;
+        transition: all .35s;
+    }
+
+    .tab-close {
+        display: flex;
+        justify-content: flex-end;
+        padding: 1em;
+        font-size: 0.75em;
+        background: _palette(accent);
+        cursor: pointer;
+
+        &:hover {
+            background: darken(_palette(accent), 10%);
+        }
+    }
+}
+
+// :checked
+input:checked {
+    +.tab-label {
+        background: darken(_palette(accent), 10%);
+
+        &::after {
+            margin-top: 5px;
+            transform: rotate(90deg);
+        }
+    }
+
+    ~.tab-content {
+        max-height: 100vh;
+        padding: 1.25em 2em 0.1em 2em;
+    }
+}

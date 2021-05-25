@@ -27,7 +27,7 @@ export const TwitchPanelSettings: React.FC<IProps> = (props: IProps) => {
     const premiumLocked = patronVm.premiumLevel < PatronLevel.level1.patreonLevelRequirement;
 
     return (
-        <section id="browser-source-settings" className="main pt0">
+        <section id="browser-source-settings" className="main no-border pt0">
             <div className="spotlight">
                 <div className="content">
                     <div className="row mb1">

@@ -142,6 +142,10 @@ html {
     padding-top: 5em;
 }
 
+.pb5 {
+    padding-bottom: 5em;
+}
+
 .pr1 {
     padding-right: 1em;
 }
@@ -196,6 +200,22 @@ html {
         color: black;
         opacity: 0.8;
         // color: _palette(bg2);
+    }
+}
+
+#main>.main.no-border {
+    border: unset !important;
+}
+
+.MuiTimeline-root.left {
+    align-items: flex-start;
+
+    .MuiTimelineItem-root {
+        width: 100%;
+    }
+
+    .MuiTimelineContent-root.MuiTimelineItem-content {
+        flex: 3;
     }
 }
 

@@ -13,10 +13,12 @@
  - Premium only
 
 
+HANDLE NO PATREONS
+
 Configs
-- Speed of Marquee
-- Speed of VerticalList
-- Speed of OneAtATime
+- Speed of Marquee ✅
+- Speed of VerticalList ✅
+- Speed of OneAtATime ✅
 
 - Limit Patrons visible
     - Min monthly donation
@@ -25,14 +27,17 @@ Configs
     - LifeTime donation
     - Date joined
 
-- Background color 
-    - Free users: 7 options (Check serverside)
+- Background color  ✅
+    - Free users: 7 options  ✅
+        - Check serverside
     - PRO users: Hex editor
 - Text color
-    - Free users: White or Black (Check serverside)
+    - Free users: White or Black ✅
+        - Check serverside
     - PRO users: Hex editor
 - Rounded images
-    - Free users: true or false (Check serverside)
+    - Free users: true or false ✅
+        - Check serverside
     - PRO users: px value
 - Custom CSS (PRO)
     - Ability to Test

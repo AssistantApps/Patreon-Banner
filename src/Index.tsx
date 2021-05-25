@@ -9,6 +9,7 @@ import { HomePresenter } from './pages/home/homePresenter';
 import { ConfigPageContainer } from './pages/config/configPageContainer';
 import { ExamplePageContainer } from './pages/example/exampleContainer';
 import { DisplayPage } from './pages/display/displayContainer';
+import { WhatIsNewPage } from './pages/whatIsNew/whatIsNewContainer';
 import { SuccessfulPatreonLoginFromTwitchPage } from './pages/successfulPatreonLoginFromTwitch';
 import { AuthTokenFromServerPage } from './pages/authTokenFromServer/authTokenFromServer';
 import { ErrorPage } from './pages/error';
@@ -36,6 +37,8 @@ const App: React.FC = () => {
 
                     <Route path={route.displayWithGuid} component={DisplayPage} />
                     <Route path={route.display} component={DisplayPage} />
+
+                    <Route path={route.whatIsNew} component={WhatIsNewPage} />
 
                     <Route path={route.patreonSuccess} component={SuccessfulPatreonLoginFromTwitchPage} />
 

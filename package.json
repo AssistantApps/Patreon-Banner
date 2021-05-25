@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.4",
+    "@material-ui/lab": "*",
     "@microsoft/signalr": "^5.0.3",
     "axios": "^0.21.1",
     "classnames": "^2.3.1",

@@ -33,7 +33,7 @@ export const BrowserSourceSettings: React.FC<IProps> = (props: IProps) => {
     };
 
     return (
-        <section id="browser-source-settings" className="main pt0">
+        <section id="browser-source-settings" className="main no-border pt0">
             <div className="spotlight">
                 <div className="content">
                     <FormControl component="fieldset" style={{ width: '100%' }}>

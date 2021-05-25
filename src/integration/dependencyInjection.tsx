@@ -3,6 +3,7 @@ import { anyObject } from "../helper/typescriptHacks";
 
 import { LoginService } from "../services/api/LoginService";
 import { PatreonService } from "../services/api/PatreonService";
+import { AssistantAppsService } from "../services/api/AssistantAppsService";
 
 import { LoggingService } from "../services/common/LoggingService";
 import { AnalyticsService } from "../services/common/AnalyticsService";
@@ -14,6 +15,7 @@ import { StorageService } from "../services/StorageService";
 export interface IDependencyInjection {
     loginService: LoginService;
     patreonService: PatreonService;
+    assistantAppsService: AssistantAppsService;
     twitchAuthService: TwitchAuthenticationService;
     oAuthClient: OAuthClient;
 
@@ -32,6 +34,7 @@ export const defaultDependencyInjectionFunc: GetServices = (props: IServiceOptio
     return {
         loginService: new LoginService(),
         patreonService: new PatreonService(),
+        assistantAppsService: new AssistantAppsService(),
         twitchAuthService: new TwitchAuthenticationService(anyObject),
         oAuthClient: new OAuthClient(),
 

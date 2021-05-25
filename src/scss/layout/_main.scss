@@ -12,7 +12,7 @@
 
     >.main {
         @include padding(5em, 5em);
-        // border-top: solid 1px _palette(invert, border);
+        border-top: solid 1px _palette(invert, border);
 
         &:first-child {
             border-top: 0;

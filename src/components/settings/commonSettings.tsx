@@ -53,7 +53,7 @@ export const CommonSettings: React.FC<ICommonSettingsProps> = (props: ICommonSet
                         min={DesignPalette.backgroundOpacityMin}
                         max={DesignPalette.backgroundOpacityMax}
                         value={(settings as any)?.[props.backgroundOpacityProp] ?? ''}
-                        onChange={(newValue: number) => props.editSettings(props.backgroundOpacityProp)(newValue.toString())}
+                        onChange={(newValue: number) => props.editSettings(props.backgroundOpacityProp)(newValue)}
                     />
                 </div>
             </div>

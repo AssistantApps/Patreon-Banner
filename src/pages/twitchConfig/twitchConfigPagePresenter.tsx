@@ -7,7 +7,7 @@ import { TwitchConfigViewModel } from '../../contracts/generated/ViewModel/twitc
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
 
 import { TextInput } from '../../components/common/form/textInput';
-import { SmallLoading } from '../../components/loading';
+import { SmallLoading, TinyLoading } from '../../components/loading';
 import { PatreonButton } from '../../components/patreon/patreonButton';
 import { TwitchPanelSettings } from '../../components/settings/twitchPanelSettings';
 import { BrowserSourceSettings } from '../../components/settings/browserSourceSettings';
@@ -31,7 +31,7 @@ export interface ITwitchConfigPagePresenterProps {
 
     submissionData: TwitchConfigViewModel;
     showSaveButton: boolean;
-
+    jwtNetworkState: NetworkState;
     showCustomisations: boolean;
     customisationTabIndex: number;
 
@@ -113,7 +113,11 @@ export const TwitchConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                 </div>
                 <div className="ta-center">
                     {
-                        (props.showCustomisations === false && hasUserConfig) &&
+                        props.jwtNetworkState === NetworkState.Loading &&
+                        <button className="primary button mt1" disabled><TinyLoading /></button>
+                    }
+                    {
+                        (props.jwtNetworkState === NetworkState.Success && props.showCustomisations === false && hasUserConfig) &&
                         <button className="primary button mt1" onClick={props.toggleShowCustomisations}>Customize</button>
                     }
                     {

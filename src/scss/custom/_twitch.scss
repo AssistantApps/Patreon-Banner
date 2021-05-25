@@ -63,7 +63,8 @@ $twitchLightModePlaceholderTextColour: rgba(255, 255, 255, 0.5);
             input,
             .label,
             .MuiFormControlLabel-root,
-            .MuiIconButton-label {
+            .MuiIconButton-label,
+            .MuiSlider-markLabel {
                 color: $twitchDarkModeTextColour;
 
                 input {

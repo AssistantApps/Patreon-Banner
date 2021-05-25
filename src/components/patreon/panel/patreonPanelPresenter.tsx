@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { BasicImage } from '../../core/image';
 import { BasicLink } from '../../core/link';
 import { AppImage } from '../../../constants/appImage';
+import { DefaultPatreonSettings, DesignPalette } from '../../../constants/designPalette';
 import { NetworkState } from '../../../constants/enum/networkState';
 import { PatreonViewModel } from '../../../contracts/generated/ViewModel/patreonViewModel';
 import { getApp } from '../../../helper/configHelper';
@@ -20,7 +21,10 @@ export interface IProps {
 
 export const PatreonPanelPresenter: React.FC<IProps> = (props: IProps) => {
     const { patronVm, patreonNetworkState } = props;
-    const { panelUseDefaultBackground, panelCustomBackgroundImageUrl } = patronVm.settings;
+    let { panelUseDefaultBackground, panelCustomBackgroundImageUrl } = patronVm.settings;
+
+    if (panelUseDefaultBackground == null) panelUseDefaultBackground = DesignPalette.panelUseDefaultBackground;
+    if (panelCustomBackgroundImageUrl == null) panelCustomBackgroundImageUrl = DesignPalette.panelCustomBackgroundImageUrl;
 
     let styleObj: any = anyObject;
     const useBackgroundImage = (panelUseDefaultBackground == false && panelCustomBackgroundImageUrl && panelCustomBackgroundImageUrl.length > 10);

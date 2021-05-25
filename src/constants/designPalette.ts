@@ -32,7 +32,6 @@ export const DesignPalette = {
     ],
     //
     verticalListSpeedDefault: 6,
-    panelVerticalListSpeedDefault: 6,
     verticalListSpeedTicks: [
         { value: 1, realValue: 250, label: '250ms' }, { value: 2, realValue: 500, label: '500ms' },
         { value: 4, realValue: 1000, label: '1000ms' }, { value: 6, realValue: 1500, label: 'default' },
@@ -48,6 +47,15 @@ export const DesignPalette = {
     //
     isProfilePicRounded: false,
     profilePicRoundedValue: 25,
+
+    panelForegroundColour: patronForegroundColours[0],
+    panelBackgroundColour: patronBackgroundColours[0],
+    panelBackgroundOpacity: 30,
+    panelVerticalListSpeedDefault: 6,
+    panelUseDefaultBackground: true,
+    panelCustomBackgroundImageUrl: '',
+    panelIsProfilePicRounded: false,
+    panelProfilePicRoundedValue: 25,
 }
 
 export const DefaultPatreonSettings: PatreonSettingsViewModel = {

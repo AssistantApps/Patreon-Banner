@@ -71,7 +71,7 @@ export class PatreonOneAtATime extends React.Component<IProps, IState> {
     setTimer = () => {
         if (this.state.intervalId) clearInterval(this.state.intervalId);
 
-        let timerInterval = +this.props.settings.oneAtATimeSpeed;
+        let timerInterval = +(this.props.settings.oneAtATimeSpeed ?? DesignPalette.oneAtATimeSpeedDefault);
         const selectedValue = DesignPalette.oneAtATimeSpeedTicks.find(t => t.value === (+timerInterval));
         if (selectedValue != null && selectedValue.realValue != null) timerInterval = (+selectedValue.realValue);
 

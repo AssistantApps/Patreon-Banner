@@ -43,7 +43,6 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
 
     render() {
         let patrons = this.props.patrons ?? [];
-        if (patrons.length < 1) return (<div id="patreonVerticalList"></div>);
 
         const {
             foregroundColour, backgroundColour, backgroundOpacity, verticalListSpeed,
@@ -72,7 +71,8 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
             addPatreonStaticButton = true;
         }
 
-        if (this.props.campaignUrl == null) {
+        if (this.props.campaignUrl == null || this.props.campaignUrl.length < 5) {
+            addPatreonStaticButton = false;
             addPatreonHoverButton = false;
         }
 
@@ -113,7 +113,7 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
                     }
                     {
                         addPatreonStaticButton &&
-                        <div className="flex pa-1-2">
+                        <div className={classNames('flex pa-1-2', { 'mt65': patrons.length < 1 })}>
                             <PatreonButton classNames="m-h-auto" text="Join my Patreon" link={this.props.campaignUrl} />
                         </div>
                     }

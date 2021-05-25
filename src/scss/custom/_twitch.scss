@@ -25,7 +25,8 @@ $twitchLightModePlaceholderTextColour: rgba(255, 255, 255, 0.5);
             // }
 
             .patreon-btn-hover {
-                top: 80%;
+                top: 75%;
+                opacity: 1;
             }
         }
 
@@ -33,7 +34,10 @@ $twitchLightModePlaceholderTextColour: rgba(255, 255, 255, 0.5);
             top: 100%;
             left: 0;
             right: 0;
-            transition: top 500ms ease-in-out;
+            opacity: 0;
+            transition-property: top, opacity;
+            transition-duration: 500ms;
+            transition-timing-function: ease-in-out;
         }
     }
 

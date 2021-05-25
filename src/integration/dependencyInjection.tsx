@@ -5,6 +5,8 @@ import { LoginService } from "../services/api/LoginService";
 import { PatreonService } from "../services/api/PatreonService";
 import { AssistantAppsService } from "../services/api/AssistantAppsService";
 
+import { MockPatreonService } from "../services/api/mock/PatreonService";
+
 import { LoggingService } from "../services/common/LoggingService";
 import { AnalyticsService } from "../services/common/AnalyticsService";
 import { OAuthClient } from "../services/common/signal/OAuthClient";
@@ -45,6 +47,23 @@ export const defaultDependencyInjectionFunc: GetServices = (props: IServiceOptio
     }
 }
 
+export const mockDependencyInjectionFunc: GetServices = (props: IServiceOptionsProps) => {
+    return {
+        loginService: new LoginService(),
+        patreonService: new MockPatreonService(),
+        assistantAppsService: new AssistantAppsService(),
+        twitchAuthService: new TwitchAuthenticationService(anyObject),
+        oAuthClient: new OAuthClient(),
+
+        // Common
+        storageService: new StorageService(),
+        loggingService: new LoggingService(props),
+        analyticsService: new AnalyticsService(props),
+    }
+}
+
+/* ------------------------------------------ Methods ------------------------------------------ */
+
 export const DependencyInjectionContext = React.createContext<IDependencyInjection>(anyObject);
 
 interface IDependencyInjectionProviderProps extends IServiceOptionsProps {
@@ -58,10 +77,10 @@ export const DependencyInjectionProvider: React.FC<IDependencyInjectionProviderP
     );
 };
 
-export function withDependencyInjectionProvider<TProps>(WrappedComponent: any): (React.FC<TProps>) {
-    return (props: TProps) => (
-        <DependencyInjectionContext.Provider value={defaultDependencyInjectionFunc(anyObject)}>
-            <WrappedComponent {...props} />
+export const MockDependencyInjectionProvider: React.FC<IDependencyInjectionProviderProps> = (props: IDependencyInjectionProviderProps) => {
+    return (
+        <DependencyInjectionContext.Provider value={mockDependencyInjectionFunc({ ...props })}>
+            {props.children}
         </DependencyInjectionContext.Provider>
     );
 };

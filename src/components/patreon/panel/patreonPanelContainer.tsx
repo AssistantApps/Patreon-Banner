@@ -2,7 +2,6 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { NetworkState } from '../../../constants/enum/networkState';
-import { patreonTestData } from '../../../constants/testData/patreonTestData';
 import { TwitchUser } from '../../../contracts/twitchAuth';
 import { ResultWithValue } from '../../../contracts/results/ResultWithValue';
 import { PatreonViewModel } from '../../../contracts/generated/ViewModel/patreonViewModel';
@@ -20,7 +19,6 @@ interface IWithoutExpectedServices {
 interface IProps extends IExpectedServices, IWithoutExpectedServices { }
 
 interface IState {
-    isTestData: boolean;
     patreonNetworkState: NetworkState;
     patronVm: PatreonViewModel;
     channelId: string;
@@ -32,13 +30,12 @@ interface IState {
     isVisible: boolean;
 }
 
-export class PatreonPanelContainerUnconnected extends React.Component<IProps, IState> {
+class PatreonPanelContainerUnconnected extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
         this.state = {
             channelId: '',
-            isTestData: false,
             patreonNetworkState: NetworkState.Loading,
             patronVm: anyObject,
 
@@ -93,20 +90,14 @@ export class PatreonPanelContainerUnconnected extends React.Component<IProps, IS
     getPatronSettings = async (channelId?: string) => {
         this.props.loggingService.log?.('getPatronSettings', channelId);
 
-        let isTestData: boolean = false;
         let patronsResult: ResultWithValue<PatreonViewModel> = anyObject;
         if (channelId != null) {
             patronsResult = await this.props.patreonService.getFromChannelId(channelId);
-        } else {
-            patronsResult = patreonTestData();
-            isTestData = true;
         }
 
         if (!patronsResult.isSuccess) {
             this.setState(() => {
                 return {
-                    isTestData: true,
-                    patronVm: patreonTestData().value,
                     patreonNetworkState: NetworkState.Error,
                 }
             });
@@ -115,7 +106,6 @@ export class PatreonPanelContainerUnconnected extends React.Component<IProps, IS
 
         this.setState(() => {
             return {
-                isTestData,
                 channelId: channelId ?? '',
                 patronVm: patronsResult.value,
                 patreonNetworkState: NetworkState.Success,

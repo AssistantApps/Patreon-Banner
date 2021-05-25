@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { BasicLink } from '../core/link';
 
-interface IPatreonButtonProps {
+export interface IPatreonButtonProps {
     text?: string;
     link?: string;
     classNames?: string;

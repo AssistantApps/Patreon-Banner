@@ -7,11 +7,11 @@ import { PatreonOneAtATime } from '../../components/patreon/patreonOneAtATime';
 import { PatreonBannerDisplayType } from '../../contracts/generated/Enum/patreonBannerDisplayType';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
 
-interface IProps {
+export interface IPatreonDisplaySwitcherProps {
     patronVm: PatreonViewModel;
 }
 
-export const PatreonDisplaySwitcher: React.FC<IProps> = (props: IProps) => {
+export const PatreonDisplaySwitcher: React.FC<IPatreonDisplaySwitcherProps> = (props: IPatreonDisplaySwitcherProps) => {
     const { settings } = props.patronVm;
 
     if (settings.displayType === PatreonBannerDisplayType.marque) return (<PatreonMarquee {...props.patronVm} />);

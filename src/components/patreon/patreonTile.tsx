@@ -4,7 +4,7 @@ import { PatronLevel } from '../../constants/patreonLevel';
 import { DesignPalette } from '../../constants/designPalette';
 import { PatreonItemViewModel } from '../../contracts/generated/ViewModel/patreonItemViewModel';
 
-interface IPatronTileProps extends PatreonItemViewModel {
+export interface IPatronTileProps extends PatreonItemViewModel {
     foregroundColour?: string;
     premiumLevel: number;
     isProfilePicRounded: boolean;

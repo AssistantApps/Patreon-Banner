@@ -21,17 +21,20 @@ interface IProps {
 }
 
 export const PatreonMarquee: React.FC<IProps> = (props: IProps) => {
+    const backgroundOpacity = props?.settings?.backgroundOpacity ?? DesignPalette.backgroundOpacityDefault;
     const {
-        foregroundColour, backgroundColour, backgroundOpacity, marqueSpeed,
+        foregroundColour, backgroundColour, marqueSpeed,
         isProfilePicRounded, profilePicRoundedValue
     } = props.settings;
+
+    debugger;
 
     let realValue = +marqueSpeed;
     const selectedValue = DesignPalette.marqueSpeedTicks.find(t => t.value === (+marqueSpeed));
     if (selectedValue != null && selectedValue.realValue != null) realValue = (+selectedValue.realValue);
 
     const styleObj = {
-        backgroundColor: backgroundColour,
+        backgroundColor: backgroundColour ?? undefined,
         opacity: backgroundOpacity / 100,
     };
 

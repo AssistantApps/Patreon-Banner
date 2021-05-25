@@ -10,23 +10,21 @@ import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonVie
 import { SpeedPicker } from '../common/slider/speedPicker';
 import { DefaultTooltip } from '../common/tooltip/tooltip';
 import { BasicImage } from '../core/image';
-import { PatreonMarquee } from '../patreon/patreonMarquee';
-import { PatreonVerticalList } from '../patreon/patreonVerticalList';
-import { PatreonOneAtATime } from '../patreon/patreonOneAtATime';
-
-import { CommonSettings, CommonSettingsFooter } from './commonSettings';
-import { anyObject } from '../../helper/typescriptHacks';
 import { PatreonDisplaySwitcher } from '../patreon/patreonDisplaySwitcher';
+import { anyObject } from '../../helper/typescriptHacks';
+
+import { TestStreamWindow } from './testStreamWindow';
+import { CommonSettings, CommonSettingsFooter } from './commonSettings';
 
 
-interface IProps {
+export interface IBrowserSourceSettingsProps {
     patreonData: PatreonViewModel;
     showSaveButton: boolean;
     onSave: () => void;
     editSettings: <T extends unknown>(name: string) => (value: T) => void;
 }
 
-export const BrowserSourceSettings: React.FC<IProps> = (props: IProps) => {
+export const BrowserSourceSettings: React.FC<IBrowserSourceSettingsProps> = (props: IBrowserSourceSettingsProps) => {
     const patronVm: PatreonViewModel = {
         ...(props?.patreonData ?? anyObject),
         settings: props?.patreonData?.settings ?? DefaultPatreonSettings
@@ -65,14 +63,9 @@ export const BrowserSourceSettings: React.FC<IProps> = (props: IProps) => {
                             }
                         </RadioGroup>
                     </FormControl>
-                    <div className="display-test">
-                        <div className="display-test-inner">
-                            <h2 className="m0">Your awesome stream!</h2>
-                        </div>
-                        <div className="display-test-container">
-                            <PatreonDisplaySwitcher patronVm={patronVm} />
-                        </div>
-                    </div>
+                    <TestStreamWindow>
+                        <PatreonDisplaySwitcher patronVm={patronVm} />
+                    </TestStreamWindow>
                     <div className="row mt2 mb1">
                         <CommonSettings
                             patronVm={patronVm}

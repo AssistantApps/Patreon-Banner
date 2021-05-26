@@ -13,8 +13,6 @@
  - Premium only
 
 
-HANDLE NO PATREONS
-
 Configs
 - Speed of Marquee ✅
 - Speed of VerticalList ✅

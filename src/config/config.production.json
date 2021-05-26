@@ -4,5 +4,11 @@
     "useServiceWorker": true,
     "reportWebVitals": false,
     "apiUrl": "https://api.assistantapps.stream",
-    "appUrl": "https://patreonbanner.com"
+    "appUrl": "https://patreonbanner.com",
+    "assistantApps": {
+        "apiUrl": "https://api.assistantapps.com",
+        "appGuid": "5b6e534d-1f07-42d2-b229-af352604600e",
+        "currentWhatIsNewGuid": "62f33041-3d2a-4496-9dec-ef9da6fa45d1"
+    },
+    "apiPatronOAuthClientId": "-fdaJApJ7dq2Ew3q7vi2VU7GcYcPaDfbTPE4vPP2igKDO7itczZagmtf-9JARsgz"
 }

@@ -4,24 +4,36 @@ import Marquee from "react-fast-marquee";
 import { PatreonTile } from '../../components/patreon/patreonTile';
 import { DesignPalette } from '../../constants/designPalette';
 import { PatreonItemViewModel } from '../../contracts/generated/ViewModel/patreonItemViewModel';
-import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
 
+interface IMarqueeRequiredSettingsProps {
+    foregroundColour: string;
+    backgroundColour: string;
+    backgroundOpacity: number;
+    marqueSpeed: number;
+    isProfilePicRounded: boolean;
+    profilePicRoundedValue: number;
+
+}
 interface IProps {
-    patronSettings: PatreonViewModel;
+    premiumLevel: number;
+    patrons: Array<PatreonItemViewModel>;
+    settings: IMarqueeRequiredSettingsProps;
 }
 
 export const PatreonMarquee: React.FC<IProps> = (props: IProps) => {
     const {
-        foregroundColour, backgroundColour, backgroundOpacity, marqueSpeed,
+        foregroundColour, backgroundColour,
+        marqueSpeed = DesignPalette.marqueSpeedDefault,
+        backgroundOpacity = DesignPalette.backgroundOpacityDefault,
         isProfilePicRounded, profilePicRoundedValue
-    } = props.patronSettings.settings;
+    } = props.settings;
 
     let realValue = +marqueSpeed;
     const selectedValue = DesignPalette.marqueSpeedTicks.find(t => t.value === (+marqueSpeed));
     if (selectedValue != null && selectedValue.realValue != null) realValue = (+selectedValue.realValue);
 
     const styleObj = {
-        backgroundColor: backgroundColour,
+        backgroundColor: backgroundColour ?? undefined,
         opacity: backgroundOpacity / 100,
     };
 
@@ -30,10 +42,11 @@ export const PatreonMarquee: React.FC<IProps> = (props: IProps) => {
             <div className="patreon-container-background" style={styleObj}></div>
             <Marquee gradient={false} className="patreon-container" speed={5 * realValue}>
                 {
-                    props?.patronSettings?.patrons != null &&
-                    props.patronSettings?.patrons.map((item: PatreonItemViewModel) => (
+                    props?.patrons != null &&
+                    props.patrons.map((item: PatreonItemViewModel) => (
                         <PatreonTile key={item.name} {...item} foregroundColour={foregroundColour}
                             isProfilePicRounded={isProfilePicRounded} profilePicRoundedValue={profilePicRoundedValue}
+                            premiumLevel={props.premiumLevel}
                         />
                     ))
                 }

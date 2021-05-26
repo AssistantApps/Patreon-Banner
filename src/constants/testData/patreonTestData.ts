@@ -10,7 +10,7 @@ const createTestPatronData = (name: string): PatreonItemViewModel => {
         imageUrl: `https://ui-avatars.com/api/?size=128&name=${name}`,
         // imageUrl: `https://picsum.photos/seed/${name}/200/300`,
         thumbnailUrl: `https://ui-avatars.com/api/?size=128&name=${name}`,
-        totalAmountCents: 0,
+        joinedDate: new Date(),
         url: '',
     }
 }
@@ -56,7 +56,11 @@ export const patreonTestData = (): ResultWithValue<PatreonViewModel> => {
             userGuid: '',
             patrons: shuffle(testPatrons),
             saveDate: new Date(),
-            settings: anyObject
+            settings: anyObject,
+            tiers: [],
+            hasTwitch: true,
+            campaignUrl: 'https://google.com',
+            premiumLevel: 100,
         },
         errorMessage: ''
     }

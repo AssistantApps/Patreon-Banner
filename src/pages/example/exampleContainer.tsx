@@ -1,17 +1,16 @@
 import React from 'react';
 
 import { DefaultPatreonSettings } from '../../constants/designPalette';
-import { DisplayType } from '../../constants/enum/displayType';
+import { PatreonBannerDisplayType } from '../../contracts/generated/Enum/patreonBannerDisplayType';
 import { patreonTestData } from '../../constants/testData/patreonTestData';
 import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/patreonSettingsViewModel';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
-import { anyObject } from '../../helper/typescriptHacks';
 import { ExamplePagePresenter } from './examplePresenter';
 
 interface IProps { }
 
 interface IState {
-    displayType: DisplayType;
+    displayType: PatreonBannerDisplayType;
     testData: PatreonViewModel;
     settings: PatreonSettingsViewModel;
 }
@@ -21,13 +20,13 @@ export class ExamplePageContainer extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            displayType: DisplayType.Marquee,
+            displayType: PatreonBannerDisplayType.marque,
             testData: patreonTestData().value,
             settings: DefaultPatreonSettings
         };
     }
 
-    setDisplayType = (displayType: DisplayType) => {
+    setDisplayType = (displayType: PatreonBannerDisplayType) => {
         this.setState(() => {
             return {
                 displayType

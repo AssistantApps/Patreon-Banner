@@ -1,14 +1,14 @@
 import React from "react";
-import { BrowserRouter, Switch } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 import { initializeWithConfig } from "./util/utils";
-import { PatreonPanel } from './components/patreon/panel/patreonPanel';
+import { PatreonPanelContainer } from './components/patreon/panel/patreonPanelContainer';
 
 import './scss/main.scss';
 import './scss/custom.scss';
 
 initializeWithConfig(
     <BrowserRouter>
-        <PatreonPanel />
+        <PatreonPanelContainer />
     </BrowserRouter>
 );

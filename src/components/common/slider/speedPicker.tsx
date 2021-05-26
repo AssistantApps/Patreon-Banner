@@ -31,10 +31,15 @@ export const SpeedPicker: React.FC<IProps> = (props: IProps) => {
     const value: number = +(props.value ?? defaultValue);
 
     const setTick = (e: any, newValue: number | number[]) => {
-        const selectedValue = marks.find(m => m.value === newValue);
-        if (selectedValue == null) return;
+        if (marks != null && marks.length > 0) {
+            const selectedValue = marks.find(m => m.value === newValue);
+            if (selectedValue == null) return;
 
-        props?.onChange?.(selectedValue.value);
+            props?.onChange?.(selectedValue.value);
+            return;
+        }
+
+        props?.onChange?.(newValue as number);
     }
 
     return (

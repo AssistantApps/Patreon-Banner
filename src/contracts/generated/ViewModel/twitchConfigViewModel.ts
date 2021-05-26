@@ -5,6 +5,4 @@ export interface TwitchConfigViewModel {
     channelId: string;
     clientId: string;
     twitchAuthToken: string;
-    accessToken: string;
-    campaignId: string;
 }

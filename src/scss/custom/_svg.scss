@@ -29,9 +29,21 @@
 }
 
 .lock {
-    //w-auto h-3 text-purple-800 mr-1
     width: auto;
-    height: .75rem;
-    margin-right: .25rem;
+    height: 3rem;
     color: var(--primary);
+}
+
+.premium-crown-container {
+    min-width: 4em;
+}
+
+.premium-crown {
+    width: auto;
+    height: 80%;
+    margin: 0 auto;
+
+    &.full-height {
+        height: 100%;
+    }
 }

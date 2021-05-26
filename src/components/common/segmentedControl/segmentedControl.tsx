@@ -3,7 +3,6 @@ import React from 'react';
 
 const segmentedControlImport = require('segmented-control');
 
-import './_segmentedControl.scss';
 
 interface IOptionProps<T> {
     label: string;

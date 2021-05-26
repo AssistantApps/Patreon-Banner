@@ -1,4 +1,4 @@
 export interface StorageItem<T> {
-    data: T;
+    data?: T;
     expiryDate: Date;
 }

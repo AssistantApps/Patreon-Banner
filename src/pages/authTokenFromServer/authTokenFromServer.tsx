@@ -21,7 +21,7 @@ export const AuthTokenFromServerPageUnconnected: React.FC<IProps> = (props: IPro
 
     useEffect(() => {
         const currentGuid = props.storageService?.get<string>(storageKey.userGuid);
-        if (currentGuid != null && currentGuid.isSuccess) {
+        if (currentGuid != null && currentGuid.isSuccess && currentGuid.value && currentGuid.value.length > 5) {
             props.loggingService.log('config is not null');
             history.push(routes.config);
             return;

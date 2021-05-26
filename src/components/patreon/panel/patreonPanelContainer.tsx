@@ -1,21 +1,16 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { BasicImage } from '../../core/image';
-import { BasicLink } from '../../core/link';
-import { AppImage } from '../../../constants/appImage';
 import { NetworkState } from '../../../constants/enum/networkState';
-import { patreonTestData } from '../../../constants/testData/patreonTestData';
 import { TwitchUser } from '../../../contracts/twitchAuth';
 import { ResultWithValue } from '../../../contracts/results/ResultWithValue';
 import { PatreonViewModel } from '../../../contracts/generated/ViewModel/patreonViewModel';
-import { SmallLoading } from '../../../components/loading';
-import { getApp } from '../../../helper/configHelper';
+import { SmallLoading } from '../../loading';
 import { anyObject } from '../../../helper/typescriptHacks';
 import { withServices } from '../../../integration/dependencyInjection';
 
 import { dependencyInjectionToProps, IExpectedServices } from './patreonPanel.dependencyInjection';
-import { PatreonVerticalList } from '../patreonVerticalList';
+import { PatreonPanelPresenter } from './patreonPanelPresenter';
 
 interface IWithoutExpectedServices {
     match?: any
@@ -24,9 +19,8 @@ interface IWithoutExpectedServices {
 interface IProps extends IExpectedServices, IWithoutExpectedServices { }
 
 interface IState {
-    isTestData: boolean;
     patreonNetworkState: NetworkState;
-    patronSettings: PatreonViewModel;
+    patronVm: PatreonViewModel;
     channelId: string;
 
     // Twitch
@@ -36,15 +30,14 @@ interface IState {
     isVisible: boolean;
 }
 
-export class PatreonPanelUnconnected extends React.Component<IProps, IState> {
+class PatreonPanelContainerUnconnected extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
         this.state = {
             channelId: '',
-            isTestData: false,
             patreonNetworkState: NetworkState.Loading,
-            patronSettings: anyObject,
+            patronVm: anyObject,
 
             // Twitch
             twitch: window.Twitch ? window.Twitch.ext : null,
@@ -97,20 +90,14 @@ export class PatreonPanelUnconnected extends React.Component<IProps, IState> {
     getPatronSettings = async (channelId?: string) => {
         this.props.loggingService.log?.('getPatronSettings', channelId);
 
-        let isTestData: boolean = false;
         let patronsResult: ResultWithValue<PatreonViewModel> = anyObject;
         if (channelId != null) {
             patronsResult = await this.props.patreonService.getFromChannelId(channelId);
-        } else {
-            patronsResult = patreonTestData();
-            isTestData = true;
         }
 
         if (!patronsResult.isSuccess) {
             this.setState(() => {
                 return {
-                    isTestData: true,
-                    patronSettings: patreonTestData().value,
                     patreonNetworkState: NetworkState.Error,
                 }
             });
@@ -119,40 +106,26 @@ export class PatreonPanelUnconnected extends React.Component<IProps, IState> {
 
         this.setState(() => {
             return {
-                isTestData,
                 channelId: channelId ?? '',
-                patronSettings: patronsResult.value,
+                patronVm: patronsResult.value,
                 patreonNetworkState: NetworkState.Success,
             }
         });
     }
 
     render() {
-        const { patronSettings, patreonNetworkState, isTestData } = this.state;
+        const { patreonNetworkState } = this.state;
         if (patreonNetworkState === NetworkState.Pending || patreonNetworkState === NetworkState.Loading) {
             return <SmallLoading additionalClasses="mt5" />;
         }
 
-        return (
-            <div id="panel" className="bg" draggable={false}>
-                <PatreonVerticalList patronSettings={patronSettings} />
-                <BasicLink id="ad" href={getApp()}>
-                    <BasicImage imageUrl={AppImage.logo100} />
-                </BasicLink>
-                {
-                    isTestData &&
-                    <div id="testData">
-                        <span>Sample data</span>
-                    </div>
-                }
-            </div>
-        );
+        return (<PatreonPanelPresenter {...this.state} />);
     }
 }
 
-export const PatreonPanel = withRouter(
+export const PatreonPanelContainer = withRouter(
     withServices<IWithoutExpectedServices, IExpectedServices>(
-        PatreonPanelUnconnected,
+        PatreonPanelContainerUnconnected,
         dependencyInjectionToProps
     )
 );

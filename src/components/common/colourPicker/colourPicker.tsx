@@ -1,18 +1,22 @@
+import classNames from 'classnames';
 import React from 'react';
 
 import { handleHex } from '../../../helper/colourHelper';
+import { Premium } from '../svg/premium';
 import { ColourPickerCircle } from './colourPickerCircle';
 
 interface IProps {
     id?: string;
     defaultValue: string;
     currentValue?: string;
+    isUserPremium?: boolean;
     availableColours: Array<string>;
     onChange?: (value: string) => void;
 }
 
 export const ColourPicker: React.FC<IProps> = (props: IProps) => {
 
+    const isUserPremium = props.isUserPremium ?? false;
     const localCurrentValue = props.currentValue ?? '';
     const pickerCurrentValue = (props.currentValue == null || props.currentValue.length < 1)
         ? props.defaultValue
@@ -42,13 +46,14 @@ export const ColourPicker: React.FC<IProps> = (props: IProps) => {
                         }
                     </div>
                 </div>
-                <div className="col-12" style={{ display: 'flex' }}>
+                <div className={classNames('col-12 flex', { 'premium-locked': !isUserPremium })}>
                     <ColourPickerCircle
                         key={`customColour-${props.id}`}
                         colourHex={pickerCurrentValue}
                         isActive={false}
                     />
                     <input type="text"
+                        disabled={!isUserPremium}
                         key={`colourPickerInput-${props.id}`}
                         name="ColourPickerInput"
                         style={{ display: 'inline-block', width: 'unset' }}
@@ -60,6 +65,10 @@ export const ColourPicker: React.FC<IProps> = (props: IProps) => {
                             setColour(value)();
                         }}
                     />
+                    {
+                        (isUserPremium == false) &&
+                        <Premium classNames="ml1" />
+                    }
                 </div>
             </div>
         </>

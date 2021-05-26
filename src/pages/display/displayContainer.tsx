@@ -2,8 +2,8 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import * as qs from 'query-string';
 
-import { PatreonMarquee } from '../../components/patreon/patreonMarquee';
 import { NetworkState } from '../../constants/enum/networkState';
+import { DefaultPatreonSettings } from '../../constants/designPalette';
 import { patreonTestData } from '../../constants/testData/patreonTestData';
 import { ResultWithValue } from '../../contracts/results/ResultWithValue';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
@@ -11,8 +11,9 @@ import { anyObject } from '../../helper/typescriptHacks';
 import { setDocumentTitle } from '../../helper/documentHelper';
 import { withServices } from '../../integration/dependencyInjection';
 
+import { DisplayPagePresenter } from './displayPresenter';
+
 import { dependencyInjectionToProps, IExpectedServices } from './display.dependencyInjection';
-import { DefaultPatreonSettings } from '../../constants/designPalette';
 
 interface IWithoutExpectedServices {
     match?: any
@@ -23,7 +24,7 @@ interface IProps extends IExpectedServices, IWithoutExpectedServices { }
 
 interface IState {
     patreonNetworkState: NetworkState;
-    patronSettings: PatreonViewModel;
+    patronVm: PatreonViewModel;
 }
 
 export class DisplayPageUnconnected extends React.Component<IProps, IState> {
@@ -32,7 +33,7 @@ export class DisplayPageUnconnected extends React.Component<IProps, IState> {
 
         this.state = {
             patreonNetworkState: NetworkState.Pending,
-            patronSettings: anyObject,
+            patronVm: anyObject,
         };
     }
 
@@ -66,19 +67,19 @@ export class DisplayPageUnconnected extends React.Component<IProps, IState> {
 
         this.setState(() => {
             return {
-                patronSettings: { ...patronsResult.value, settings: DefaultPatreonSettings }, //TODO remove this when settings are added
+                patronVm: {
+                    ...patronsResult.value,
+                    settings: patronsResult?.value?.settings ?? DefaultPatreonSettings
+                },
                 patreonNetworkState: NetworkState.Success,
             }
         });
     }
 
     render() {
-        const { patronSettings, patreonNetworkState } = this.state;
-        if (patreonNetworkState !== NetworkState.Success) return <span></span>
-
         return (
             <div id="display" className="height-100vh" draggable={false}>
-                <PatreonMarquee patronSettings={patronSettings} />
+                <DisplayPagePresenter {...this.state} />
             </div>
         );
     }

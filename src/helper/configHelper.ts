@@ -12,8 +12,14 @@ export class Config {
 
 export const getApi = () => getConfig('apiUrl') ?? '';
 export const getApp = () => getConfig('appUrl') ?? '';
+
+export const getAAppApiUrl = () => getSubConfig('assistantApps', 'apiUrl') ?? '';
+export const getAAppAppGuid = () => getSubConfig('assistantApps', 'appGuid') ?? '';
+export const getAAppCurrentWhatIsNewGuid = () => getSubConfig('assistantApps', 'currentWhatIsNewGuid') ?? '';
+
 export const getConsoleLogDebug = () => getConfig('consoleLogDebug') ?? false;
 export const getAnalytics = () => getConfig('googleAnalyticsEnabled') ?? false;
+export const getApiPatronOAuthClientId = () => getConfig('apiPatronOAuthClientId') ?? '';
 
 export const getConfig = (property: string) => getEntireConfig()?.[property] ?? '';
 export const getSubConfig = (property: string, subProperty: string) => getEntireConfig()?.[property]?.[subProperty] ?? '';

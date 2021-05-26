@@ -6,15 +6,15 @@ export const patreonApiOAuthUrl = `${patreonApiUrl}/oauth2/authorize`;
 
 export const displayTypeCheckBoxes = [
     {
-        imageUrl: `/${AppImage.displayTypeMarquee}`,
+        imageUrl: AppImage.displayTypeMarquee,
         displayType: PatreonBannerDisplayType.marque,
     },
     {
-        imageUrl: `/${AppImage.displayTypeVerticalList}`,
+        imageUrl: AppImage.displayTypeVerticalList,
         displayType: PatreonBannerDisplayType.verticalList,
     },
     {
-        imageUrl: `/${AppImage.displayTypeOneAtATime}`,
+        imageUrl: AppImage.displayTypeOneAtATime,
         displayType: PatreonBannerDisplayType.oneAtATime,
     }
 ];

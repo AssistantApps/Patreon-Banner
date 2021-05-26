@@ -7,7 +7,6 @@ import { NetworkState } from '../../constants/enum/networkState';
 import { DefaultPatreonSettings } from '../../constants/designPalette';
 
 import { TwitchUser } from '../../contracts/twitchAuth';
-import { ResultWithValue } from '../../contracts/results/ResultWithValue';
 import { PatreonSettingsViewModel } from '../../contracts/generated/ViewModel/patreonSettingsViewModel';
 import { TwitchConfigViewModel } from '../../contracts/generated/ViewModel/twitchConfigViewModel';
 import { PatreonViewModel } from '../../contracts/generated/ViewModel/patreonViewModel';
@@ -15,6 +14,7 @@ import { anyObject } from '../../helper/typescriptHacks';
 
 import { dependencyInjectionToProps, IExpectedServices } from './twitchConfigPage.dependencyInjection';
 import { TwitchConfigPagePresenter } from './twitchConfigPagePresenter';
+import { stringify } from 'query-string';
 
 declare global {
     interface Window {
@@ -33,8 +33,7 @@ interface IState {
     settingsHash: string;
 
     submissionData: TwitchConfigViewModel;
-    submissionStatus: NetworkState;
-
+    getJwtStatus: NetworkState;
     showCustomisations: boolean;
     customisationTabIndex: number;
 
@@ -55,10 +54,8 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
             initialSettingsHash: '',
             settingsHash: '',
 
-            // Streamer Submission
             submissionData: anyObject,
-            submissionStatus: NetworkState.Pending,
-
+            getJwtStatus: NetworkState.Pending,
             showCustomisations: false,
             customisationTabIndex: 0,
 
@@ -77,18 +74,20 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
                 this.props.twitchAuthService.setToken(auth.token, auth.userId);
                 this.props.loggingService.log?.('set Token', auth);
                 if (this.state.twitchStatus !== NetworkState.Success) {
-                    this.setLoadingForFetchExistingSettings(auth.channelId);
-                    this.setState((prevState: IState) => {
+                    this.setState(() => {
                         return {
-                            twitchStatus: NetworkState.Success,
                             submissionData: {
-                                ...prevState.submissionData,
-                                userId: auth.userId,
                                 clientId: auth.clientId,
                                 channelId: auth.channelId,
                                 twitchAuthToken: auth.token,
                             },
+                            twitchStatus: NetworkState.Success,
+                            getJwtStatus: NetworkState.Loading,
+                            fetchExistingStatus: NetworkState.Loading,
                         }
+                    }, () => {
+                        this.fetchJwtFromTwitchAuth(auth);
+                        this.fetchExistingSettings(auth.channelId);
                     });
                 }
             });
@@ -158,6 +157,20 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
         });
     }
 
+    fetchJwtFromTwitchAuth = async (auth: TwitchUser) => {
+        const { clientId, channelId, token } = auth;
+        this.props.loggingService.log?.('fetchJwtFromSettings',);
+
+        const jwtResult = await this.props.loginService.getJwtFromTwitchAuth(clientId, channelId, token, this.props.storageService);
+        this.setState(() => {
+            return {
+                getJwtStatus: jwtResult.isSuccess
+                    ? NetworkState.Success
+                    : NetworkState.Error,
+            }
+        });
+    }
+
     toggleShowCustomisations = () => {
         this.setState((prevState: IState) => {
             return {
@@ -215,6 +228,7 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
             <TwitchConfigPagePresenter
                 {...this.state}
                 {...this.props}
+                jwtNetworkState={this.state.getJwtStatus}
                 showSaveButton={(this.state.initialSettingsHash != this.state.settingsHash)}
                 toggleShowCustomisations={this.toggleShowCustomisations}
                 setCustomisationTabIndex={this.setCustomisationTabIndex}

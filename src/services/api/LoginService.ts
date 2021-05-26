@@ -25,4 +25,24 @@ export class LoginService extends BaseApiService {
             errorMessage: apiResult.errorMessage,
         };
     }
+
+    async getJwtFromTwitchAuth(clientId: string, channelId: string, twitchAuthToken: string, storageServ: StorageService): Promise<Result> {
+        const body = { ClientId: clientId, ChannelId: channelId, TwitchAuthToken: twitchAuthToken }
+        const apiResult = await this.post(apiEndpoints.oAuthFromTwitch, body, (headers) => {
+            const token = headers.token;
+            const userGuid = headers.userguid;
+            const timeTillExpiry = headers.tokenexpiry;
+
+            this.setInterceptors(token);
+            const expiry = moment().add(timeTillExpiry, 'seconds');
+
+            storageServ.set(storageKey.authToken, token, expiry.toDate());
+            storageServ.set(storageKey.userGuid, userGuid, expiry.toDate());
+        });
+
+        return {
+            isSuccess: apiResult.isSuccess,
+            errorMessage: apiResult.errorMessage,
+        };
+    }
 }

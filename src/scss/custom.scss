@@ -86,8 +86,8 @@ html {
     margin-top: 5em;
 }
 
-.mt75 {
-    margin-top: 7.5em;
+.mt65 {
+    margin-top: 6.5em;
 }
 
 .ml1 {
@@ -207,8 +207,16 @@ html {
     }
 }
 
-#main>.main.no-border {
-    border: unset !important;
+#main {
+    >.main.no-border {
+        border: unset !important;
+    }
+
+    .loader {
+        h2.largeHeading {
+            color: _palette(loading);
+        }
+    }
 }
 
 .MuiTimeline-root.left {
@@ -221,6 +229,10 @@ html {
     .MuiTimelineContent-root.MuiTimelineItem-content {
         flex: 4;
     }
+}
+
+.icon.medium.icon-browser::before {
+    font-size: 3.2rem;
 }
 
 @import "custom/_scrollbar";

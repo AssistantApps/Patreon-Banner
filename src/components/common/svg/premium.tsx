@@ -2,15 +2,17 @@
 import React from 'react';
 import classNames from 'classnames';
 
-interface IProps {
+export interface IPremiumProps {
+    level?: number;
     classNames?: string;
 }
 
-export const Premium: React.FC<IProps> = (props: IProps) => {
+export const Premium: React.FC<IPremiumProps> = (props: IPremiumProps) => {
     return (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={classNames('premium-crown', props.classNames)}>
-            <g clipPath="url(#prefix__clip0)"><path d="M13.174 17.44h-1.349v.003h1.349v-.003z" fill="#FFCB39">
-            </path>
+            <g>
+                <path d="M13.174 17.44h-1.349v.003h1.349v-.003z" fill="#FFCB39">
+                </path>
                 <path opacity="0.3" d="M13.174 17.44h-1.349v.003h1.349v-.003z" fill="#fff">
                 </path>
                 <path d="M12.144 6.184a.317.317 0 00-.056-.074l-.019-.015a.44.44 0 00-.059-.037h-.016l-.072-.021a.332.332 0 00-.088 0v4.47l1.137-2.774-.827-1.549z" fill="#FFCB39">
@@ -51,13 +53,11 @@ export const Premium: React.FC<IProps> = (props: IProps) => {
                 </path>
                 <path opacity="0.3" d="M16.882 12.805L14.98 17.44h2.213l3.2-7.801-3.51 3.166z" fill="#fff">
                 </path>
+                {
+                    (props.level != null) &&
+                    <text fill="#0000FF" font-size="7px" text-anchor="middle" x="12" y="17">{props.level}</text>
+                }
             </g>
-            <defs>
-                <clipPath id="prefix__clip0">
-                    <path fill="#fff" transform="translate(2 3)" d="M0 0h22v18H0z">
-                    </path>
-                </clipPath>
-            </defs>
         </svg>
     );
 }

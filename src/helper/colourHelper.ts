@@ -1,6 +1,6 @@
 export const handleHex = (colourHex: string) => {
 
-    colourHex = colourHex.replaceAll('#', '');
+    colourHex = (colourHex ?? '').replaceAll('#', '');
 
     if (colourHex.length > 6) {
         colourHex = colourHex.substring(0, 6);

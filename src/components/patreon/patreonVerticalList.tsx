@@ -115,7 +115,7 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
                     }
                     {
                         addPatreonStaticButton &&
-                        <div className={classNames('flex pa-1-2', { 'mt75': patrons.length < 1 })}>
+                        <div className={classNames('flex pa-1-2', { 'mt65': patrons.length < 1 })}>
                             <PatreonButton classNames="m-h-auto" text="Join my Patreon" link={this.props.campaignUrl} />
                         </div>
                     }

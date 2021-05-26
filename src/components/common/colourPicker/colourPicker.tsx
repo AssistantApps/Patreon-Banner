@@ -5,7 +5,7 @@ import { handleHex } from '../../../helper/colourHelper';
 import { Premium } from '../svg/premium';
 import { ColourPickerCircle } from './colourPickerCircle';
 
-interface IProps {
+export interface IColourPickerProps {
     id?: string;
     defaultValue: string;
     currentValue?: string;
@@ -14,7 +14,7 @@ interface IProps {
     onChange?: (value: string) => void;
 }
 
-export const ColourPicker: React.FC<IProps> = (props: IProps) => {
+export const ColourPicker: React.FC<IColourPickerProps> = (props: IColourPickerProps) => {
 
     const isUserPremium = props.isUserPremium ?? false;
     const localCurrentValue = props.currentValue ?? '';
@@ -33,7 +33,7 @@ export const ColourPicker: React.FC<IProps> = (props: IProps) => {
                 <div className="col-12">
                     <div className="colour-picker-row ta-center mt-4">
                         {
-                            props.availableColours.map((hex: string) => {
+                            (props.availableColours ?? []).map((hex: string) => {
                                 return (
                                     <ColourPickerCircle
                                         key={hex}

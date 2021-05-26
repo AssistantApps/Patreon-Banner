@@ -1,0 +1,21 @@
+This Extension adds a Panel to display Patreon supporters. 
+Panel: 
+- It makes use of the Twitch Channel Id to get the Patrons and display them within the Panel. 
+- If there are no Patreon settings saved for the Twitch channel it will display a button linking to the channel's Patreon page. 
+- In Local Testing and Hosted Testing I was able to verify that the Panel works on my channel (https://www.twitch.tv/khaoztopsy)
+
+Configuration:
+- The Configuration page for this extension has a Login with Patreon button
+- Once logged in it displays the number of Patron supporters fetched as well as a url to use as a browser source
+- Example of a url that a user would see once logged in: https://patreonbanner.com/display.html?guid=5eeab99c-16bf-40b4-a287-57955aedbfe8
+
+Live:
+- I will be live tomorrow (27th May) 10AM PDT till 3PM PDT
+- I will be live Saturday (29th May) 10AM PDT till 3PM PDT
+
+Changelog:
+- The configure page has more configuration/customisation options .
+  - The configure page is more secure.
+  - I now generate a JWT token from Twitch Auth details gained from the Extension library, use that for sending data to the API.
+- The Panel handles none to very few Patrons gracefully.
+- When hovering over the Panel (with sufficient Patrons) a button becomes visible that links to a users Patreon.

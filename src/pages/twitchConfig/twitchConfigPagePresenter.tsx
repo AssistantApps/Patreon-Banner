@@ -79,7 +79,7 @@ export const TwitchConfigPagePresenter: React.FC<IProps> = (props: IProps) => {
                         />
                         <a href={userDisplayUrl} target="_blank" rel="noopener noreferrer"
                             className="icon medium icon-browser" draggable={false}
-                            style={{ position: 'absolute', top: '1rem', right: '0.1rem' }}
+                            style={{ position: 'absolute', top: '1rem', right: '-0.3rem' }}
                         ></a>
                     </div>
                 </>

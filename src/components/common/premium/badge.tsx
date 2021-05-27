@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-import { Lock } from './svg/lock';
+import { Lock } from '../svg/lock';
 
 interface IProps { }
 

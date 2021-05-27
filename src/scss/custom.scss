@@ -119,7 +119,8 @@ html {
 }
 
 .m-h-auto {
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .pa-1-2 {
@@ -192,6 +193,10 @@ html {
     float: left;
 }
 
+.row.justify {
+    justify-content: center;
+}
+
 .features.special {
     text-align: center;
 }
@@ -204,18 +209,6 @@ html {
         color: black;
         opacity: 0.8;
         // color: _palette(bg2);
-    }
-}
-
-#main {
-    >.main.no-border {
-        border: unset !important;
-    }
-
-    .loader {
-        h2.largeHeading {
-            color: _palette(loading);
-        }
     }
 }
 
@@ -246,5 +239,6 @@ html {
 @import 'custom/_icon.scss';
 @import 'custom/_svg.scss';
 @import 'custom/_displayType.scss';
+@import 'custom/_pages.scss';
 @import 'custom/_error.scss';
 @import 'custom/_segmentedControl.scss';

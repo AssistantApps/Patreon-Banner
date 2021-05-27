@@ -1,4 +1,4 @@
-#get-started .set-choice-container {
+#setup .set-choice-container {
 
     @media screen and (min-width: 700px) {
         width: 50%;
@@ -19,6 +19,18 @@
             display: inline-block;
             margin-bottom: 2em;
             color: var(--secondary);
+        }
+    }
+}
+
+#main {
+    >.main.no-border {
+        border: unset !important;
+    }
+
+    .loader {
+        h2.largeHeading {
+            color: _palette(loading);
         }
     }
 }

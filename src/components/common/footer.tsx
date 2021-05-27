@@ -1,6 +1,5 @@
 import React from 'react';
 
-import * as routes from '../../constants/route';
 import { site } from '../../constants/site';
 import { BasicLink } from '../core/link';
 import packageJson from '../../../package.json';

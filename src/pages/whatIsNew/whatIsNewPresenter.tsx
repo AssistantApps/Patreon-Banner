@@ -9,7 +9,9 @@ import { toLongDate } from '../../helper/datehelper';
 
 interface IProps {
     whatIsNewItems: Array<VersionViewModel>;
+    selectedWhatIsNewItemIndex: number;
     whatIsNewStatus: NetworkState;
+    setWhatIsNewItemIndex: (index: number) => void;
 }
 
 export const WhatIsNewPresenter: React.FC<IProps> = (props: IProps) => {
@@ -30,10 +32,12 @@ export const WhatIsNewPresenter: React.FC<IProps> = (props: IProps) => {
         const winItems = (whatIsNewItems ?? []);
         return (
             <Accordian
+                key="whatIsNew"
+                onClick={props.setWhatIsNewItemIndex}
                 list={winItems.map((win: VersionViewModel, index: number) => {
                     return {
                         id: win.guid,
-                        defaultChecked: index === 0,
+                        checked: index === props.selectedWhatIsNewItemIndex,
                         title: toLongDate(win.activeDate),
                         content: <Markdown>{win.markdown}</Markdown>,
                     };

@@ -23,3 +23,8 @@ img.lg-max-33 {
 img.lg-maxh-300 {
     max-width: 300px;
 }
+
+img.flip-h,
+svg.flip-h {
+    transform: scaleX(-1);
+}

@@ -10,3 +10,48 @@
         }
     }
 }
+
+.premium-crown.inline-h2 {
+    height: 1.33em;
+    margin: 0 0.125em -10px 0.125em;
+}
+
+a.payment-option {
+    text-decoration: none;
+    border-bottom: unset;
+}
+
+.payment-option {
+    display: flex;
+    min-width: 200px;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding: 0.5em;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.075);
+    transition: background-color 250ms ease-in-out;
+
+    &.pointer:hover {
+        background-color: rgba(0, 0, 0, 0.15);
+    }
+
+    img {
+        height: 50px;
+        margin-right: 10px;
+        transition: all 250ms ease-in-out;
+    }
+
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: white;
+        margin: auto 0.25em;
+        // padding-bottom: 2.5px;
+        white-space: nowrap;
+        font-weight: 500;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

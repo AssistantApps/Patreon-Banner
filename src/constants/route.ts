@@ -8,6 +8,7 @@ export const display = '/display';
 export const displayWithGuid = '/display/:guid';
 
 export const whatIsNew = '/updates';
+export const premium = '/premium';
 
 export const patreonSuccess = '/patreon-success';
 export const authTokenFromServer = '/auth';

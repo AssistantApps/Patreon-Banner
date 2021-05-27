@@ -8,6 +8,7 @@ import { setBodyLoadingClass } from "./helper/documentHelper";
 import { HomePresenter } from './pages/home/homePresenter';
 import { ConfigPageContainer } from './pages/config/configPageContainer';
 import { ExamplePageContainer } from './pages/example/exampleContainer';
+import { PremiumPresenter } from './pages/premium/premiumPresenter';
 import { DisplayPage } from './pages/display/displayContainer';
 import { WhatIsNewPage } from './pages/whatIsNew/whatIsNewContainer';
 import { SuccessfulPatreonLoginFromTwitchPage } from './pages/successfulPatreonLoginFromTwitch';
@@ -39,9 +40,9 @@ const App: React.FC = () => {
                     <Route path={route.display} component={DisplayPage} />
 
                     <Route path={route.whatIsNew} component={WhatIsNewPage} />
+                    <Route path={route.premium} component={PremiumPresenter} />
 
                     <Route path={route.patreonSuccess} component={SuccessfulPatreonLoginFromTwitchPage} />
-
                     <Route path={route.authTokenFromServer} component={AuthTokenFromServerPage} />
 
                     <Route path={route.errorWithCode} component={ErrorPage} />

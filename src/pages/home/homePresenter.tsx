@@ -23,21 +23,17 @@ export const HomePresenter: React.FC = () => {
 
     const navBarLinks = [
         {
-            link: '#intro',
+            link: '#get-started',
             name: 'Get started'
         },
         {
-            link: '#get-started',
+            link: '#setup',
             name: 'The setup'
         },
         {
             link: '#how-it-works',
             name: 'How it works'
         },
-        // {
-        //     link: '#examples',
-        //     name: 'Examples'
-        // },
         {
             link: '#contact',
             name: 'Contact us'
@@ -58,11 +54,11 @@ export const HomePresenter: React.FC = () => {
                 <Header />
                 <Navbar
                     links={navBarLinks}
-                    initialActiveLink="#intro"
+                    initialActiveLink="#get-started"
                 />
 
                 <div id="main">
-                    <section id="intro" className="main">
+                    <section id="get-started" className="main">
                         <div className="spotlight">
                             <div className="content">
                                 <header className="major">

@@ -18,6 +18,7 @@ interface IProps extends IExpectedServices, IWithoutExpectedServices { }
 
 interface IState {
     whatIsNewItems: Array<VersionViewModel>;
+    selectedWhatIsNewItemIndex: number;
     whatIsNewStatus: NetworkState;
     whatIsNewSearchObj: VersionSearchViewModel;
 }
@@ -28,6 +29,7 @@ export class WhatIsNewPageUnconnected extends React.Component<IProps, IState> {
 
         this.state = {
             whatIsNewItems: [],
+            selectedWhatIsNewItemIndex: 0,
             whatIsNewStatus: NetworkState.Loading,
             whatIsNewSearchObj: {
                 appGuid: '',
@@ -62,8 +64,21 @@ export class WhatIsNewPageUnconnected extends React.Component<IProps, IState> {
         });
     }
 
+    setWhatIsNewItemIndex = (selectedWhatIsNewItemIndex: number) => {
+        if (this.state.selectedWhatIsNewItemIndex === selectedWhatIsNewItemIndex) {
+            this.setState({ selectedWhatIsNewItemIndex: -1 });
+            return;
+        }
+        this.setState({ selectedWhatIsNewItemIndex })
+    };
+
     render() {
-        return (<WhatIsNewPresenter {...this.state} />);
+        return (
+            <WhatIsNewPresenter
+                {...this.state}
+                setWhatIsNewItemIndex={this.setWhatIsNewItemIndex}
+            />
+        );
     }
 }
 

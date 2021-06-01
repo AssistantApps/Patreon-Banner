@@ -125,7 +125,10 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
             return {
                 fetchExistingStatus: NetworkState.Loading
             }
-        }, () => this.fetchExistingSettings(channelId))
+        }, () => {
+            this.fetchJwtFromTwitchAuth();
+            this.fetchExistingSettings(channelId);
+        });
     };
 
     fetchExistingSettings = async (channelId?: string) => {
@@ -157,16 +160,25 @@ export class TwitchConfigPageContainerUnconnected extends React.Component<IProps
         });
     }
 
-    fetchJwtFromTwitchAuth = async (auth: TwitchUser) => {
-        const { clientId, channelId, token } = auth;
+    fetchJwtFromTwitchAuth = async (auth?: TwitchUser) => {
+        const clientId = auth?.clientId ?? this.state.submissionData.clientId;
+        const channelId = auth?.channelId ?? this.state.submissionData.channelId;
+        const token = auth?.token ?? this.state.submissionData.twitchAuthToken;
+
         this.props.loggingService.log?.('fetchJwtFromSettings',);
 
         const jwtResult = await this.props.loginService.getJwtFromTwitchAuth(clientId, channelId, token, this.props.storageService);
-        this.setState(() => {
+        this.setState((prevState: IState) => {
             return {
                 getJwtStatus: jwtResult.isSuccess
                     ? NetworkState.Success
                     : NetworkState.Error,
+                submissionData: {
+                    ...prevState.submissionData,
+                    clientId: clientId,
+                    channelId: channelId,
+                    twitchAuthToken: token,
+                },
             }
         });
     }

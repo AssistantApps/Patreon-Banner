@@ -73,11 +73,6 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
             addPatreonStaticButton = true;
         }
 
-        if (this.props.campaignUrl == null || this.props.campaignUrl.length < 5) {
-            addPatreonStaticButton = false;
-            addPatreonHoverButton = false;
-        }
-
         if (this.props.isBrowserSource == true) {
             addPatreonStaticButton = false;
             addPatreonHoverButton = false;
@@ -116,14 +111,14 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
                     {
                         addPatreonStaticButton &&
                         <div className={classNames('flex pa-1-2', { 'mt65': patrons.length < 1 })}>
-                            <PatreonButton classNames="m-h-auto" text="Join my Patreon" link={this.props.campaignUrl} />
+                            <PatreonButton classNames="m-h-auto no-pointer" text="Join my Patreon!" />
                         </div>
                     }
                 </div>
                 {
                     (addPatreonStaticButton == false && addPatreonHoverButton) &&
                     <div className="pos-abs patreon-btn-hover flex pa-1-2">
-                        <PatreonButton classNames="m-h-auto" text="Join my Patreon" link={this.props.campaignUrl} />
+                        <PatreonButton classNames="m-h-auto no-pointer" text="Join my Patreon!" />
                     </div>
                 }
             </>

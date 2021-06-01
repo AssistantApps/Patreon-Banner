@@ -38,13 +38,6 @@ const LowNumPatronsArgs: IProps = {
 };
 LowNumPatrons.args = LowNumPatronsArgs;
 
-export const TestDataPatronsNoCampaignUrl = Template.bind({});
-const TestDataPatronsNoCampaignUrlArgs: IProps = {
-  patreonNetworkState: NetworkState.Success,
-  patronVm: { ...testDataPatronsViewModel, campaignUrl: '' }
-};
-TestDataPatronsNoCampaignUrl.args = TestDataPatronsNoCampaignUrlArgs;
-
 export const TestDataPatrons = Template.bind({});
 const TestDataPatronsArgs: IProps = {
   patreonNetworkState: NetworkState.Success,

@@ -173,6 +173,11 @@ html {
     cursor: pointer;
 }
 
+.no-pointer,
+.no-pointer * {
+    cursor: default !important;
+}
+
 .no-click {
     cursor: not-allowed;
 }

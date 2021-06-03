@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
+import { DefaultPatreonSettings } from '../../../constants/designPalette';
 import { NetworkState } from '../../../constants/enum/networkState';
 import { TwitchUser } from '../../../contracts/twitchAuth';
 import { ResultWithValue } from '../../../contracts/results/ResultWithValue';
@@ -107,7 +108,10 @@ class PatreonPanelContainerUnconnected extends React.Component<IProps, IState> {
         this.setState(() => {
             return {
                 channelId: channelId ?? '',
-                patronVm: patronsResult.value,
+                patronVm: {
+                    ...patronsResult.value,
+                    settings: patronsResult?.value?.settings ?? DefaultPatreonSettings
+                },
                 patreonNetworkState: NetworkState.Success,
             }
         });

@@ -51,7 +51,8 @@ export class PatreonVerticalList extends React.Component<IProps, IState> {
             isProfilePicRounded, profilePicRoundedValue
         } = this.props.settings;
 
-        let realValue = +verticalListSpeed;
+        let realValue = 1500;
+        if (verticalListSpeed === 0) verticalListSpeed = DesignPalette.verticalListSpeedDefault;
         const selectedValue = DesignPalette.verticalListSpeedTicks.find(t => t.value === (+verticalListSpeed));
         if (selectedValue != null && selectedValue.realValue != null) realValue = (+selectedValue.realValue);
 

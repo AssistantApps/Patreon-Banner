@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/react';
 
 import { PatreonPanelPresenter, IProps } from './patreonPanelPresenter';
 import { NetworkState } from '../../../constants/enum/networkState';
-import { noPatronsViewModel, lowNumPatronsViewModel, testDataPatronsViewModel } from '../../../util/mockPatreonViewModel';
+import { noPatronsViewModel, lowNumPatronsViewModel, testDataPatronsViewModel, lrdalucardPatronsViewModel } from '../../../util/mockPatreonViewModel';
 
 export default {
   title: 'Patreon/TwitchPanel',
@@ -44,3 +44,10 @@ const TestDataPatronsArgs: IProps = {
   patronVm: testDataPatronsViewModel
 };
 TestDataPatrons.args = TestDataPatronsArgs;
+
+export const lrdalucardTestDataPatrons = Template.bind({});
+const lrdalucardTestDataPatronsArgs: IProps = {
+  patreonNetworkState: NetworkState.Success,
+  patronVm: lrdalucardPatronsViewModel
+};
+lrdalucardTestDataPatrons.args = lrdalucardTestDataPatronsArgs;

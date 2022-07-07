@@ -1,4 +1,4 @@
-# PatreonBanner Web
+![banner](./.github/img/banner.png)
 
 > This is the source code for the web app available from [patreonbanner.com](https://patreonbanner.com). This project is split into multiple pieces to support the way Twitch wants their extensions to work. 
 

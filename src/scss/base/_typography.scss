@@ -1,3 +1,4 @@
+@use "sass:math";
 ///
 /// Stellar by HTML5 UP
 /// html5up.net | @ajlkn
@@ -135,7 +136,7 @@ blockquote {
     border-left: solid 4px;
     font-style: italic;
     margin: 0 0 _size(element-margin) 0;
-    padding: (_size(element-margin) / 4) 0 (_size(element-margin) / 4) _size(element-margin);
+    padding: math.div(_size(element-margin), 4) 0 math.div(_size(element-margin), 4) _size(element-margin);
 }
 
 code {

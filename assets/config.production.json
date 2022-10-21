@@ -1,0 +1,7 @@
+{
+    "googleAnalyticsEnabled": true,
+    "consoleLogDebug": false,
+    "useServiceWorker": true,
+    "reportWebVitals": false,
+    "apiUrl": "https://api.assistantapps.com"
+}

@@ -1,0 +1,28 @@
+{
+  "short_name": "Patreon Banner",
+  "name": "Patreon Banner by AssistantApps",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#341e77",
+  "background_color": "#000000",
+  "description": "Patreon Banner by AssistantApps",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "assets/favicon/android-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/favicon/android-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

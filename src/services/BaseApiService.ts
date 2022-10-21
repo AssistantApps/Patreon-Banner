@@ -20,7 +20,7 @@ export class BaseApiService {
       const storageServ = new StorageService();
       const tokenFromStorage = storageServ.get<string>(storageKey.authToken);
       if (tokenFromStorage.isSuccess) this.setInterceptors(tokenFromStorage.value);
-    } catch (ex) { }
+    } catch (ex: any) { }
   }
 
   setInterceptors = (token: string) => {
@@ -35,7 +35,7 @@ export class BaseApiService {
         value: result.data,
         errorMessage: ''
       }
-    } catch (ex) {
+    } catch (ex: any) {
       return {
         isSuccess: false,
         value: anyObject,
@@ -55,7 +55,7 @@ export class BaseApiService {
         value: result.data,
         errorMessage: ''
       }
-    } catch (ex) {
+    } catch (ex: any) {
       return {
         isSuccess: false,
         value: anyObject,
@@ -73,7 +73,7 @@ export class BaseApiService {
         isSuccess: true,
         errorMessage: ''
       }
-    } catch (ex) {
+    } catch (ex: any) {
       return {
         isSuccess: false,
         errorMessage: ex.message

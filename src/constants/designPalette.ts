@@ -26,8 +26,8 @@ export const DesignPalette = {
     //
     marqueSpeedDefault: 4,
     marqueSpeedTicks: [
-        { value: 1, label: 'very very slow' }, { value: 2, label: 'very slow' }, { value: 3, label: 'slow' },
-        { value: 4, label: 'default' },
+        { value: 1, label: 'very very slow' }, { value: 2, label: 'very slow' },
+        { value: 3, label: 'slow' }, { value: 4, label: 'default' },
         { value: 5, realValue: 8, label: 'fast' }, { value: 6, realValue: 14, label: 'very fast' }, { value: 7, realValue: 20, label: 'very very fast' }
     ],
     //
